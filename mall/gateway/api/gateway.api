@@ -1,0 +1,14 @@
+type (
+	GatewayRequest {
+		Id string `path:"id"`
+	}
+
+	GatewayReply {
+		Id   string `json:"id"`
+		Name string `json:"name"`
+	}
+)
+service gateway {
+	@handler getOrder
+	get /api/gateway/getOrder/:id (GatewayRequest) returns (GatewayReply)
+}

@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package basic;
+option go_package="./basic";
+
+message Request {
+  string ping = 1;
+}
+
+message Response {
+  string pong = 1;
+}
+
+message GetRegionRequest {
+  int64 Id = 1;
+}
+
+message GetRegionResponse {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string Name = 3;
+}
+
+message GetRegionsRequest {
+  int64 ParentId = 1;
+}
+
+message GetRegionsResponse {
+  repeated GetRegionChild List = 1;
+}
+
+message GetRegionChild {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string Name = 3;
+}
+
+message AddRegionRequest {
+  int64 ParentId = 1;
+  string Name = 2;
+}
+
+message AddRegionResponse {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string Name = 3;
+}
+
+service Basic {
+  rpc Ping(Request) returns(Response);
+  rpc getRegion(GetRegionRequest) returns(GetRegionResponse);
+  rpc getRegions(GetRegionsRequest) returns(GetRegionsResponse);
+  rpc addRegion(AddRegionRequest) returns(AddRegionResponse);
+}

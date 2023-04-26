@@ -1,0 +1,81 @@
+type (
+	//获取地区信息
+	GatewayGetRegionRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayGetRegionReply {
+		Id       int64  `json:"id"`
+		ParentId int64  `json:"parent_id"`
+		Name     string `json:"name"`
+	}
+
+	//根据父级id获取地区信息
+	GatewayGetRegionsRequest {
+		ParentId int64 `path:"parent_id"`
+	}
+
+	GatewayGetRegionsReply {
+		List []GatewayGetRegionsChild `json:"list"`
+	}
+
+	GatewayGetRegionsChild {
+		Id       int64  `json:"id"`
+		ParentId int64  `json:"parent_id"`
+		Name     string `json:"name"`
+	}
+
+	//添加地区信息
+	GatewayAddRegionRequest {
+		ParentId int64  `json:"parent_id"`
+		Name     string `json:"name"`
+	}
+
+	GatewayAddRegionReply {
+		Id       int64  `json:"id"`
+		ParentId int64  `json:"parent_id"`
+		Name     string `json:"name"`
+	}
+)
+
+type (
+	//登录相关信息
+	GatewayRegisterRequest {
+		Mobile   string `json:"mobile"`
+		Email    string `json:"email"`
+		Password string `json:"password"`
+		AuthKey  string `json:"auth_key"`
+		AuthType string `json:"auth_type"`
+	}
+
+	GatewayRegisterResponse {
+		AccessToken  string `json:"access_token"`
+		AccessExpire int64  `json:"access_expire"`
+		RefreshAfter int64  `json:"refresh_after"`
+	}
+
+	GatewayLoginRequest {
+
+	}
+
+	GatewayLoginResponse{
+		
+	}
+)
+
+service gateway {
+	@handler getRegion
+	get /api/gateway/region/:id	(GatewayGetRegionRequest) returns (GatewayGetRegionReply)
+	
+	@handler getRegions
+	get /api/gateway/regions/:parent_id	(GatewayGetRegionsRequest) returns (GatewayGetRegionsReply)
+	
+	@handler addRegion
+	post /api/gateway/region (GatewayAddRegionRequest) returns (GatewayAddRegionReply)
+	
+	@handler register
+	post /api/gateway/register (GatewayRegisterRequest) returns (GatewayRegisterResponse)
+
+	@handler login
+	post /api/gateway/login (GatewayLoginRequest) returns (GatewayLoginResponse)
+}

@@ -1,0 +1,25 @@
+Name: account.rpc
+ListenOn: 0.0.0.0:9502
+
+Etcd:
+  Hosts:
+  - etcd:2379
+  Key: account.rpc
+
+Mysql:
+  DataSource: root:root@tcp(mysql:3306)/account_center?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+Redis:
+  Host: redis:6379
+  Type: node
+  Pass: secret_redis
+
+CacheRedis:
+  - Host: redis:6379
+    Type: node
+    Pass: secret_redis
+
+Prometheus:
+  Host: 0.0.0.0
+  Port: 9602
+  Path: /metrics

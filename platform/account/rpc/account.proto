@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package account;
+option go_package = "./account";
+
+message User {
+  int64 Id = 1;
+  string Name = 2;
+  string Avatar =3;
+  int32  Gender = 4;
+  string Mobile = 5;
+  string Email = 6;
+  string Password = 7;
+  int32 Status = 8;
+}
+
+message UserAuth {
+  int64  Id = 1;
+  int64  UserId = 2;
+  string AuthType = 3;
+  string AuthKey = 4;
+}
+
+message RegisterRequest {
+  string Mobile = 1;
+  string Email = 2;
+  string Password = 3;
+  string AuthKey = 4;
+  string AuthType = 5;
+}
+message RegisterResponse {
+  string AccessToken = 1;
+  int64  AccessExpire = 2;
+  int64  RefreshAfter = 3;
+}
+
+message LoginRequest {
+  string  AuthType = 1;
+  string AuthKey = 2;
+  string  Password = 3;
+}
+message LoginResponse {
+  string AccessToken = 1;
+  int64  AccessExpire = 2;
+  int64  RefreshAfter = 3;
+}
+
+message GetUserRequest {
+  int64  Id = 1;
+}
+message GetUserResponse {
+   User User = 1;
+}
+
+message GetUserAuthByAuthKeyRequest {
+  string  AuthKey = 1;
+  string  AuthType = 2;
+}
+message GetUserAuthByAuthKeyResponse {
+   UserAuth UserAuth = 1;
+}
+
+message GetUserAuthByUserIdRequest {
+  int64  UserId = 1;
+  string  AuthType = 2;
+}
+message GetUserAuthByUserIdResponse {
+   UserAuth UserAuth = 1;
+}
+
+message GenerateTokenRequest {
+  int64 UserId = 1;
+}
+message GenerateTokenResponse {
+  string AccessToken = 1;
+  int64  AccessExpire = 2;
+  int64  RefreshAfter = 3;
+}
+
+//service
+service usercenter {
+  rpc login(LoginRequest) returns(LoginResponse);
+  rpc register(RegisterRequest) returns(RegisterResponse);
+  rpc getUser(GetUserRequest) returns(GetUserResponse);
+  rpc getUserAuthByAuthKey(GetUserAuthByAuthKeyRequest) returns(GetUserAuthByAuthKeyResponse);
+  rpc getUserAuthByUserId(GetUserAuthByUserIdRequest) returns(GetUserAuthByUserIdResponse);
+  rpc generateToken(GenerateTokenRequest) returns(GenerateTokenResponse);
+}

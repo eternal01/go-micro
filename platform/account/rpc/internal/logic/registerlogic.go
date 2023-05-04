@@ -26,16 +26,40 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 
 func (l *RegisterLogic) Register(in *account.RegisterRequest) (*account.RegisterResponse, error) {
 	// todo: add your logic here and delete this line
-	var user *model.Users
-	var err error
-	if len(in.Mobile) > 0 {
-		user, err = l.svcCtx.UserModel.FindOneByMobile(l.ctx, in.Mobile)
-	} else {
-		user, err = l.svcCtx.UserModel.FindOneByEmail(l.ctx, in.Email)
+	userResult, error := l.svcCtx.UserModel.Insert(l.ctx, &model.Users{
+		Mobile: in.Mobile,
+		Email:  in.Email,
+		Status: model.Enable, //默认启用
+	})
+	if error != nil {
+		return nil, error
 	}
-	if err != nil {
-		return nil, err
+	userId, error := userResult.LastInsertId()
+	if error != nil {
+		return nil, error
 	}
 
-	return &account.RegisterResponse{}, nil
+	_, error = l.svcCtx.UserAuthModel.Insert(l.ctx, &model.UsersAuths{
+		UserId: userId,
+		// AuthType:       in.AuthType,
+		AuthKey:        in.AuthKey,
+		AuthCredential: in.AuthCredential,
+	})
+	if error != nil {
+		return nil, error
+	}
+
+	generateTokenLogic := NewGenerateTokenLogic(l.ctx, l.svcCtx)
+	token, error := generateTokenLogic.GenerateToken(&account.GenerateTokenRequest{
+		UserId: userId,
+	})
+	if error != nil {
+		return nil, error
+	}
+
+	return &account.RegisterResponse{
+		AccessToken:  token.AccessToken,
+		AccessExpire: token.AccessExpire,
+		RefreshAfter: token.RefreshAfter,
+	}, nil
 }

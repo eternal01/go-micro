@@ -39,13 +39,11 @@ type (
 )
 
 type (
-	//登录相关信息
+	//登录注册相关信息
 	GatewayRegisterRequest {
-		Mobile   string `json:"mobile"`
-		Email    string `json:"email"`
-		Password string `json:"password"`
-		AuthKey  string `json:"auth_key"`
-		AuthType string `json:"auth_type"`
+		Mobile         string `json:"mobile"`
+		Email          string `json:"email"`
+		AuthCredential string `json:"auth_credential"`
 	}
 
 	GatewayRegisterResponse {
@@ -55,27 +53,57 @@ type (
 	}
 
 	GatewayLoginRequest {
-
+		Mobile         string `json:"mobile"`
+		Email          string `json:"email"`
+		AuthCredential string `json:"auth_credential"`
 	}
 
-	GatewayLoginResponse{
-		
+	GatewayLoginResponse {
+		Id     int64  `json:"id"`
+		Mobile string `json:"mobile"`
+		Email  string `json:"email"`
+
+		AccessToken  string `json:"access_token"`
+		AccessExpire int64  `json:"access_expire"`
+		RefreshAfter int64  `json:"refresh_after"`
+	}
+
+	GatewayGetUserRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayGetUserResponse {
+		Id     int64  `json:"id"`
+		Mobile string `json:"mobile"`
+		Email  string `json:"email"`
 	}
 )
 
+@server(
+	prefix: /api/gateway
+)
 service gateway {
 	@handler getRegion
-	get /api/gateway/region/:id	(GatewayGetRegionRequest) returns (GatewayGetRegionReply)
+	get /region/:id	(GatewayGetRegionRequest) returns (GatewayGetRegionReply)
 	
 	@handler getRegions
-	get /api/gateway/regions/:parent_id	(GatewayGetRegionsRequest) returns (GatewayGetRegionsReply)
+	get /regions/:parent_id	(GatewayGetRegionsRequest) returns (GatewayGetRegionsReply)
 	
 	@handler addRegion
-	post /api/gateway/region (GatewayAddRegionRequest) returns (GatewayAddRegionReply)
+	post /region (GatewayAddRegionRequest) returns (GatewayAddRegionReply)
 	
 	@handler register
-	post /api/gateway/register (GatewayRegisterRequest) returns (GatewayRegisterResponse)
-
+	post /register (GatewayRegisterRequest) returns (GatewayRegisterResponse)
+	
 	@handler login
-	post /api/gateway/login (GatewayLoginRequest) returns (GatewayLoginResponse)
+	post /login (GatewayLoginRequest) returns (GatewayLoginResponse)
+}
+
+@server(
+	prefix: /api/gateway
+	jwt: JwtAuth
+)
+service gateway {
+	@handler getUser
+	get /user/:id (GatewayGetUserRequest) returns (GatewayGetUserResponse)
 }

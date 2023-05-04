@@ -14,24 +14,42 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodGet,
-				Path:    "/api/gateway/region/:id",
+				Path:    "/region/:id",
 				Handler: getRegionHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/api/gateway/regions/:parent_id",
+				Path:    "/regions/:parent_id",
 				Handler: getRegionsHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/gateway/region",
+				Path:    "/region",
 				Handler: addRegionHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/gateway/register",
+				Path:    "/register",
 				Handler: registerHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/login",
+				Handler: loginHandler(serverCtx),
+			},
 		},
+		rest.WithPrefix("/api/gateway"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/user/:id",
+				Handler: getUserHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithPrefix("/api/gateway"),
 	)
 }

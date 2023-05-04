@@ -43,12 +43,12 @@ type (
 
 	Users struct {
 		Id         int64        `db:"id"`          // 主键id
-		Name       string       `db:"name"`        // 用户名
+		UserName   string       `db:"user_name"`   // 用户名
+		NickName   string       `db:"nick_name"`   // 用户昵称
 		Avatar     string       `db:"avatar"`      // 头像
 		Gender     int64        `db:"gender"`      // 用户性别;0-保密;1-男;2-女
 		Mobile     string       `db:"mobile"`      // 用户手机号
 		Email      string       `db:"email"`       // 用户邮箱地址
-		Password   string       `db:"password"`    // 用户密码
 		Status     int64        `db:"status"`      // 状态(1-启用2-禁用)
 		CreateTime sql.NullTime `db:"create_time"` // 创建时间
 		UpdateTime sql.NullTime `db:"update_time"` // 更新时间
@@ -142,7 +142,7 @@ func (m *defaultUsersModel) Insert(ctx context.Context, data *Users) (sql.Result
 	usersMobileKey := fmt.Sprintf("%s%v", cacheUsersMobilePrefix, data.Mobile)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?)", m.table, usersRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.Name, data.Avatar, data.Gender, data.Mobile, data.Email, data.Password, data.Status, data.DeleteTime)
+		return conn.ExecCtx(ctx, query, data.UserName, data.NickName, data.Avatar, data.Gender, data.Mobile, data.Email, data.Status, data.DeleteTime)
 	}, usersEmailKey, usersIdKey, usersMobileKey)
 	return ret, err
 }
@@ -158,7 +158,7 @@ func (m *defaultUsersModel) Update(ctx context.Context, newData *Users) error {
 	usersMobileKey := fmt.Sprintf("%s%v", cacheUsersMobilePrefix, data.Mobile)
 	_, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, usersRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, newData.Name, newData.Avatar, newData.Gender, newData.Mobile, newData.Email, newData.Password, newData.Status, newData.DeleteTime, newData.Id)
+		return conn.ExecCtx(ctx, query, newData.UserName, newData.NickName, newData.Avatar, newData.Gender, newData.Mobile, newData.Email, newData.Status, newData.DeleteTime, newData.Id)
 	}, usersEmailKey, usersIdKey, usersMobileKey)
 	return err
 }

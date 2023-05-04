@@ -23,8 +23,8 @@ func NewGetUserAuthByUserIdLogic(ctx context.Context, svcCtx *svc.ServiceContext
 	}
 }
 
-func (l *GetUserAuthByUserIdLogic) GetUserAuthByUserId(in *account.GetUserAuthByUserIdRequest) (*account.GetUserAuthByUserIdResponse, error) {
+func (l *GetUserAuthByUserIdLogic) GetUserAuthByUserId(in *account.GetUserAuthByUserIdRequest) (*account.GetUserAuthResponse, error) {
 	// todo: add your logic here and delete this line
 
-	return &account.GetUserAuthByUserIdResponse{}, nil
+	return &account.GetUserAuthResponse{}, nil
 }

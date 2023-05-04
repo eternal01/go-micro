@@ -37,15 +37,38 @@ type GatewayAddRegionReply struct {
 }
 
 type GatewayRegisterRequest struct {
-	Mobile   string `json:"mobile"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	AuthKey  string `json:"auth_key"`
-	AuthType string `json:"auth_type"`
+	Mobile         string `json:"mobile"`
+	Email          string `json:"email"`
+	AuthCredential string `json:"auth_credential"`
 }
 
 type GatewayRegisterResponse struct {
 	AccessToken  string `json:"access_token"`
 	AccessExpire int64  `json:"access_expire"`
 	RefreshAfter int64  `json:"refresh_after"`
+}
+
+type GatewayLoginRequest struct {
+	Mobile         string `json:"mobile"`
+	Email          string `json:"email"`
+	AuthCredential string `json:"auth_credential"`
+}
+
+type GatewayLoginResponse struct {
+	Id           int64  `json:"id"`
+	Mobile       string `json:"mobile"`
+	Email        string `json:"email"`
+	AccessToken  string `json:"access_token"`
+	AccessExpire int64  `json:"access_expire"`
+	RefreshAfter int64  `json:"refresh_after"`
+}
+
+type GatewayGetUserRequest struct {
+	Id int64 `path:"id"`
+}
+
+type GatewayGetUserResponse struct {
+	Id     int64  `json:"id"`
+	Mobile string `json:"mobile"`
+	Email  string `json:"email"`
 }

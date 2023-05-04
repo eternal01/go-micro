@@ -10,24 +10,23 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type GetUserLogic struct {
+type GetUserByEmailLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewGetUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserLogic {
-	return &GetUserLogic{
+func NewGetUserByEmailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserByEmailLogic {
+	return &GetUserByEmailLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *GetUserLogic) GetUser(in *account.GetUserRequest) (*account.GetUserResponse, error) {
+func (l *GetUserByEmailLogic) GetUserByEmail(in *account.GetUserByEmailRequest) (*account.GetUserResponse, error) {
 	// todo: add your logic here and delete this line
-
-	user, error := l.svcCtx.UserModel.FindOne(l.ctx, in.Id)
+	user, error := l.svcCtx.UserModel.FindOneByEmail(l.ctx, in.Email)
 	if error != nil && error != model.ErrNotFound {
 		return nil, error
 	}

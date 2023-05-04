@@ -23,8 +23,8 @@ func NewGetUserAuthByAuthKeyLogic(ctx context.Context, svcCtx *svc.ServiceContex
 	}
 }
 
-func (l *GetUserAuthByAuthKeyLogic) GetUserAuthByAuthKey(in *account.GetUserAuthByAuthKeyRequest) (*account.GetUserAuthByAuthKeyResponse, error) {
+func (l *GetUserAuthByAuthKeyLogic) GetUserAuthByAuthKey(in *account.GetUserAuthByAuthKeyRequest) (*account.GetUserAuthResponse, error) {
 	// todo: add your logic here and delete this line
 
-	return &account.GetUserAuthByAuthKeyResponse{}, nil
+	return &account.GetUserAuthResponse{}, nil
 }

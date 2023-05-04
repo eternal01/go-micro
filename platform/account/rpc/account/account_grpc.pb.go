@@ -19,274 +19,348 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Usercenter_Login_FullMethodName                = "/account.usercenter/login"
-	Usercenter_Register_FullMethodName             = "/account.usercenter/register"
-	Usercenter_GetUser_FullMethodName              = "/account.usercenter/getUser"
-	Usercenter_GetUserAuthByAuthKey_FullMethodName = "/account.usercenter/getUserAuthByAuthKey"
-	Usercenter_GetUserAuthByUserId_FullMethodName  = "/account.usercenter/getUserAuthByUserId"
-	Usercenter_GenerateToken_FullMethodName        = "/account.usercenter/generateToken"
+	Account_Register_FullMethodName             = "/account.Account/register"
+	Account_Login_FullMethodName                = "/account.Account/login"
+	Account_GetUser_FullMethodName              = "/account.Account/getUser"
+	Account_GetUserByEmail_FullMethodName       = "/account.Account/getUserByEmail"
+	Account_GetUserByMobile_FullMethodName      = "/account.Account/getUserByMobile"
+	Account_GetUserAuthByAuthKey_FullMethodName = "/account.Account/getUserAuthByAuthKey"
+	Account_GetUserAuthByUserId_FullMethodName  = "/account.Account/getUserAuthByUserId"
+	Account_GenerateToken_FullMethodName        = "/account.Account/generateToken"
 )
 
-// UsercenterClient is the client API for Usercenter service.
+// AccountClient is the client API for Account service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UsercenterClient interface {
-	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+type AccountClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
+	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
-	GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyRequest, opts ...grpc.CallOption) (*GetUserAuthByAuthKeyResponse, error)
-	GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdRequest, opts ...grpc.CallOption) (*GetUserAuthByUserIdResponse, error)
+	GetUserByEmail(ctx context.Context, in *GetUserByEmailRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
+	GetUserByMobile(ctx context.Context, in *GetUserByMobileRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
+	GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error)
+	GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error)
 	GenerateToken(ctx context.Context, in *GenerateTokenRequest, opts ...grpc.CallOption) (*GenerateTokenResponse, error)
 }
 
-type usercenterClient struct {
+type accountClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUsercenterClient(cc grpc.ClientConnInterface) UsercenterClient {
-	return &usercenterClient{cc}
+func NewAccountClient(cc grpc.ClientConnInterface) AccountClient {
+	return &accountClient{cc}
 }
 
-func (c *usercenterClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
-	out := new(LoginResponse)
-	err := c.cc.Invoke(ctx, Usercenter_Login_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *usercenterClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
+func (c *accountClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
 	out := new(RegisterResponse)
-	err := c.cc.Invoke(ctx, Usercenter_Register_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Account_Register_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *usercenterClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
+func (c *accountClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
+	err := c.cc.Invoke(ctx, Account_Login_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
 	out := new(GetUserResponse)
-	err := c.cc.Invoke(ctx, Usercenter_GetUser_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Account_GetUser_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *usercenterClient) GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyRequest, opts ...grpc.CallOption) (*GetUserAuthByAuthKeyResponse, error) {
-	out := new(GetUserAuthByAuthKeyResponse)
-	err := c.cc.Invoke(ctx, Usercenter_GetUserAuthByAuthKey_FullMethodName, in, out, opts...)
+func (c *accountClient) GetUserByEmail(ctx context.Context, in *GetUserByEmailRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
+	out := new(GetUserResponse)
+	err := c.cc.Invoke(ctx, Account_GetUserByEmail_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *usercenterClient) GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdRequest, opts ...grpc.CallOption) (*GetUserAuthByUserIdResponse, error) {
-	out := new(GetUserAuthByUserIdResponse)
-	err := c.cc.Invoke(ctx, Usercenter_GetUserAuthByUserId_FullMethodName, in, out, opts...)
+func (c *accountClient) GetUserByMobile(ctx context.Context, in *GetUserByMobileRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
+	out := new(GetUserResponse)
+	err := c.cc.Invoke(ctx, Account_GetUserByMobile_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *usercenterClient) GenerateToken(ctx context.Context, in *GenerateTokenRequest, opts ...grpc.CallOption) (*GenerateTokenResponse, error) {
+func (c *accountClient) GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error) {
+	out := new(GetUserAuthResponse)
+	err := c.cc.Invoke(ctx, Account_GetUserAuthByAuthKey_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountClient) GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error) {
+	out := new(GetUserAuthResponse)
+	err := c.cc.Invoke(ctx, Account_GetUserAuthByUserId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountClient) GenerateToken(ctx context.Context, in *GenerateTokenRequest, opts ...grpc.CallOption) (*GenerateTokenResponse, error) {
 	out := new(GenerateTokenResponse)
-	err := c.cc.Invoke(ctx, Usercenter_GenerateToken_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Account_GenerateToken_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UsercenterServer is the server API for Usercenter service.
-// All implementations must embed UnimplementedUsercenterServer
+// AccountServer is the server API for Account service.
+// All implementations must embed UnimplementedAccountServer
 // for forward compatibility
-type UsercenterServer interface {
-	Login(context.Context, *LoginRequest) (*LoginResponse, error)
+type AccountServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
+	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
-	GetUserAuthByAuthKey(context.Context, *GetUserAuthByAuthKeyRequest) (*GetUserAuthByAuthKeyResponse, error)
-	GetUserAuthByUserId(context.Context, *GetUserAuthByUserIdRequest) (*GetUserAuthByUserIdResponse, error)
+	GetUserByEmail(context.Context, *GetUserByEmailRequest) (*GetUserResponse, error)
+	GetUserByMobile(context.Context, *GetUserByMobileRequest) (*GetUserResponse, error)
+	GetUserAuthByAuthKey(context.Context, *GetUserAuthByAuthKeyRequest) (*GetUserAuthResponse, error)
+	GetUserAuthByUserId(context.Context, *GetUserAuthByUserIdRequest) (*GetUserAuthResponse, error)
 	GenerateToken(context.Context, *GenerateTokenRequest) (*GenerateTokenResponse, error)
-	mustEmbedUnimplementedUsercenterServer()
+	mustEmbedUnimplementedAccountServer()
 }
 
-// UnimplementedUsercenterServer must be embedded to have forward compatible implementations.
-type UnimplementedUsercenterServer struct {
+// UnimplementedAccountServer must be embedded to have forward compatible implementations.
+type UnimplementedAccountServer struct {
 }
 
-func (UnimplementedUsercenterServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
-}
-func (UnimplementedUsercenterServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
+func (UnimplementedAccountServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
-func (UnimplementedUsercenterServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
+func (UnimplementedAccountServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+}
+func (UnimplementedAccountServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
-func (UnimplementedUsercenterServer) GetUserAuthByAuthKey(context.Context, *GetUserAuthByAuthKeyRequest) (*GetUserAuthByAuthKeyResponse, error) {
+func (UnimplementedAccountServer) GetUserByEmail(context.Context, *GetUserByEmailRequest) (*GetUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserByEmail not implemented")
+}
+func (UnimplementedAccountServer) GetUserByMobile(context.Context, *GetUserByMobileRequest) (*GetUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserByMobile not implemented")
+}
+func (UnimplementedAccountServer) GetUserAuthByAuthKey(context.Context, *GetUserAuthByAuthKeyRequest) (*GetUserAuthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserAuthByAuthKey not implemented")
 }
-func (UnimplementedUsercenterServer) GetUserAuthByUserId(context.Context, *GetUserAuthByUserIdRequest) (*GetUserAuthByUserIdResponse, error) {
+func (UnimplementedAccountServer) GetUserAuthByUserId(context.Context, *GetUserAuthByUserIdRequest) (*GetUserAuthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserAuthByUserId not implemented")
 }
-func (UnimplementedUsercenterServer) GenerateToken(context.Context, *GenerateTokenRequest) (*GenerateTokenResponse, error) {
+func (UnimplementedAccountServer) GenerateToken(context.Context, *GenerateTokenRequest) (*GenerateTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GenerateToken not implemented")
 }
-func (UnimplementedUsercenterServer) mustEmbedUnimplementedUsercenterServer() {}
+func (UnimplementedAccountServer) mustEmbedUnimplementedAccountServer() {}
 
-// UnsafeUsercenterServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to UsercenterServer will
+// UnsafeAccountServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AccountServer will
 // result in compilation errors.
-type UnsafeUsercenterServer interface {
-	mustEmbedUnimplementedUsercenterServer()
+type UnsafeAccountServer interface {
+	mustEmbedUnimplementedAccountServer()
 }
 
-func RegisterUsercenterServer(s grpc.ServiceRegistrar, srv UsercenterServer) {
-	s.RegisterService(&Usercenter_ServiceDesc, srv)
+func RegisterAccountServer(s grpc.ServiceRegistrar, srv AccountServer) {
+	s.RegisterService(&Account_ServiceDesc, srv)
 }
 
-func _Usercenter_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoginRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UsercenterServer).Login(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Usercenter_Login_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsercenterServer).Login(ctx, req.(*LoginRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Usercenter_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Account_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RegisterRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsercenterServer).Register(ctx, in)
+		return srv.(AccountServer).Register(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Usercenter_Register_FullMethodName,
+		FullMethod: Account_Register_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsercenterServer).Register(ctx, req.(*RegisterRequest))
+		return srv.(AccountServer).Register(ctx, req.(*RegisterRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Usercenter_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Account_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServer).Login(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Account_Login_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServer).Login(ctx, req.(*LoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Account_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsercenterServer).GetUser(ctx, in)
+		return srv.(AccountServer).GetUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Usercenter_GetUser_FullMethodName,
+		FullMethod: Account_GetUser_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsercenterServer).GetUser(ctx, req.(*GetUserRequest))
+		return srv.(AccountServer).GetUser(ctx, req.(*GetUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Usercenter_GetUserAuthByAuthKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Account_GetUserByEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserByEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServer).GetUserByEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Account_GetUserByEmail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServer).GetUserByEmail(ctx, req.(*GetUserByEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Account_GetUserByMobile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserByMobileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServer).GetUserByMobile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Account_GetUserByMobile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServer).GetUserByMobile(ctx, req.(*GetUserByMobileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Account_GetUserAuthByAuthKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUserAuthByAuthKeyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsercenterServer).GetUserAuthByAuthKey(ctx, in)
+		return srv.(AccountServer).GetUserAuthByAuthKey(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Usercenter_GetUserAuthByAuthKey_FullMethodName,
+		FullMethod: Account_GetUserAuthByAuthKey_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsercenterServer).GetUserAuthByAuthKey(ctx, req.(*GetUserAuthByAuthKeyRequest))
+		return srv.(AccountServer).GetUserAuthByAuthKey(ctx, req.(*GetUserAuthByAuthKeyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Usercenter_GetUserAuthByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Account_GetUserAuthByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUserAuthByUserIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsercenterServer).GetUserAuthByUserId(ctx, in)
+		return srv.(AccountServer).GetUserAuthByUserId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Usercenter_GetUserAuthByUserId_FullMethodName,
+		FullMethod: Account_GetUserAuthByUserId_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsercenterServer).GetUserAuthByUserId(ctx, req.(*GetUserAuthByUserIdRequest))
+		return srv.(AccountServer).GetUserAuthByUserId(ctx, req.(*GetUserAuthByUserIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Usercenter_GenerateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Account_GenerateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GenerateTokenRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsercenterServer).GenerateToken(ctx, in)
+		return srv.(AccountServer).GenerateToken(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Usercenter_GenerateToken_FullMethodName,
+		FullMethod: Account_GenerateToken_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsercenterServer).GenerateToken(ctx, req.(*GenerateTokenRequest))
+		return srv.(AccountServer).GenerateToken(ctx, req.(*GenerateTokenRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Usercenter_ServiceDesc is the grpc.ServiceDesc for Usercenter service.
+// Account_ServiceDesc is the grpc.ServiceDesc for Account service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Usercenter_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "account.usercenter",
-	HandlerType: (*UsercenterServer)(nil),
+var Account_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "account.Account",
+	HandlerType: (*AccountServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "login",
-			Handler:    _Usercenter_Login_Handler,
+			MethodName: "register",
+			Handler:    _Account_Register_Handler,
 		},
 		{
-			MethodName: "register",
-			Handler:    _Usercenter_Register_Handler,
+			MethodName: "login",
+			Handler:    _Account_Login_Handler,
 		},
 		{
 			MethodName: "getUser",
-			Handler:    _Usercenter_GetUser_Handler,
+			Handler:    _Account_GetUser_Handler,
+		},
+		{
+			MethodName: "getUserByEmail",
+			Handler:    _Account_GetUserByEmail_Handler,
+		},
+		{
+			MethodName: "getUserByMobile",
+			Handler:    _Account_GetUserByMobile_Handler,
 		},
 		{
 			MethodName: "getUserAuthByAuthKey",
-			Handler:    _Usercenter_GetUserAuthByAuthKey_Handler,
+			Handler:    _Account_GetUserAuthByAuthKey_Handler,
 		},
 		{
 			MethodName: "getUserAuthByUserId",
-			Handler:    _Usercenter_GetUserAuthByUserId_Handler,
+			Handler:    _Account_GetUserAuthByUserId_Handler,
 		},
 		{
 			MethodName: "generateToken",
-			Handler:    _Usercenter_GenerateToken_Handler,
+			Handler:    _Account_GenerateToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

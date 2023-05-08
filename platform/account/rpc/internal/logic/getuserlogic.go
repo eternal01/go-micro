@@ -28,13 +28,12 @@ func (l *GetUserLogic) GetUser(in *account.GetUserRequest) (*account.GetUserResp
 	// todo: add your logic here and delete this line
 
 	user, error := l.svcCtx.UserModel.FindOne(l.ctx, in.Id)
-	if error != nil && error != model.ErrNotFound {
+	if error != nil {
+		if error == model.ErrNotFound {
+			return &account.GetUserResponse{}, nil
+		}
 		return nil, error
 	}
-	if user == nil {
-		return &account.GetUserResponse{}, nil
-	}
-
 	return &account.GetUserResponse{
 		Id:       user.Id,
 		UserName: user.UserName,

@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"go-micro/common/errorx"
+	"go-micro/platform/account/model"
 	"go-micro/platform/account/rpc/accountclient"
 	"go-micro/platform/gateway/api/internal/svc"
 	"go-micro/platform/gateway/api/internal/types"
@@ -29,15 +30,18 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 func (l *LoginLogic) Login(req *types.GatewayLoginRequest) (resp *types.GatewayLoginResponse, err error) {
 	// todo: add your logic here and delete this line
 	if len(req.Email) == 0 && len(req.Mobile) == 0 {
-		return nil, errorx.NewDefaultError("参数错误")
+		return nil, errorx.ParamsError
 	}
 	var user *accountclient.GetUserResponse
+	var authKey string
 	if len(req.Email) > 0 {
+		authKey = req.Email
 		user, err = l.svcCtx.AccountRpc.GetUserByEmail(l.ctx, &accountclient.GetUserByEmailRequest{
 			Email: req.Email,
 		})
 	}
 	if len(req.Mobile) > 0 {
+		authKey = req.Mobile
 		user, err = l.svcCtx.AccountRpc.GetUserByMobile(l.ctx, &accountclient.GetUserByMobileRequest{
 			Mobile: req.Mobile,
 		})
@@ -45,13 +49,26 @@ func (l *LoginLogic) Login(req *types.GatewayLoginRequest) (resp *types.GatewayL
 	if err != nil {
 		return nil, err
 	}
-	if user == nil {
-		return nil, errorx.NewDefaultError("用户不存在")
+	if user.Id == 0 {
+		return nil, errorx.UserNotFound
 	}
 
-	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.AuthCredential))
+	userAuth, err := l.svcCtx.AccountRpc.GetUserAuthByUserIdAuthKeyAuthType(l.ctx, &accountclient.GetUserAuthByUserIdAuthKeyAuthTypeRequest{
+		UserId:   user.Id,
+		AuthKey:  authKey,
+		AuthType: model.AuthTypeSystem,
+	})
 	if err != nil {
-		errorx.NewDefaultError("密码错误")
+		return nil, err
+	}
+
+	if userAuth.Id == 0 {
+		return nil, errorx.UserNotFound
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(userAuth.AuthCredential), []byte(req.AuthCredential))
+	if err != nil {
+		return nil, errorx.PasswordError
 	}
 
 	jwtToken, err := l.svcCtx.AccountRpc.Login(l.ctx, &accountclient.LoginRequest{

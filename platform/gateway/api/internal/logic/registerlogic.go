@@ -5,10 +5,10 @@ import (
 	"strings"
 
 	"go-micro/common/errorx"
+	"go-micro/platform/account/model"
 	"go-micro/platform/account/rpc/accountclient"
 	"go-micro/platform/gateway/api/internal/svc"
 	"go-micro/platform/gateway/api/internal/types"
-	"go-micro/platform/gateway/model"
 
 	"github.com/zeromicro/go-zero/core/logx"
 	"golang.org/x/crypto/bcrypt"
@@ -33,7 +33,7 @@ func (l *RegisterLogic) Register(req *types.GatewayRegisterRequest) (resp *types
 	email := strings.TrimSpace(req.Email)
 	mobile := strings.TrimSpace(req.Mobile)
 	if len(email) == 0 && len(mobile) == 0 {
-		return nil, errorx.NewDefaultError("参数错误")
+		return nil, errorx.ParamsError
 	}
 	var user *accountclient.GetUserResponse
 	var authKey string
@@ -49,11 +49,13 @@ func (l *RegisterLogic) Register(req *types.GatewayRegisterRequest) (resp *types
 			Mobile: mobile,
 		})
 	}
+
 	if err != nil {
 		return nil, err
 	}
-	if user != nil || user.Id != 0 {
-		return nil, errorx.NewDefaultError("用户已存在")
+
+	if user.Id != 0 {
+		return nil, errorx.UserExist
 	}
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(req.AuthCredential), bcrypt.DefaultCost)

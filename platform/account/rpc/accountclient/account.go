@@ -13,19 +13,20 @@ import (
 )
 
 type (
-	GenerateTokenRequest        = account.GenerateTokenRequest
-	GenerateTokenResponse       = account.GenerateTokenResponse
-	GetUserAuthByAuthKeyRequest = account.GetUserAuthByAuthKeyRequest
-	GetUserAuthByUserIdRequest  = account.GetUserAuthByUserIdRequest
-	GetUserAuthResponse         = account.GetUserAuthResponse
-	GetUserByEmailRequest       = account.GetUserByEmailRequest
-	GetUserByMobileRequest      = account.GetUserByMobileRequest
-	GetUserRequest              = account.GetUserRequest
-	GetUserResponse             = account.GetUserResponse
-	LoginRequest                = account.LoginRequest
-	LoginResponse               = account.LoginResponse
-	RegisterRequest             = account.RegisterRequest
-	RegisterResponse            = account.RegisterResponse
+	GenerateTokenRequest                      = account.GenerateTokenRequest
+	GenerateTokenResponse                     = account.GenerateTokenResponse
+	GetUserAuthByUserIdAuthKeyAuthTypeRequest = account.GetUserAuthByUserIdAuthKeyAuthTypeRequest
+	GetUserAuthResponse                       = account.GetUserAuthResponse
+	GetUserByEmailRequest                     = account.GetUserByEmailRequest
+	GetUserByMobileRequest                    = account.GetUserByMobileRequest
+	GetUserRequest                            = account.GetUserRequest
+	GetUserResponse                           = account.GetUserResponse
+	LoginRequest                              = account.LoginRequest
+	LoginResponse                             = account.LoginResponse
+	RegisterRequest                           = account.RegisterRequest
+	RegisterResponse                          = account.RegisterResponse
+	UpdateUserRequest                         = account.UpdateUserRequest
+	UpdateUserResponse                        = account.UpdateUserResponse
 
 	Account interface {
 		Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
@@ -33,9 +34,9 @@ type (
 		GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
 		GetUserByEmail(ctx context.Context, in *GetUserByEmailRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
 		GetUserByMobile(ctx context.Context, in *GetUserByMobileRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
-		GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error)
-		GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error)
+		GetUserAuthByUserIdAuthKeyAuthType(ctx context.Context, in *GetUserAuthByUserIdAuthKeyAuthTypeRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error)
 		GenerateToken(ctx context.Context, in *GenerateTokenRequest, opts ...grpc.CallOption) (*GenerateTokenResponse, error)
+		UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 	}
 
 	defaultAccount struct {
@@ -74,17 +75,17 @@ func (m *defaultAccount) GetUserByMobile(ctx context.Context, in *GetUserByMobil
 	return client.GetUserByMobile(ctx, in, opts...)
 }
 
-func (m *defaultAccount) GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error) {
+func (m *defaultAccount) GetUserAuthByUserIdAuthKeyAuthType(ctx context.Context, in *GetUserAuthByUserIdAuthKeyAuthTypeRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error) {
 	client := account.NewAccountClient(m.cli.Conn())
-	return client.GetUserAuthByAuthKey(ctx, in, opts...)
-}
-
-func (m *defaultAccount) GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error) {
-	client := account.NewAccountClient(m.cli.Conn())
-	return client.GetUserAuthByUserId(ctx, in, opts...)
+	return client.GetUserAuthByUserIdAuthKeyAuthType(ctx, in, opts...)
 }
 
 func (m *defaultAccount) GenerateToken(ctx context.Context, in *GenerateTokenRequest, opts ...grpc.CallOption) (*GenerateTokenResponse, error) {
 	client := account.NewAccountClient(m.cli.Conn())
 	return client.GenerateToken(ctx, in, opts...)
+}
+
+func (m *defaultAccount) UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error) {
+	client := account.NewAccountClient(m.cli.Conn())
+	return client.UpdateUser(ctx, in, opts...)
 }

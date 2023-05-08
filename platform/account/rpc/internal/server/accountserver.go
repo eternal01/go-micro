@@ -47,17 +47,17 @@ func (s *AccountServer) GetUserByMobile(ctx context.Context, in *account.GetUser
 	return l.GetUserByMobile(in)
 }
 
-func (s *AccountServer) GetUserAuthByAuthKey(ctx context.Context, in *account.GetUserAuthByAuthKeyRequest) (*account.GetUserAuthResponse, error) {
-	l := logic.NewGetUserAuthByAuthKeyLogic(ctx, s.svcCtx)
-	return l.GetUserAuthByAuthKey(in)
-}
-
-func (s *AccountServer) GetUserAuthByUserId(ctx context.Context, in *account.GetUserAuthByUserIdRequest) (*account.GetUserAuthResponse, error) {
-	l := logic.NewGetUserAuthByUserIdLogic(ctx, s.svcCtx)
-	return l.GetUserAuthByUserId(in)
+func (s *AccountServer) GetUserAuthByUserIdAuthKeyAuthType(ctx context.Context, in *account.GetUserAuthByUserIdAuthKeyAuthTypeRequest) (*account.GetUserAuthResponse, error) {
+	l := logic.NewGetUserAuthByUserIdAuthKeyAuthTypeLogic(ctx, s.svcCtx)
+	return l.GetUserAuthByUserIdAuthKeyAuthType(in)
 }
 
 func (s *AccountServer) GenerateToken(ctx context.Context, in *account.GenerateTokenRequest) (*account.GenerateTokenResponse, error) {
 	l := logic.NewGenerateTokenLogic(ctx, s.svcCtx)
 	return l.GenerateToken(in)
+}
+
+func (s *AccountServer) UpdateUser(ctx context.Context, in *account.UpdateUserRequest) (*account.UpdateUserResponse, error) {
+	l := logic.NewUpdateUserLogic(ctx, s.svcCtx)
+	return l.UpdateUser(in)
 }

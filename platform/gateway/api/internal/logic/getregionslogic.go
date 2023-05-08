@@ -29,7 +29,7 @@ func (l *GetRegionsLogic) GetRegions(req *types.GatewayGetRegionsRequest) (resp 
 	// todo: add your logic here and delete this line
 
 	if req.ParentId <= 0 {
-		errorx.NewDefaultError("参数错误")
+		return nil, errorx.ParamsError
 	}
 
 	regions, err := l.svcCtx.BasicRpc.GetRegions(l.ctx, &basic.GetRegionsRequest{

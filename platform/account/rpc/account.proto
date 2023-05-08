@@ -51,21 +51,17 @@ message GetUserResponse {
   int64  gender = 5;
   string mobile = 6;
   string email = 7;
-  string password = 8;
-  int64 status = 9;
+  int64 status = 8;
 }
 
-message GetUserAuthByAuthKeyRequest {
-  string  authKey = 1;
-  int64  authType = 2;
-}
-message GetUserAuthByUserIdRequest {
-  int64  aserId = 1;
-  int64  authType = 2;
+message GetUserAuthByUserIdAuthKeyAuthTypeRequest {
+  int64 userId = 1;
+  string  authKey = 2;
+  int64  authType = 3;
 }
 message GetUserAuthResponse {
   int64  id = 1;
-  int64  aserId = 2;
+  int64  userId = 2;
   int64  authType = 3;
   string authKey = 4;
   string authCredential = 5;
@@ -82,6 +78,28 @@ message GenerateTokenResponse {
 }
 
 
+message UpdateUserRequest {
+  int64 id = 1;
+  string userName = 2;
+  string nickName = 3;
+  string avatar = 4;
+  int64  gender = 5;
+  string mobile = 6;
+  string email = 7;
+  int64 status = 8;
+}
+message UpdateUserResponse {
+  int64 id = 1;
+  string userName = 2;
+  string nickName = 3;
+  string avatar = 4;
+  int64  gender = 5;
+  string mobile = 6;
+  string email = 7;
+  int64 status = 8;
+}
+
+
 //service
 service Account {
   rpc register(RegisterRequest) returns(RegisterResponse);
@@ -89,7 +107,7 @@ service Account {
   rpc getUser(GetUserRequest) returns(GetUserResponse);
   rpc getUserByEmail(GetUserByEmailRequest) returns(GetUserResponse);
   rpc getUserByMobile(GetUserByMobileRequest) returns(GetUserResponse);
-  rpc getUserAuthByAuthKey(GetUserAuthByAuthKeyRequest) returns(GetUserAuthResponse);
-  rpc getUserAuthByUserId(GetUserAuthByUserIdRequest) returns(GetUserAuthResponse);
+  rpc getUserAuthByUserIdAuthKeyAuthType(GetUserAuthByUserIdAuthKeyAuthTypeRequest) returns(GetUserAuthResponse);
   rpc generateToken(GenerateTokenRequest) returns(GenerateTokenResponse);
+  rpc updateUser(UpdateUserRequest) returns(UpdateUserResponse);
 }

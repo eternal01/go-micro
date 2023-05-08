@@ -68,7 +68,34 @@ type GatewayGetUserRequest struct {
 }
 
 type GatewayGetUserResponse struct {
-	Id     int64  `json:"id"`
-	Mobile string `json:"mobile"`
-	Email  string `json:"email"`
+	Id       int64  `json:"id"`
+	Avatar   string `json:"avatar"`
+	Mobile   string `json:"mobile"`
+	Email    string `json:"email"`
+	UserName string `json:"user_name"`
+	NickName string `json:"nick_name"`
+	Gender   int64  `json:"gender"`
+	Status   int64  `json:"status"`
+}
+
+type GatewayUpdateUserRequest struct {
+	Id       int64  `path:"id"`
+	Avatar   string `json:"avatar"`
+	Mobile   string `json:"mobile"`
+	Email    string `json:"email"`
+	UserName string `json:"user_name"`
+	NickName string `json:"nick_name"`
+	Gender   int64  `json:"gender"`
+	Status   int64  `json:"status"`
+}
+
+type GatewayUpdateUserResponse struct {
+	Id       int64  `json:"id"`
+	Avatar   string `json:"avatar"`
+	Mobile   string `json:"mobile"`
+	Email    string `json:"email"`
+	UserName string `json:"user_name"`
+	NickName string `json:"nick_name"`
+	Gender   int64  `json:"gender"`
+	Status   int64  `json:"status"`
 }

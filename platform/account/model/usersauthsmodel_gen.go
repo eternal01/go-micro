@@ -21,17 +21,15 @@ var (
 	usersAuthsRowsExpectAutoSet   = strings.Join(stringx.Remove(usersAuthsFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), ",")
 	usersAuthsRowsWithPlaceHolder = strings.Join(stringx.Remove(usersAuthsFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), "=?,") + "=?"
 
-	cacheUsersAuthsIdPrefix            = "cache:usersAuths:id:"
-	cacheUsersAuthsAuthKeyPrefix       = "cache:usersAuths:authKey:"
-	cacheUsersAuthsUserIdAuthKeyPrefix = "cache:usersAuths:userId:authKey:"
+	cacheUsersAuthsIdPrefix                    = "cache:usersAuths:id:"
+	cacheUsersAuthsUserIdAuthKeyAuthTypePrefix = "cache:usersAuths:userId:authKey:authType:"
 )
 
 type (
 	usersAuthsModel interface {
 		Insert(ctx context.Context, data *UsersAuths) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*UsersAuths, error)
-		FindOneByAuthKey(ctx context.Context, authKey string) (*UsersAuths, error)
-		FindOneByUserIdAuthKey(ctx context.Context, userId int64, authKey string) (*UsersAuths, error)
+		FindOneByUserIdAuthKeyAuthType(ctx context.Context, userId int64, authKey string, authType int64) (*UsersAuths, error)
 		Update(ctx context.Context, data *UsersAuths) error
 		Delete(ctx context.Context, id int64) error
 	}
@@ -44,12 +42,12 @@ type (
 	UsersAuths struct {
 		Id             int64        `db:"id"`              // 主键id
 		UserId         int64        `db:"user_id"`         // 用户id
-		AuthType       int64        `db:"auth_type"`       // 认证类型(0-平台)
+		AuthType       int64        `db:"auth_type"`       // 认证类型(1-手机密码;2-手机验证码;3-邮箱密码)
 		AuthKey        string       `db:"auth_key"`        // 认证标识
 		AuthCredential string       `db:"auth_credential"` // 认证凭据
-		CreateTime     sql.NullTime `db:"create_time"`     // 创建时间
-		UpdateTime     sql.NullTime `db:"update_time"`     // 更新时间
-		DeleteTime     sql.NullTime `db:"delete_time"`     // 删除时间
+		CreatedAt      sql.NullTime `db:"created_at"`      // 创建时间
+		UpdatedAt      sql.NullTime `db:"updated_at"`      // 更新时间
+		DeletedAt      sql.NullTime `db:"deleted_at"`      // 删除时间
 	}
 )
 
@@ -66,13 +64,12 @@ func (m *defaultUsersAuthsModel) Delete(ctx context.Context, id int64) error {
 		return err
 	}
 
-	usersAuthsAuthKeyKey := fmt.Sprintf("%s%v", cacheUsersAuthsAuthKeyPrefix, data.AuthKey)
 	usersAuthsIdKey := fmt.Sprintf("%s%v", cacheUsersAuthsIdPrefix, id)
-	usersAuthsUserIdAuthKeyKey := fmt.Sprintf("%s%v:%v", cacheUsersAuthsUserIdAuthKeyPrefix, data.UserId, data.AuthKey)
+	usersAuthsUserIdAuthKeyAuthTypeKey := fmt.Sprintf("%s%v:%v:%v", cacheUsersAuthsUserIdAuthKeyAuthTypePrefix, data.UserId, data.AuthKey, data.AuthType)
 	_, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 		return conn.ExecCtx(ctx, query, id)
-	}, usersAuthsAuthKeyKey, usersAuthsIdKey, usersAuthsUserIdAuthKeyKey)
+	}, usersAuthsIdKey, usersAuthsUserIdAuthKeyAuthTypeKey)
 	return err
 }
 
@@ -93,32 +90,12 @@ func (m *defaultUsersAuthsModel) FindOne(ctx context.Context, id int64) (*UsersA
 	}
 }
 
-func (m *defaultUsersAuthsModel) FindOneByAuthKey(ctx context.Context, authKey string) (*UsersAuths, error) {
-	usersAuthsAuthKeyKey := fmt.Sprintf("%s%v", cacheUsersAuthsAuthKeyPrefix, authKey)
+func (m *defaultUsersAuthsModel) FindOneByUserIdAuthKeyAuthType(ctx context.Context, userId int64, authKey string, authType int64) (*UsersAuths, error) {
+	usersAuthsUserIdAuthKeyAuthTypeKey := fmt.Sprintf("%s%v:%v:%v", cacheUsersAuthsUserIdAuthKeyAuthTypePrefix, userId, authKey, authType)
 	var resp UsersAuths
-	err := m.QueryRowIndexCtx(ctx, &resp, usersAuthsAuthKeyKey, m.formatPrimary, func(ctx context.Context, conn sqlx.SqlConn, v any) (i any, e error) {
-		query := fmt.Sprintf("select %s from %s where `auth_key` = ? limit 1", usersAuthsRows, m.table)
-		if err := conn.QueryRowCtx(ctx, &resp, query, authKey); err != nil {
-			return nil, err
-		}
-		return resp.Id, nil
-	}, m.queryPrimary)
-	switch err {
-	case nil:
-		return &resp, nil
-	case sqlc.ErrNotFound:
-		return nil, ErrNotFound
-	default:
-		return nil, err
-	}
-}
-
-func (m *defaultUsersAuthsModel) FindOneByUserIdAuthKey(ctx context.Context, userId int64, authKey string) (*UsersAuths, error) {
-	usersAuthsUserIdAuthKeyKey := fmt.Sprintf("%s%v:%v", cacheUsersAuthsUserIdAuthKeyPrefix, userId, authKey)
-	var resp UsersAuths
-	err := m.QueryRowIndexCtx(ctx, &resp, usersAuthsUserIdAuthKeyKey, m.formatPrimary, func(ctx context.Context, conn sqlx.SqlConn, v any) (i any, e error) {
-		query := fmt.Sprintf("select %s from %s where `user_id` = ? and `auth_key` = ? limit 1", usersAuthsRows, m.table)
-		if err := conn.QueryRowCtx(ctx, &resp, query, userId, authKey); err != nil {
+	err := m.QueryRowIndexCtx(ctx, &resp, usersAuthsUserIdAuthKeyAuthTypeKey, m.formatPrimary, func(ctx context.Context, conn sqlx.SqlConn, v any) (i any, e error) {
+		query := fmt.Sprintf("select %s from %s where `user_id` = ? and `auth_key` = ? and `auth_type` = ? limit 1", usersAuthsRows, m.table)
+		if err := conn.QueryRowCtx(ctx, &resp, query, userId, authKey, authType); err != nil {
 			return nil, err
 		}
 		return resp.Id, nil
@@ -134,13 +111,12 @@ func (m *defaultUsersAuthsModel) FindOneByUserIdAuthKey(ctx context.Context, use
 }
 
 func (m *defaultUsersAuthsModel) Insert(ctx context.Context, data *UsersAuths) (sql.Result, error) {
-	usersAuthsAuthKeyKey := fmt.Sprintf("%s%v", cacheUsersAuthsAuthKeyPrefix, data.AuthKey)
 	usersAuthsIdKey := fmt.Sprintf("%s%v", cacheUsersAuthsIdPrefix, data.Id)
-	usersAuthsUserIdAuthKeyKey := fmt.Sprintf("%s%v:%v", cacheUsersAuthsUserIdAuthKeyPrefix, data.UserId, data.AuthKey)
+	usersAuthsUserIdAuthKeyAuthTypeKey := fmt.Sprintf("%s%v:%v:%v", cacheUsersAuthsUserIdAuthKeyAuthTypePrefix, data.UserId, data.AuthKey, data.AuthType)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, usersAuthsRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.UserId, data.AuthType, data.AuthKey, data.AuthCredential, data.DeleteTime)
-	}, usersAuthsAuthKeyKey, usersAuthsIdKey, usersAuthsUserIdAuthKeyKey)
+		return conn.ExecCtx(ctx, query, data.UserId, data.AuthType, data.AuthKey, data.AuthCredential, data.DeletedAt)
+	}, usersAuthsIdKey, usersAuthsUserIdAuthKeyAuthTypeKey)
 	return ret, err
 }
 
@@ -150,13 +126,12 @@ func (m *defaultUsersAuthsModel) Update(ctx context.Context, newData *UsersAuths
 		return err
 	}
 
-	usersAuthsAuthKeyKey := fmt.Sprintf("%s%v", cacheUsersAuthsAuthKeyPrefix, data.AuthKey)
 	usersAuthsIdKey := fmt.Sprintf("%s%v", cacheUsersAuthsIdPrefix, data.Id)
-	usersAuthsUserIdAuthKeyKey := fmt.Sprintf("%s%v:%v", cacheUsersAuthsUserIdAuthKeyPrefix, data.UserId, data.AuthKey)
+	usersAuthsUserIdAuthKeyAuthTypeKey := fmt.Sprintf("%s%v:%v:%v", cacheUsersAuthsUserIdAuthKeyAuthTypePrefix, data.UserId, data.AuthKey, data.AuthType)
 	_, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, usersAuthsRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, newData.UserId, newData.AuthType, newData.AuthKey, newData.AuthCredential, newData.DeleteTime, newData.Id)
-	}, usersAuthsAuthKeyKey, usersAuthsIdKey, usersAuthsUserIdAuthKeyKey)
+		return conn.ExecCtx(ctx, query, newData.UserId, newData.AuthType, newData.AuthKey, newData.AuthCredential, newData.DeletedAt, newData.Id)
+	}, usersAuthsIdKey, usersAuthsUserIdAuthKeyAuthTypeKey)
 	return err
 }
 

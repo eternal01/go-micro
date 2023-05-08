@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Account_Register_FullMethodName             = "/account.Account/register"
-	Account_Login_FullMethodName                = "/account.Account/login"
-	Account_GetUser_FullMethodName              = "/account.Account/getUser"
-	Account_GetUserByEmail_FullMethodName       = "/account.Account/getUserByEmail"
-	Account_GetUserByMobile_FullMethodName      = "/account.Account/getUserByMobile"
-	Account_GetUserAuthByAuthKey_FullMethodName = "/account.Account/getUserAuthByAuthKey"
-	Account_GetUserAuthByUserId_FullMethodName  = "/account.Account/getUserAuthByUserId"
-	Account_GenerateToken_FullMethodName        = "/account.Account/generateToken"
+	Account_Register_FullMethodName                           = "/account.Account/register"
+	Account_Login_FullMethodName                              = "/account.Account/login"
+	Account_GetUser_FullMethodName                            = "/account.Account/getUser"
+	Account_GetUserByEmail_FullMethodName                     = "/account.Account/getUserByEmail"
+	Account_GetUserByMobile_FullMethodName                    = "/account.Account/getUserByMobile"
+	Account_GetUserAuthByUserIdAuthKeyAuthType_FullMethodName = "/account.Account/getUserAuthByUserIdAuthKeyAuthType"
+	Account_GenerateToken_FullMethodName                      = "/account.Account/generateToken"
+	Account_UpdateUser_FullMethodName                         = "/account.Account/updateUser"
 )
 
 // AccountClient is the client API for Account service.
@@ -38,9 +38,9 @@ type AccountClient interface {
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
 	GetUserByEmail(ctx context.Context, in *GetUserByEmailRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
 	GetUserByMobile(ctx context.Context, in *GetUserByMobileRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
-	GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error)
-	GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error)
+	GetUserAuthByUserIdAuthKeyAuthType(ctx context.Context, in *GetUserAuthByUserIdAuthKeyAuthTypeRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error)
 	GenerateToken(ctx context.Context, in *GenerateTokenRequest, opts ...grpc.CallOption) (*GenerateTokenResponse, error)
+	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 }
 
 type accountClient struct {
@@ -96,18 +96,9 @@ func (c *accountClient) GetUserByMobile(ctx context.Context, in *GetUserByMobile
 	return out, nil
 }
 
-func (c *accountClient) GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error) {
+func (c *accountClient) GetUserAuthByUserIdAuthKeyAuthType(ctx context.Context, in *GetUserAuthByUserIdAuthKeyAuthTypeRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error) {
 	out := new(GetUserAuthResponse)
-	err := c.cc.Invoke(ctx, Account_GetUserAuthByAuthKey_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *accountClient) GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdRequest, opts ...grpc.CallOption) (*GetUserAuthResponse, error) {
-	out := new(GetUserAuthResponse)
-	err := c.cc.Invoke(ctx, Account_GetUserAuthByUserId_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Account_GetUserAuthByUserIdAuthKeyAuthType_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -123,6 +114,15 @@ func (c *accountClient) GenerateToken(ctx context.Context, in *GenerateTokenRequ
 	return out, nil
 }
 
+func (c *accountClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error) {
+	out := new(UpdateUserResponse)
+	err := c.cc.Invoke(ctx, Account_UpdateUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AccountServer is the server API for Account service.
 // All implementations must embed UnimplementedAccountServer
 // for forward compatibility
@@ -132,9 +132,9 @@ type AccountServer interface {
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
 	GetUserByEmail(context.Context, *GetUserByEmailRequest) (*GetUserResponse, error)
 	GetUserByMobile(context.Context, *GetUserByMobileRequest) (*GetUserResponse, error)
-	GetUserAuthByAuthKey(context.Context, *GetUserAuthByAuthKeyRequest) (*GetUserAuthResponse, error)
-	GetUserAuthByUserId(context.Context, *GetUserAuthByUserIdRequest) (*GetUserAuthResponse, error)
+	GetUserAuthByUserIdAuthKeyAuthType(context.Context, *GetUserAuthByUserIdAuthKeyAuthTypeRequest) (*GetUserAuthResponse, error)
 	GenerateToken(context.Context, *GenerateTokenRequest) (*GenerateTokenResponse, error)
+	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
 	mustEmbedUnimplementedAccountServer()
 }
 
@@ -157,14 +157,14 @@ func (UnimplementedAccountServer) GetUserByEmail(context.Context, *GetUserByEmai
 func (UnimplementedAccountServer) GetUserByMobile(context.Context, *GetUserByMobileRequest) (*GetUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserByMobile not implemented")
 }
-func (UnimplementedAccountServer) GetUserAuthByAuthKey(context.Context, *GetUserAuthByAuthKeyRequest) (*GetUserAuthResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserAuthByAuthKey not implemented")
-}
-func (UnimplementedAccountServer) GetUserAuthByUserId(context.Context, *GetUserAuthByUserIdRequest) (*GetUserAuthResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserAuthByUserId not implemented")
+func (UnimplementedAccountServer) GetUserAuthByUserIdAuthKeyAuthType(context.Context, *GetUserAuthByUserIdAuthKeyAuthTypeRequest) (*GetUserAuthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserAuthByUserIdAuthKeyAuthType not implemented")
 }
 func (UnimplementedAccountServer) GenerateToken(context.Context, *GenerateTokenRequest) (*GenerateTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GenerateToken not implemented")
+}
+func (UnimplementedAccountServer) UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
 func (UnimplementedAccountServer) mustEmbedUnimplementedAccountServer() {}
 
@@ -269,38 +269,20 @@ func _Account_GetUserByMobile_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Account_GetUserAuthByAuthKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserAuthByAuthKeyRequest)
+func _Account_GetUserAuthByUserIdAuthKeyAuthType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserAuthByUserIdAuthKeyAuthTypeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServer).GetUserAuthByAuthKey(ctx, in)
+		return srv.(AccountServer).GetUserAuthByUserIdAuthKeyAuthType(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Account_GetUserAuthByAuthKey_FullMethodName,
+		FullMethod: Account_GetUserAuthByUserIdAuthKeyAuthType_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServer).GetUserAuthByAuthKey(ctx, req.(*GetUserAuthByAuthKeyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Account_GetUserAuthByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserAuthByUserIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AccountServer).GetUserAuthByUserId(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Account_GetUserAuthByUserId_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServer).GetUserAuthByUserId(ctx, req.(*GetUserAuthByUserIdRequest))
+		return srv.(AccountServer).GetUserAuthByUserIdAuthKeyAuthType(ctx, req.(*GetUserAuthByUserIdAuthKeyAuthTypeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -319,6 +301,24 @@ func _Account_GenerateToken_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AccountServer).GenerateToken(ctx, req.(*GenerateTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Account_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServer).UpdateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Account_UpdateUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServer).UpdateUser(ctx, req.(*UpdateUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -351,16 +351,16 @@ var Account_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Account_GetUserByMobile_Handler,
 		},
 		{
-			MethodName: "getUserAuthByAuthKey",
-			Handler:    _Account_GetUserAuthByAuthKey_Handler,
-		},
-		{
-			MethodName: "getUserAuthByUserId",
-			Handler:    _Account_GetUserAuthByUserId_Handler,
+			MethodName: "getUserAuthByUserIdAuthKeyAuthType",
+			Handler:    _Account_GetUserAuthByUserIdAuthKeyAuthType_Handler,
 		},
 		{
 			MethodName: "generateToken",
 			Handler:    _Account_GenerateToken_Handler,
+		},
+		{
+			MethodName: "updateUser",
+			Handler:    _Account_UpdateUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

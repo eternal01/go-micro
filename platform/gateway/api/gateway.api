@@ -73,9 +73,36 @@ type (
 	}
 
 	GatewayGetUserResponse {
-		Id     int64  `json:"id"`
-		Mobile string `json:"mobile"`
-		Email  string `json:"email"`
+		Id       int64  `json:"id"`
+		Avatar   string `json:"avatar"`
+		Mobile   string `json:"mobile"`
+		Email    string `json:"email"`
+		UserName string `json:"user_name"`
+		NickName string `json:"nick_name"`
+		Gender   int64  `json:"gender"`
+		Status   int64  `json:"status"`
+	}
+
+	GatewayUpdateUserRequest {
+		Id       int64  `path:"id"`
+		Avatar   string `json:"avatar"`
+		Mobile   string `json:"mobile"`
+		Email    string `json:"email"`
+		UserName string `json:"user_name"`
+		NickName string `json:"nick_name"`
+		Gender   int64  `json:"gender"`
+		Status   int64  `json:"status"`
+	}
+
+	GatewayUpdateUserResponse {
+		Id       int64  `json:"id"`
+		Avatar   string `json:"avatar"`
+		Mobile   string `json:"mobile"`
+		Email    string `json:"email"`
+		UserName string `json:"user_name"`
+		NickName string `json:"nick_name"`
+		Gender   int64  `json:"gender"`
+		Status   int64  `json:"status"`
 	}
 )
 
@@ -106,4 +133,7 @@ service gateway {
 service gateway {
 	@handler getUser
 	get /user/:id (GatewayGetUserRequest) returns (GatewayGetUserResponse)
+	
+	@handler updateUser
+	put /user/:id (GatewayUpdateUserRequest) returns (GatewayUpdateUserResponse)
 }

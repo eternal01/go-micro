@@ -45,9 +45,9 @@ type (
 		Method      string       `db:"method"`      // 方法
 		Url         string       `db:"url"`         // 路径
 		Description string       `db:"description"` // 描述
-		CreateTime  sql.NullTime `db:"create_time"` // 创建时间
-		UpdateTime  sql.NullTime `db:"update_time"` // 更新时间
-		DeleteTime  sql.NullTime `db:"delete_time"` // 删除时间
+		CreatedAt   sql.NullTime `db:"created_at"`  // 创建时间
+		UpdatedAt   sql.NullTime `db:"updated_at"`  // 更新时间
+		DeletedAt   sql.NullTime `db:"deleted_at"`  // 删除时间
 	}
 )
 
@@ -115,7 +115,7 @@ func (m *defaultPermissionsModel) Insert(ctx context.Context, data *Permissions)
 	permissionsNameKey := fmt.Sprintf("%s%v", cachePermissionsNamePrefix, data.Name)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, permissionsRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.Name, data.Method, data.Url, data.Description, data.DeleteTime)
+		return conn.ExecCtx(ctx, query, data.Name, data.Method, data.Url, data.Description, data.DeletedAt)
 	}, permissionsIdKey, permissionsNameKey)
 	return ret, err
 }
@@ -130,7 +130,7 @@ func (m *defaultPermissionsModel) Update(ctx context.Context, newData *Permissio
 	permissionsNameKey := fmt.Sprintf("%s%v", cachePermissionsNamePrefix, data.Name)
 	_, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, permissionsRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, newData.Name, newData.Method, newData.Url, newData.Description, newData.DeleteTime, newData.Id)
+		return conn.ExecCtx(ctx, query, newData.Name, newData.Method, newData.Url, newData.Description, newData.DeletedAt, newData.Id)
 	}, permissionsIdKey, permissionsNameKey)
 	return err
 }

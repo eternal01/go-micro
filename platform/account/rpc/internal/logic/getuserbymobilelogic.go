@@ -3,9 +3,9 @@ package logic
 import (
 	"context"
 
+	"go-micro/platform/account/model"
 	"go-micro/platform/account/rpc/account"
 	"go-micro/platform/account/rpc/internal/svc"
-	"go-micro/platform/basic/model"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -27,7 +27,10 @@ func NewGetUserByMobileLogic(ctx context.Context, svcCtx *svc.ServiceContext) *G
 func (l *GetUserByMobileLogic) GetUserByMobile(in *account.GetUserByMobileRequest) (*account.GetUserResponse, error) {
 	// todo: add your logic here and delete this line
 	user, error := l.svcCtx.UserModel.FindOneByMobile(l.ctx, in.Mobile)
-	if error != nil && error != model.ErrNotFound {
+	if error != nil {
+		if error == model.ErrNotFound {
+			return &account.GetUserResponse{}, nil
+		}
 		return nil, error
 	}
 	return &account.GetUserResponse{

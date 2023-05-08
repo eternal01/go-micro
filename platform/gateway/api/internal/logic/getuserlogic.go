@@ -3,6 +3,8 @@ package logic
 import (
 	"context"
 
+	"go-micro/common/errorx"
+	"go-micro/platform/account/rpc/accountclient"
 	"go-micro/platform/gateway/api/internal/svc"
 	"go-micro/platform/gateway/api/internal/types"
 
@@ -26,27 +28,27 @@ func NewGetUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserLo
 func (l *GetUserLogic) GetUser(req *types.GatewayGetUserRequest) (resp *types.GatewayGetUserResponse, err error) {
 	// todo: add your logic here and delete this line
 
-	// if req.Id == 0 {
-	// 	return nil, errorx.NewDefaultError("参数错误")
-	// }
-	// var user *accountclient.GetUserResponse
-	// user, err = l.svcCtx.AccountRpc.GetUser(l.ctx, &accountclient.GetUserRequest{
-	// 	Id: req.Id,
-	// })
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// if user == nil {
-	// 	return nil, errorx.NewDefaultError("用户不存在")
-	// }
-	// return &types.GatewayGetUserResponse{
-	// 	Id:     user.Id,
-	// 	Mobile: user.Mobile,
-	// 	Email:  user.Email,
-	// }, nil
-
+	if req.Id == 0 {
+		return nil, errorx.ParamsError
+	}
+	var user *accountclient.GetUserResponse
+	user, err = l.svcCtx.AccountRpc.GetUser(l.ctx, &accountclient.GetUserRequest{
+		Id: req.Id,
+	})
+	if err != nil {
+		return nil, err
+	}
+	if user.Id == 0 {
+		return nil, errorx.UserNotFound
+	}
 	return &types.GatewayGetUserResponse{
-		Id:     1,
-		Mobile: "1223333",
+		Id:       user.Id,
+		Avatar:   user.Avatar,
+		Mobile:   user.Mobile,
+		Email:    user.Email,
+		UserName: user.UserName,
+		NickName: user.NickName,
+		Gender:   user.Gender,
+		Status:   user.Status,
 	}, nil
 }

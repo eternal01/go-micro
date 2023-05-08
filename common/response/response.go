@@ -1,6 +1,7 @@
 package response
 
 import (
+	"go-micro/common/errorx"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -15,8 +16,14 @@ type Body struct {
 func Response(w http.ResponseWriter, resp interface{}, err error) {
 	var body Body
 	if err != nil {
-		body.Code = -1
-		body.Msg = err.Error()
+		switch e := err.(type) {
+		case *errorx.CodeError:
+			body.Code = e.Code
+			body.Msg = e.Msg
+		default:
+			body.Code = -1
+			body.Msg = err.Error()
+		}
 	} else {
 		body.Msg = "OK"
 		body.Data = resp

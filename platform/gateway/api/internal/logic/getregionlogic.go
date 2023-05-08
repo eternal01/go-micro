@@ -28,7 +28,7 @@ func NewGetRegionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetRegi
 func (l *GetRegionLogic) GetRegion(req *types.GatewayGetRegionRequest) (resp *types.GatewayGetRegionReply, err error) {
 	// todo: add your logic here and delete this line
 	if req.Id <= 0 {
-		errorx.NewDefaultError("参数错误")
+		return nil, errorx.ParamsError
 	}
 
 	region, err := l.svcCtx.BasicRpc.GetRegion(l.ctx, &basic.GetRegionRequest{

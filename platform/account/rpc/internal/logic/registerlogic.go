@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"database/sql"
 
 	"go-micro/platform/account/model"
 	"go-micro/platform/account/rpc/account"
@@ -27,9 +28,11 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 func (l *RegisterLogic) Register(in *account.RegisterRequest) (*account.RegisterResponse, error) {
 	// todo: add your logic here and delete this line
 	userResult, error := l.svcCtx.UserModel.Insert(l.ctx, &model.Users{
-		Mobile: in.Mobile,
-		Email:  in.Email,
-		Status: model.Enable, //默认启用
+		Mobile:    in.Mobile,
+		Email:     in.Email,
+		Status:    model.Enable, //默认启用
+		CreatedAt: sql.NullTime{},
+		UpdatedAt: sql.NullTime{},
 	})
 	if error != nil {
 		return nil, error
@@ -44,6 +47,8 @@ func (l *RegisterLogic) Register(in *account.RegisterRequest) (*account.Register
 		// AuthType:       in.AuthType,
 		AuthKey:        in.AuthKey,
 		AuthCredential: in.AuthCredential,
+		CreatedAt:      sql.NullTime{},
+		UpdatedAt:      sql.NullTime{},
 	})
 	if error != nil {
 		return nil, error

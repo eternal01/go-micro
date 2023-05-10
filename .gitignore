@@ -1,0 +1,3 @@
+.vscode/
+platform/*/api/logs/
+platform/*/rpc/logs/

@@ -6,6 +6,16 @@ Etcd:
   - etcd:2379
   Key: basic.rpc
 
+Log: 
+  ServiceName: basic-rpc
+  Mode: file
+  Path: logs
+  Level: error
+  Compress: false
+  KeepDays: 3
+  StackCooldownMillis: 100
+
+# 监控
 Prometheus:
   Host: 0.0.0.0
   Port: 9601
@@ -13,11 +23,6 @@ Prometheus:
 
 Mysql:
   DataSource: root:root@tcp(mysql:3306)/basic?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
-
-# Redis:
-#   Host: redis:6379
-#   Type: node
-#   Pass: secret_redis
 
 CacheRedis:
   - Host: redis:6379

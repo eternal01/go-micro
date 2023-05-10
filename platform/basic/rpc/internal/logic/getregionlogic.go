@@ -25,7 +25,6 @@ func NewGetRegionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetRegi
 
 func (l *GetRegionLogic) GetRegion(in *basic.GetRegionRequest) (*basic.GetRegionResponse, error) {
 	// todo: add your logic here and delete this line
-
 	region, error := l.svcCtx.RegionModel.FindOne(l.ctx, in.Id)
 	if error != nil {
 		return nil, error

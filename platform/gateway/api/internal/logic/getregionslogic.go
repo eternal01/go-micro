@@ -36,6 +36,7 @@ func (l *GetRegionsLogic) GetRegions(req *types.GatewayGetRegionsRequest) (resp 
 		ParentId: req.ParentId,
 	})
 	if err != nil {
+		logx.Errorf("RPC-BASIC GetRegions Error - %+v", err)
 		return nil, err
 	}
 

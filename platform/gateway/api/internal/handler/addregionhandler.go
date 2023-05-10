@@ -26,6 +26,6 @@ func addRegionHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		// } else {
 		// 	httpx.OkJsonCtx(r.Context(), w, resp)
 		// }
-		response.Response(w, resp, err)
+		response.Response(r, w, resp, err)
 	}
 }

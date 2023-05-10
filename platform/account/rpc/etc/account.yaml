@@ -6,6 +6,16 @@ Etcd:
   - etcd:2379
   Key: account.rpc
 
+Log: 
+  ServiceName: basic-rpc
+  Mode: file
+  Path: logs
+  Level: error
+  Compress: false
+  KeepDays: 3
+  StackCooldownMillis: 100
+
+# 监控
 Prometheus:
   Host: 0.0.0.0
   Port: 9602
@@ -23,6 +33,7 @@ JwtAuth:
   AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
   AccessExpire: 7200
 
+# 链路追踪
 Telemetry:
   Name: account-rpc
   Endpoint: http://jaeger:14268/api/traces

@@ -18,7 +18,3 @@ create table users
         unique (mobile)
 )
     comment '用户表';
-
-create index users_idx_name
-    on users (name);
-

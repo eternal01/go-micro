@@ -1,4 +1,4 @@
-create table basic.system_industry
+create table system_industry
 (
     id          int auto_increment comment '主键id'
         primary key,

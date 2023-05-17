@@ -1,6 +1,10 @@
 package model
 
 import (
+	"context"
+	"database/sql"
+	"fmt"
+
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
@@ -12,6 +16,8 @@ type (
 	// and implement the added methods in customUsersAuthsModel.
 	UsersAuthsModel interface {
 		usersAuthsModel
+
+		TxInsert(ctx context.Context, tx *sql.Tx, data *UsersAuths) (sql.Result, error)
 	}
 
 	customUsersAuthsModel struct {
@@ -24,4 +30,9 @@ func NewUsersAuthsModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Opti
 	return &customUsersAuthsModel{
 		defaultUsersAuthsModel: newUsersAuthsModel(conn, c, opts...),
 	}
+}
+
+func (m *defaultUsersAuthsModel) TxInsert(ctx context.Context, tx *sql.Tx, data *UsersAuths) (sql.Result, error) {
+	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, usersAuthsRowsExpectAutoSet)
+	return tx.ExecContext(ctx, query, data.UserId, data.AuthType, data.AuthKey, data.AuthCredential, data.DeletedAt)
 }

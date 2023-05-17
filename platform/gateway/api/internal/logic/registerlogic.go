@@ -5,13 +5,13 @@ import (
 	"strings"
 
 	"go-micro/common/errorx"
+	"go-micro/common/tool"
 	"go-micro/platform/account/model"
 	"go-micro/platform/account/rpc/accountclient"
 	"go-micro/platform/gateway/api/internal/svc"
 	"go-micro/platform/gateway/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
-	"golang.org/x/crypto/bcrypt"
 )
 
 type RegisterLogic struct {
@@ -58,7 +58,7 @@ func (l *RegisterLogic) Register(req *types.GatewayRegisterRequest) (resp *types
 		return nil, errorx.UserExist
 	}
 
-	hash, err := bcrypt.GenerateFromPassword([]byte(req.AuthCredential), bcrypt.DefaultCost)
+	hash, err := tool.Encryption(req.AuthCredential)
 	if err != nil {
 		return nil, err
 	}
@@ -70,6 +70,7 @@ func (l *RegisterLogic) Register(req *types.GatewayRegisterRequest) (resp *types
 		AuthCredential: string(hash),
 	})
 	if err != nil {
+		logx.Errorf("RPC-ACCOUNT Register Error - %+v", err)
 		return nil, err
 	}
 

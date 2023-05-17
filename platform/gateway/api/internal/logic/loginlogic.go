@@ -4,13 +4,13 @@ import (
 	"context"
 
 	"go-micro/common/errorx"
+	"go-micro/common/tool"
 	"go-micro/platform/account/model"
 	"go-micro/platform/account/rpc/accountclient"
 	"go-micro/platform/gateway/api/internal/svc"
 	"go-micro/platform/gateway/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
-	"golang.org/x/crypto/bcrypt"
 )
 
 type LoginLogic struct {
@@ -66,7 +66,7 @@ func (l *LoginLogic) Login(req *types.GatewayLoginRequest) (resp *types.GatewayL
 		return nil, errorx.UserNotFound
 	}
 
-	err = bcrypt.CompareHashAndPassword([]byte(userAuth.AuthCredential), []byte(req.AuthCredential))
+	err = tool.CompareHash(req.AuthCredential, userAuth.AuthCredential)
 	if err != nil {
 		return nil, errorx.PasswordError
 	}

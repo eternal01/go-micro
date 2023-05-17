@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 
+	"go-micro/common/interceptor/rpcserver"
 	"go-micro/platform/basic/rpc/basic"
 	"go-micro/platform/basic/rpc/internal/config"
 	"go-micro/platform/basic/rpc/internal/server"
@@ -32,6 +33,7 @@ func main() {
 			reflection.Register(grpcServer)
 		}
 	})
+	s.AddUnaryInterceptors(rpcserver.LoggerInterceptor)
 	defer s.Stop()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)

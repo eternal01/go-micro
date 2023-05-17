@@ -30,11 +30,11 @@ func (l *GetRegionLogic) GetRegion(req *types.GatewayGetRegionRequest) (resp *ty
 	if req.Id <= 0 {
 		return nil, errorx.ParamsError
 	}
-
 	region, err := l.svcCtx.BasicRpc.GetRegion(l.ctx, &basic.GetRegionRequest{
 		Id: req.Id,
 	})
 	if err != nil {
+		l.Logger.Errorf("RPC-BASIC GetRegion Error - %+v", err)
 		return nil, err
 	}
 

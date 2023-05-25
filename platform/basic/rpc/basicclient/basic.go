@@ -13,20 +13,31 @@ import (
 )
 
 type (
-	AddRegionRequest   = basic.AddRegionRequest
-	AddRegionResponse  = basic.AddRegionResponse
-	GetRegionChild     = basic.GetRegionChild
-	GetRegionRequest   = basic.GetRegionRequest
-	GetRegionResponse  = basic.GetRegionResponse
-	GetRegionsRequest  = basic.GetRegionsRequest
-	GetRegionsResponse = basic.GetRegionsResponse
-	Request            = basic.Request
-	Response           = basic.Response
+	AddRegionRequest      = basic.AddRegionRequest
+	AddRegionResponse     = basic.AddRegionResponse
+	GetIndustriesRequest  = basic.GetIndustriesRequest
+	GetIndustriesResponse = basic.GetIndustriesResponse
+	GetIndustryChild      = basic.GetIndustryChild
+	GetIndustryRequest    = basic.GetIndustryRequest
+	GetIndustryResponse   = basic.GetIndustryResponse
+	GetRegionChild        = basic.GetRegionChild
+	GetRegionRequest      = basic.GetRegionRequest
+	GetRegionResponse     = basic.GetRegionResponse
+	GetRegionsRequest     = basic.GetRegionsRequest
+	GetRegionsResponse    = basic.GetRegionsResponse
+	Request               = basic.Request
+	Response              = basic.Response
 
 	Basic interface {
 		Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+		// 获取地区信息
 		GetRegion(ctx context.Context, in *GetRegionRequest, opts ...grpc.CallOption) (*GetRegionResponse, error)
+		// 根据父级id获取地区信息
 		GetRegions(ctx context.Context, in *GetRegionsRequest, opts ...grpc.CallOption) (*GetRegionsResponse, error)
+		// 获取职业信息
+		GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error)
+		// 根据父级id获取职业信息
+		GetIndustries(ctx context.Context, in *GetIndustriesRequest, opts ...grpc.CallOption) (*GetIndustriesResponse, error)
 		AddRegion(ctx context.Context, in *AddRegionRequest, opts ...grpc.CallOption) (*AddRegionResponse, error)
 	}
 
@@ -46,14 +57,28 @@ func (m *defaultBasic) Ping(ctx context.Context, in *Request, opts ...grpc.CallO
 	return client.Ping(ctx, in, opts...)
 }
 
+// 获取地区信息
 func (m *defaultBasic) GetRegion(ctx context.Context, in *GetRegionRequest, opts ...grpc.CallOption) (*GetRegionResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
 	return client.GetRegion(ctx, in, opts...)
 }
 
+// 根据父级id获取地区信息
 func (m *defaultBasic) GetRegions(ctx context.Context, in *GetRegionsRequest, opts ...grpc.CallOption) (*GetRegionsResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
 	return client.GetRegions(ctx, in, opts...)
+}
+
+// 获取职业信息
+func (m *defaultBasic) GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.GetIndustry(ctx, in, opts...)
+}
+
+// 根据父级id获取职业信息
+func (m *defaultBasic) GetIndustries(ctx context.Context, in *GetIndustriesRequest, opts ...grpc.CallOption) (*GetIndustriesResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.GetIndustries(ctx, in, opts...)
 }
 
 func (m *defaultBasic) AddRegion(ctx context.Context, in *AddRegionRequest, opts ...grpc.CallOption) (*AddRegionResponse, error) {

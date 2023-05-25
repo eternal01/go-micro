@@ -27,14 +27,28 @@ func (s *BasicServer) Ping(ctx context.Context, in *basic.Request) (*basic.Respo
 	return l.Ping(in)
 }
 
+// 获取地区信息
 func (s *BasicServer) GetRegion(ctx context.Context, in *basic.GetRegionRequest) (*basic.GetRegionResponse, error) {
 	l := logic.NewGetRegionLogic(ctx, s.svcCtx)
 	return l.GetRegion(in)
 }
 
+// 根据父级id获取地区信息
 func (s *BasicServer) GetRegions(ctx context.Context, in *basic.GetRegionsRequest) (*basic.GetRegionsResponse, error) {
 	l := logic.NewGetRegionsLogic(ctx, s.svcCtx)
 	return l.GetRegions(in)
+}
+
+// 获取职业信息
+func (s *BasicServer) GetIndustry(ctx context.Context, in *basic.GetIndustryRequest) (*basic.GetIndustryResponse, error) {
+	l := logic.NewGetIndustryLogic(ctx, s.svcCtx)
+	return l.GetIndustry(in)
+}
+
+// 根据父级id获取职业信息
+func (s *BasicServer) GetIndustries(ctx context.Context, in *basic.GetIndustriesRequest) (*basic.GetIndustriesResponse, error) {
+	l := logic.NewGetIndustriesLogic(ctx, s.svcCtx)
+	return l.GetIndustries(in)
 }
 
 func (s *BasicServer) AddRegion(ctx context.Context, in *basic.AddRegionRequest) (*basic.AddRegionResponse, error) {

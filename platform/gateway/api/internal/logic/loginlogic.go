@@ -27,8 +27,7 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 	}
 }
 
-func (l *LoginLogic) Login(req *types.GatewayLoginRequest) (resp *types.GatewayLoginResponse, err error) {
-	// todo: add your logic here and delete this line
+func (l *LoginLogic) Login(req *types.GatewayLoginRequest) (resp *types.GatewayLoginReply, err error) {
 	if len(req.Email) == 0 && len(req.Mobile) == 0 {
 		return nil, errorx.ParamsError
 	}
@@ -80,7 +79,7 @@ func (l *LoginLogic) Login(req *types.GatewayLoginRequest) (resp *types.GatewayL
 		return nil, err
 	}
 
-	return &types.GatewayLoginResponse{
+	return &types.GatewayLoginReply{
 		Id:     user.Id,
 		Mobile: user.Mobile,
 		Email:  user.Email,

@@ -35,6 +35,38 @@ message GetRegionChild {
   string Name = 3;
 }
 
+
+message GetIndustryRequest {
+  string IndustryId = 1;
+}
+
+message GetIndustryResponse {
+  int64 Id = 1;
+  string IndustryId = 2;
+  string Name = 3;
+  string ParentId = 4;
+  int64 LevelType = 5;
+  string Description = 6;
+}
+
+message GetIndustriesRequest {
+  string ParentId = 1;
+}
+
+message GetIndustriesResponse {
+  repeated GetIndustryChild List = 1;
+}
+
+message GetIndustryChild {
+  int64 Id = 1;
+  string IndustryId = 2;
+  string Name = 3;
+  string ParentId = 4;
+  int64 LevelType = 5;
+  string Description = 6;
+}
+
+
 message AddRegionRequest {
   int64 ParentId = 1;
   string Name = 2;
@@ -48,7 +80,15 @@ message AddRegionResponse {
 
 service Basic {
   rpc Ping(Request) returns(Response);
+
+  //获取地区信息
   rpc getRegion(GetRegionRequest) returns(GetRegionResponse);
+  //根据父级id获取地区信息
   rpc getRegions(GetRegionsRequest) returns(GetRegionsResponse);
+  //获取职业信息
+  rpc getIndustry(GetIndustryRequest) returns(GetIndustryResponse);
+  //根据父级id获取职业信息
+  rpc getIndustries(GetIndustriesRequest) returns(GetIndustriesResponse);
+
   rpc addRegion(AddRegionRequest) returns(AddRegionResponse);
 }

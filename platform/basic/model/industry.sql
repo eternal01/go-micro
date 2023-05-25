@@ -6,7 +6,9 @@ create table system_industry
     parent_id   varchar(12)   default '' not null comment '父级id',
     level_type  int           default 0  not null comment '等级',
     description varchar(4000) default '' not null comment '描述',
-    primary key(id)
+    primary key(id),
+    constraint system_industry_uni_industry_id
+        unique (industry_id)
 )
     comment '行业表';
 

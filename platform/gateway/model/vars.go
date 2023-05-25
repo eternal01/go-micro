@@ -8,3 +8,6 @@ const Enable int64 = 1
 const Disable int64 = 2
 
 const AuthTypeSystem int64 = 0
+
+const RegionTreeCacheKey = "cache:regionTree"
+const IndustryTreeCacheKey = "cache:industryTree"

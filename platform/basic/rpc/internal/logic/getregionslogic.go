@@ -6,6 +6,7 @@ import (
 	"go-micro/platform/basic/rpc/basic"
 	"go-micro/platform/basic/rpc/internal/svc"
 
+	"github.com/Masterminds/squirrel"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -24,8 +25,24 @@ func NewGetRegionsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetReg
 }
 
 func (l *GetRegionsLogic) GetRegions(in *basic.GetRegionsRequest) (*basic.GetRegionsResponse, error) {
-	// todo: add your logic here and delete this line
+	whereBuilder := l.svcCtx.RegionModel.RowBuilder().Where(squirrel.Eq{"parent_id": in.ParentId})
+	regions, err := l.svcCtx.RegionModel.FindChildrenList(l.ctx, whereBuilder)
+	if err != nil {
+		return nil, err
+	}
+	l.Logger.Slowf("result is %+v", regions)
+	var list []*basic.GetRegionChild
+	if len(regions) > 0 {
+		for _, region := range regions {
+			list = append(list, &basic.GetRegionChild{
+				Id:       region.Id,
+				ParentId: region.ParentId,
+				Name:     region.Name,
+			})
+		}
+	}
+
 	return &basic.GetRegionsResponse{
-		List: []*basic.GetRegionChild{},
+		List: list,
 	}, nil
 }

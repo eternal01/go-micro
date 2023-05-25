@@ -28,8 +28,7 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 	}
 }
 
-func (l *RegisterLogic) Register(req *types.GatewayRegisterRequest) (resp *types.GatewayRegisterResponse, err error) {
-	// todo: add your logic here and delete this line
+func (l *RegisterLogic) Register(req *types.GatewayRegisterRequest) (resp *types.GatewayRegisterReply, err error) {
 	email := strings.TrimSpace(req.Email)
 	mobile := strings.TrimSpace(req.Mobile)
 	if len(email) == 0 && len(mobile) == 0 {
@@ -74,7 +73,7 @@ func (l *RegisterLogic) Register(req *types.GatewayRegisterRequest) (resp *types
 		return nil, err
 	}
 
-	return &types.GatewayRegisterResponse{
+	return &types.GatewayRegisterReply{
 		AccessToken:  respUser.AccessToken,
 		AccessExpire: respUser.AccessExpire,
 		RefreshAfter: respUser.RefreshAfter,

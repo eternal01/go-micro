@@ -25,8 +25,7 @@ func NewGetUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserLo
 	}
 }
 
-func (l *GetUserLogic) GetUser(req *types.GatewayGetUserRequest) (resp *types.GatewayGetUserResponse, err error) {
-	// todo: add your logic here and delete this line
+func (l *GetUserLogic) GetUser(req *types.GatewayGetUserRequest) (resp *types.GatewayGetUserReply, err error) {
 	if req.Id == 0 {
 		return nil, errorx.ParamsError
 	}
@@ -41,7 +40,7 @@ func (l *GetUserLogic) GetUser(req *types.GatewayGetUserRequest) (resp *types.Ga
 	if user.Id == 0 {
 		return nil, errorx.UserNotFound
 	}
-	return &types.GatewayGetUserResponse{
+	return &types.GatewayGetUserReply{
 		Id:       user.Id,
 		Avatar:   user.Avatar,
 		Mobile:   user.Mobile,

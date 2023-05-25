@@ -19,10 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Basic_Ping_FullMethodName       = "/basic.Basic/Ping"
-	Basic_GetRegion_FullMethodName  = "/basic.Basic/getRegion"
-	Basic_GetRegions_FullMethodName = "/basic.Basic/getRegions"
-	Basic_AddRegion_FullMethodName  = "/basic.Basic/addRegion"
+	Basic_Ping_FullMethodName          = "/basic.Basic/Ping"
+	Basic_GetRegion_FullMethodName     = "/basic.Basic/getRegion"
+	Basic_GetRegions_FullMethodName    = "/basic.Basic/getRegions"
+	Basic_GetIndustry_FullMethodName   = "/basic.Basic/getIndustry"
+	Basic_GetIndustries_FullMethodName = "/basic.Basic/getIndustries"
+	Basic_AddRegion_FullMethodName     = "/basic.Basic/addRegion"
 )
 
 // BasicClient is the client API for Basic service.
@@ -30,8 +32,14 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BasicClient interface {
 	Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+	// 获取地区信息
 	GetRegion(ctx context.Context, in *GetRegionRequest, opts ...grpc.CallOption) (*GetRegionResponse, error)
+	// 根据父级id获取地区信息
 	GetRegions(ctx context.Context, in *GetRegionsRequest, opts ...grpc.CallOption) (*GetRegionsResponse, error)
+	// 获取职业信息
+	GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error)
+	// 根据父级id获取职业信息
+	GetIndustries(ctx context.Context, in *GetIndustriesRequest, opts ...grpc.CallOption) (*GetIndustriesResponse, error)
 	AddRegion(ctx context.Context, in *AddRegionRequest, opts ...grpc.CallOption) (*AddRegionResponse, error)
 }
 
@@ -70,6 +78,24 @@ func (c *basicClient) GetRegions(ctx context.Context, in *GetRegionsRequest, opt
 	return out, nil
 }
 
+func (c *basicClient) GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error) {
+	out := new(GetIndustryResponse)
+	err := c.cc.Invoke(ctx, Basic_GetIndustry_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) GetIndustries(ctx context.Context, in *GetIndustriesRequest, opts ...grpc.CallOption) (*GetIndustriesResponse, error) {
+	out := new(GetIndustriesResponse)
+	err := c.cc.Invoke(ctx, Basic_GetIndustries_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *basicClient) AddRegion(ctx context.Context, in *AddRegionRequest, opts ...grpc.CallOption) (*AddRegionResponse, error) {
 	out := new(AddRegionResponse)
 	err := c.cc.Invoke(ctx, Basic_AddRegion_FullMethodName, in, out, opts...)
@@ -84,8 +110,14 @@ func (c *basicClient) AddRegion(ctx context.Context, in *AddRegionRequest, opts 
 // for forward compatibility
 type BasicServer interface {
 	Ping(context.Context, *Request) (*Response, error)
+	// 获取地区信息
 	GetRegion(context.Context, *GetRegionRequest) (*GetRegionResponse, error)
+	// 根据父级id获取地区信息
 	GetRegions(context.Context, *GetRegionsRequest) (*GetRegionsResponse, error)
+	// 获取职业信息
+	GetIndustry(context.Context, *GetIndustryRequest) (*GetIndustryResponse, error)
+	// 根据父级id获取职业信息
+	GetIndustries(context.Context, *GetIndustriesRequest) (*GetIndustriesResponse, error)
 	AddRegion(context.Context, *AddRegionRequest) (*AddRegionResponse, error)
 	mustEmbedUnimplementedBasicServer()
 }
@@ -102,6 +134,12 @@ func (UnimplementedBasicServer) GetRegion(context.Context, *GetRegionRequest) (*
 }
 func (UnimplementedBasicServer) GetRegions(context.Context, *GetRegionsRequest) (*GetRegionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRegions not implemented")
+}
+func (UnimplementedBasicServer) GetIndustry(context.Context, *GetIndustryRequest) (*GetIndustryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetIndustry not implemented")
+}
+func (UnimplementedBasicServer) GetIndustries(context.Context, *GetIndustriesRequest) (*GetIndustriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetIndustries not implemented")
 }
 func (UnimplementedBasicServer) AddRegion(context.Context, *AddRegionRequest) (*AddRegionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddRegion not implemented")
@@ -173,6 +211,42 @@ func _Basic_GetRegions_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Basic_GetIndustry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetIndustryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).GetIndustry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_GetIndustry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).GetIndustry(ctx, req.(*GetIndustryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_GetIndustries_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetIndustriesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).GetIndustries(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_GetIndustries_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).GetIndustries(ctx, req.(*GetIndustriesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Basic_AddRegion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddRegionRequest)
 	if err := dec(in); err != nil {
@@ -209,6 +283,14 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "getRegions",
 			Handler:    _Basic_GetRegions_Handler,
+		},
+		{
+			MethodName: "getIndustry",
+			Handler:    _Basic_GetIndustry_Handler,
+		},
+		{
+			MethodName: "getIndustries",
+			Handler:    _Basic_GetIndustries_Handler,
 		},
 		{
 			MethodName: "addRegion",

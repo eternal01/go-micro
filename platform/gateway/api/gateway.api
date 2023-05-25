@@ -25,6 +25,71 @@ type (
 		Name     string `json:"name"`
 	}
 
+	//获取地区信息树
+	GatewayGetRegionTreeRequest {
+	}
+
+	GatewayGetRegionTreeReply {
+		Tree []GatewayRegionTreeNode `json:"tree"`
+	}
+
+	GatewayRegionTreeNode {
+		Id       int64                   `json:"id"`
+		ParentId int64                   `json:"parent_id"`
+		Name     string                  `json:"name"`
+		Children []GatewayRegionTreeNode `json:"children"`
+	}
+
+	//获取职业信息
+	GatewayGetIndustryRequest {
+		IndustryId string `path:"industry_id"`
+	}
+
+	GatewayGetIndustryReply {
+		Id          int64  `json:"id"`
+		IndustryId  string `json:"industry_id"`
+		Name        string `json:"name"`
+		ParentId    string `json:"parent_id"`
+		LevelType   int64  `json:"level_type"`
+		Description string `json:"description"`
+	}
+
+	//根据父级id获取职业信息
+	GatewayGetIndustriesRequest {
+		ParentId string `path:"parent_id"`
+	}
+
+	GatewayGetIndustriesReply {
+		List []GatewayGetIndustriesChild `json:"list"`
+	}
+
+	GatewayGetIndustriesChild {
+		Id          int64  `json:"id"`
+		IndustryId  string `json:"industry_id"`
+		Name        string `json:"name"`
+		ParentId    string `json:"parent_id"`
+		LevelType   int64  `json:"level_type"`
+		Description string `json:"description"`
+	}
+
+	//获取职业信息树
+	GatewayGetIndustryTreeRequest {
+	}
+
+	GatewayGetIndustryTreeReply {
+		Tree []GatewayIndustryTreeNode `json:"tree"`
+	}
+
+	GatewayIndustryTreeNode {
+		Id          int64                     `json:"id"`
+		IndustryId  string                    `json:"industry_id"`
+		Name        string                    `json:"name"`
+		ParentId    string                    `json:"parent_id"`
+		LevelType   int64                     `json:"level_type"`
+		Description string                    `json:"description"`
+		Children    []GatewayIndustryTreeNode `json:"children"`
+	}
+
 	//添加地区信息
 	GatewayAddRegionRequest {
 		ParentId int64  `json:"parent_id"`
@@ -46,7 +111,7 @@ type (
 		AuthCredential string `json:"auth_credential"`
 	}
 
-	GatewayRegisterResponse {
+	GatewayRegisterReply {
 		AccessToken  string `json:"access_token"`
 		AccessExpire int64  `json:"access_expire"`
 		RefreshAfter int64  `json:"refresh_after"`
@@ -58,7 +123,7 @@ type (
 		AuthCredential string `json:"auth_credential"`
 	}
 
-	GatewayLoginResponse {
+	GatewayLoginReply {
 		Id     int64  `json:"id"`
 		Mobile string `json:"mobile"`
 		Email  string `json:"email"`
@@ -72,7 +137,7 @@ type (
 		Id int64 `path:"id"`
 	}
 
-	GatewayGetUserResponse {
+	GatewayGetUserReply {
 		Id       int64  `json:"id"`
 		Avatar   string `json:"avatar"`
 		Mobile   string `json:"mobile"`
@@ -94,7 +159,7 @@ type (
 		Status   int64  `json:"status"`
 	}
 
-	GatewayUpdateUserResponse {
+	GatewayUpdateUserReply {
 		Id       int64  `json:"id"`
 		Avatar   string `json:"avatar"`
 		Mobile   string `json:"mobile"`
@@ -110,20 +175,40 @@ type (
 	prefix: /api/gateway
 )
 service gateway {
+	@doc "获取地区信息"
 	@handler getRegion
 	get /region/:id	(GatewayGetRegionRequest) returns (GatewayGetRegionReply)
 	
+	@doc "根据父级id获取地区信息"
 	@handler getRegions
 	get /regions/:parent_id	(GatewayGetRegionsRequest) returns (GatewayGetRegionsReply)
+	
+	@doc "获取地区信息树"
+	@handler getRegionTree
+	get /regionTree (GatewayGetRegionTreeRequest) returns (GatewayGetRegionTreeReply)
+	
+	@doc "获取职业信息"
+	@handler getIndustry
+	get /industry/:industry_id (GatewayGetIndustryRequest) returns (GatewayGetIndustryReply)
+	
+	@doc "根据父级id获取职业信息"
+	@handler getIndustries
+	get /industries/:parent_id (GatewayGetIndustriesRequest) returns (GatewayGetIndustriesReply)
+	
+	@doc "获取职业信息树"
+	@handler getIndustryTree
+	get /industryTree (GatewayGetIndustryTreeRequest) returns (GatewayGetIndustryTreeReply)
 	
 	@handler addRegion
 	post /region (GatewayAddRegionRequest) returns (GatewayAddRegionReply)
 	
+	@doc "注册"
 	@handler register
-	post /register (GatewayRegisterRequest) returns (GatewayRegisterResponse)
+	post /register (GatewayRegisterRequest) returns (GatewayRegisterReply)
 	
+	@doc "登录"
 	@handler login
-	post /login (GatewayLoginRequest) returns (GatewayLoginResponse)
+	post /login (GatewayLoginRequest) returns (GatewayLoginReply)
 }
 
 @server(
@@ -131,9 +216,11 @@ service gateway {
 	jwt: JwtAuth
 )
 service gateway {
+	@doc "获取用户信息"
 	@handler getUser
-	get /user/:id (GatewayGetUserRequest) returns (GatewayGetUserResponse)
+	get /user/:id (GatewayGetUserRequest) returns (GatewayGetUserReply)
 	
+	@doc "更新用户信息"
 	@handler updateUser
-	put /user/:id (GatewayUpdateUserRequest) returns (GatewayUpdateUserResponse)
+	put /user/:id (GatewayUpdateUserRequest) returns (GatewayUpdateUserReply)
 }

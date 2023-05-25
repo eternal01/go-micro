@@ -26,9 +26,7 @@ func NewGetRegionsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetReg
 }
 
 func (l *GetRegionsLogic) GetRegions(req *types.GatewayGetRegionsRequest) (resp *types.GatewayGetRegionsReply, err error) {
-	// todo: add your logic here and delete this line
-
-	if req.ParentId <= 0 {
+	if req.ParentId < 0 {
 		return nil, errorx.ParamsError
 	}
 
@@ -39,7 +37,7 @@ func (l *GetRegionsLogic) GetRegions(req *types.GatewayGetRegionsRequest) (resp 
 		logx.Errorf("RPC-BASIC GetRegions Error - %+v", err)
 		return nil, err
 	}
-
+	resp = new(types.GatewayGetRegionsReply)
 	if len(regions.List) > 0 {
 		for _, v := range regions.List {
 			resp.List = append(resp.List, types.GatewayGetRegionsChild{

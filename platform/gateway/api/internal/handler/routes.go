@@ -23,6 +23,26 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: getRegionsHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodGet,
+				Path:    "/regionTree",
+				Handler: getRegionTreeHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/industry/:industry_id",
+				Handler: getIndustryHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/industries/:parent_id",
+				Handler: getIndustriesHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/industryTree",
+				Handler: getIndustryTreeHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodPost,
 				Path:    "/region",
 				Handler: addRegionHandler(serverCtx),

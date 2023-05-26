@@ -16,8 +16,8 @@ type (
 	SystemIndustryModel interface {
 		systemIndustryModel
 
-		FindChildrenList(ctx context.Context, rowBuilder squirrel.SelectBuilder) ([]*SystemIndustry, error)
 		RowBuilder() squirrel.SelectBuilder
+		FindChildrenList(ctx context.Context, rowBuilder squirrel.SelectBuilder) ([]*SystemIndustry, error)
 	}
 
 	customSystemIndustryModel struct {

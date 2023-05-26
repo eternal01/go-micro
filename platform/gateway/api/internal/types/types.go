@@ -39,6 +39,15 @@ type GatewayRegionTreeNode struct {
 	Children []GatewayRegionTreeNode `json:"children"`
 }
 
+type GatewayAddRegionRequest struct {
+	ParentId int64  `json:"parent_id"`
+	Name     string `json:"name"`
+}
+
+type GatewayAddRegionReply struct {
+	Id int64 `json:"id"`
+}
+
 type GatewayGetIndustryRequest struct {
 	IndustryId string `path:"industry_id"`
 }
@@ -86,15 +95,106 @@ type GatewayIndustryTreeNode struct {
 	Children    []GatewayIndustryTreeNode `json:"children"`
 }
 
-type GatewayAddRegionRequest struct {
-	ParentId int64  `json:"parent_id"`
-	Name     string `json:"name"`
+type GatewayGetCategoryRequest struct {
+	Id int64 `path:"id"`
 }
 
-type GatewayAddRegionReply struct {
-	Id       int64  `json:"id"`
-	ParentId int64  `json:"parent_id"`
-	Name     string `json:"name"`
+type GatewayGetCategoryReply struct {
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	ParentId    int64  `json:"parent_id"`
+	Description string `json:"description"`
+}
+
+type GatewayGetCategoriesRequest struct {
+	ParentId int64 `path:"parent_id"`
+}
+
+type GatewayGetCategoriesReply struct {
+	List []GatewayGetCategoriesChild `json:"list"`
+}
+
+type GatewayGetCategoriesChild struct {
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	ParentId    int64  `json:"parent_id"`
+	Description string `json:"description"`
+}
+
+type GatewayGetCategoryTreeRequest struct {
+}
+
+type GatewayGetCategoryTreeReply struct {
+	Tree []GatewayCategoryTreeNode `json:"tree"`
+}
+
+type GatewayCategoryTreeNode struct {
+	Id          int64                     `json:"id"`
+	Name        string                    `json:"name"`
+	ParentId    int64                     `json:"parent_id"`
+	Description string                    `json:"description"`
+	Children    []GatewayCategoryTreeNode `json:"children"`
+}
+
+type GatewayAddCategoryRequest struct {
+	Name        string `json:"name"`
+	ParentId    int64  `json:"parent_id"`
+	Description string `json:"description"`
+}
+
+type GatewayAddCategoryReply struct {
+	Id int64 `json:"id"`
+}
+
+type GatewayGetClassifyRequest struct {
+	Id int64 `path:"id"`
+}
+
+type GatewayGetClassifyReply struct {
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	ParentId    int64  `json:"parent_id"`
+	Description string `json:"description"`
+}
+
+type GatewayGetClassifiesRequest struct {
+	ParentId int64 `path:"parent_id"`
+}
+
+type GatewayGetClassifiesReply struct {
+	List []GatewayGetClassifiesChild `json:"list"`
+}
+
+type GatewayGetClassifiesChild struct {
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	ParentId    int64  `json:"parent_id"`
+	Description string `json:"description"`
+}
+
+type GatewayGetClassifyTreeRequest struct {
+}
+
+type GatewayGetClassifyTreeReply struct {
+	Tree []GatewayClassifyTreeNode `json:"tree"`
+}
+
+type GatewayClassifyTreeNode struct {
+	Id          int64                     `json:"id"`
+	Name        string                    `json:"name"`
+	ParentId    int64                     `json:"parent_id"`
+	Description string                    `json:"description"`
+	Children    []GatewayClassifyTreeNode `json:"children"`
+}
+
+type GatewayAddClassifyRequest struct {
+	Name        string `json:"name"`
+	ParentId    int64  `json:"parent_id"`
+	Description string `json:"description"`
+}
+
+type GatewayAddClassifyReply struct {
+	Id int64 `json:"id"`
 }
 
 type GatewayRegisterRequest struct {

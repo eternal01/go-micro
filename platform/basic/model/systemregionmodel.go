@@ -16,9 +16,9 @@ type (
 	SystemRegionModel interface {
 		systemRegionModel
 
-		FindChildrenList(ctx context.Context, rowBuilder squirrel.SelectBuilder) ([]*SystemRegion, error)
-		FindListBySelectBuilder(ctx context.Context, rowBuilder squirrel.SelectBuilder) ([]*SystemRegion, error)
 		RowBuilder() squirrel.SelectBuilder
+		FindListBySelectBuilder(ctx context.Context, rowBuilder squirrel.SelectBuilder) ([]*SystemRegion, error)
+		FindChildrenList(ctx context.Context, rowBuilder squirrel.SelectBuilder) ([]*SystemRegion, error)
 	}
 
 	customSystemRegionModel struct {
@@ -31,6 +31,14 @@ func NewSystemRegionModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Op
 	return &customSystemRegionModel{
 		defaultSystemRegionModel: newSystemRegionModel(conn, c, opts...),
 	}
+}
+
+func (m *defaultSystemRegionModel) RowBuilder() squirrel.SelectBuilder {
+	return squirrel.Select(systemRegionRows).From(m.table)
+}
+
+func (m *defaultSystemRegionModel) FindListBySelectBuilder(ctx context.Context, rowBuilder squirrel.SelectBuilder) ([]*SystemRegion, error) {
+	return []*SystemRegion{}, nil
 }
 
 func (m *defaultSystemRegionModel) FindChildrenList(ctx context.Context, rowBuilder squirrel.SelectBuilder) ([]*SystemRegion, error) {
@@ -47,12 +55,4 @@ func (m *defaultSystemRegionModel) FindChildrenList(ctx context.Context, rowBuil
 	default:
 		return nil, err
 	}
-}
-
-func (m *defaultSystemRegionModel) FindListBySelectBuilder(ctx context.Context, rowBuilder squirrel.SelectBuilder) ([]*SystemRegion, error) {
-	return []*SystemRegion{}, nil
-}
-
-func (m *defaultSystemRegionModel) RowBuilder() squirrel.SelectBuilder {
-	return squirrel.Select(systemRegionRows).From(m.table)
 }

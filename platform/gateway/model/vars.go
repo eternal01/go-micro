@@ -11,3 +11,5 @@ const AuthTypeSystem int64 = 0
 
 const RegionTreeCacheKey = "cache:regionTree"
 const IndustryTreeCacheKey = "cache:industryTree"
+const ClassifyTreeCacheKey = "cache:classifyTree"
+const CategoryTreeCacheKey = "cache:categoryTree"

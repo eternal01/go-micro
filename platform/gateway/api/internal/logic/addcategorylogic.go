@@ -11,33 +11,34 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type AddRegionLogic struct {
+type AddCategoryLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewAddRegionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddRegionLogic {
-	return &AddRegionLogic{
+func NewAddCategoryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddCategoryLogic {
+	return &AddCategoryLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *AddRegionLogic) AddRegion(req *types.GatewayAddRegionRequest) (resp *types.GatewayAddRegionReply, err error) {
+func (l *AddCategoryLogic) AddCategory(req *types.GatewayAddCategoryRequest) (resp *types.GatewayAddCategoryReply, err error) {
 	if req.ParentId < 0 || len(req.Name) <= 0 {
 		return nil, errorx.ParamsError
 	}
-	result, err := l.svcCtx.BasicRpc.AddRegion(l.ctx, &basic.AddRegionRequest{
-		Name:     req.Name,
-		ParentId: req.ParentId,
+	result, err := l.svcCtx.BasicRpc.AddCategory(l.ctx, &basic.AddCategoryRequest{
+		Name:        req.Name,
+		ParentId:    req.ParentId,
+		Description: req.Description,
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	return &types.GatewayAddRegionReply{
+	return &types.GatewayAddCategoryReply{
 		Id: result.Id,
 	}, nil
 }

@@ -22,9 +22,15 @@ const (
 	Basic_Ping_FullMethodName          = "/basic.Basic/Ping"
 	Basic_GetRegion_FullMethodName     = "/basic.Basic/getRegion"
 	Basic_GetRegions_FullMethodName    = "/basic.Basic/getRegions"
+	Basic_AddRegion_FullMethodName     = "/basic.Basic/addRegion"
 	Basic_GetIndustry_FullMethodName   = "/basic.Basic/getIndustry"
 	Basic_GetIndustries_FullMethodName = "/basic.Basic/getIndustries"
-	Basic_AddRegion_FullMethodName     = "/basic.Basic/addRegion"
+	Basic_GetClassify_FullMethodName   = "/basic.Basic/getClassify"
+	Basic_GetClassifies_FullMethodName = "/basic.Basic/getClassifies"
+	Basic_AddClassify_FullMethodName   = "/basic.Basic/addClassify"
+	Basic_GetCategory_FullMethodName   = "/basic.Basic/getCategory"
+	Basic_GetCategories_FullMethodName = "/basic.Basic/getCategories"
+	Basic_AddCategory_FullMethodName   = "/basic.Basic/addCategory"
 )
 
 // BasicClient is the client API for Basic service.
@@ -36,11 +42,24 @@ type BasicClient interface {
 	GetRegion(ctx context.Context, in *GetRegionRequest, opts ...grpc.CallOption) (*GetRegionResponse, error)
 	// 根据父级id获取地区信息
 	GetRegions(ctx context.Context, in *GetRegionsRequest, opts ...grpc.CallOption) (*GetRegionsResponse, error)
+	// 添加地区信息
+	AddRegion(ctx context.Context, in *AddRegionRequest, opts ...grpc.CallOption) (*AddRegionResponse, error)
 	// 获取职业信息
 	GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error)
 	// 根据父级id获取职业信息
 	GetIndustries(ctx context.Context, in *GetIndustriesRequest, opts ...grpc.CallOption) (*GetIndustriesResponse, error)
-	AddRegion(ctx context.Context, in *AddRegionRequest, opts ...grpc.CallOption) (*AddRegionResponse, error)
+	// 获取分类信息
+	GetClassify(ctx context.Context, in *GetClassifyRequest, opts ...grpc.CallOption) (*GetClassifyResponse, error)
+	// 根据父级id获取分类信息
+	GetClassifies(ctx context.Context, in *GetClassifiesRequest, opts ...grpc.CallOption) (*GetClassifiesResponse, error)
+	// 添加分类信息
+	AddClassify(ctx context.Context, in *AddClassifyRequest, opts ...grpc.CallOption) (*AddClassifyResponse, error)
+	// 获取类别信息
+	GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetCategoryResponse, error)
+	// 根据父级id获取类别信息
+	GetCategories(ctx context.Context, in *GetCategoriesRequest, opts ...grpc.CallOption) (*GetCategoriesResponse, error)
+	// 添加类别信息
+	AddCategory(ctx context.Context, in *AddCategoryRequest, opts ...grpc.CallOption) (*AddCategoryResponse, error)
 }
 
 type basicClient struct {
@@ -78,6 +97,15 @@ func (c *basicClient) GetRegions(ctx context.Context, in *GetRegionsRequest, opt
 	return out, nil
 }
 
+func (c *basicClient) AddRegion(ctx context.Context, in *AddRegionRequest, opts ...grpc.CallOption) (*AddRegionResponse, error) {
+	out := new(AddRegionResponse)
+	err := c.cc.Invoke(ctx, Basic_AddRegion_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *basicClient) GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error) {
 	out := new(GetIndustryResponse)
 	err := c.cc.Invoke(ctx, Basic_GetIndustry_FullMethodName, in, out, opts...)
@@ -96,9 +124,54 @@ func (c *basicClient) GetIndustries(ctx context.Context, in *GetIndustriesReques
 	return out, nil
 }
 
-func (c *basicClient) AddRegion(ctx context.Context, in *AddRegionRequest, opts ...grpc.CallOption) (*AddRegionResponse, error) {
-	out := new(AddRegionResponse)
-	err := c.cc.Invoke(ctx, Basic_AddRegion_FullMethodName, in, out, opts...)
+func (c *basicClient) GetClassify(ctx context.Context, in *GetClassifyRequest, opts ...grpc.CallOption) (*GetClassifyResponse, error) {
+	out := new(GetClassifyResponse)
+	err := c.cc.Invoke(ctx, Basic_GetClassify_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) GetClassifies(ctx context.Context, in *GetClassifiesRequest, opts ...grpc.CallOption) (*GetClassifiesResponse, error) {
+	out := new(GetClassifiesResponse)
+	err := c.cc.Invoke(ctx, Basic_GetClassifies_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) AddClassify(ctx context.Context, in *AddClassifyRequest, opts ...grpc.CallOption) (*AddClassifyResponse, error) {
+	out := new(AddClassifyResponse)
+	err := c.cc.Invoke(ctx, Basic_AddClassify_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetCategoryResponse, error) {
+	out := new(GetCategoryResponse)
+	err := c.cc.Invoke(ctx, Basic_GetCategory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) GetCategories(ctx context.Context, in *GetCategoriesRequest, opts ...grpc.CallOption) (*GetCategoriesResponse, error) {
+	out := new(GetCategoriesResponse)
+	err := c.cc.Invoke(ctx, Basic_GetCategories_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) AddCategory(ctx context.Context, in *AddCategoryRequest, opts ...grpc.CallOption) (*AddCategoryResponse, error) {
+	out := new(AddCategoryResponse)
+	err := c.cc.Invoke(ctx, Basic_AddCategory_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -114,11 +187,24 @@ type BasicServer interface {
 	GetRegion(context.Context, *GetRegionRequest) (*GetRegionResponse, error)
 	// 根据父级id获取地区信息
 	GetRegions(context.Context, *GetRegionsRequest) (*GetRegionsResponse, error)
+	// 添加地区信息
+	AddRegion(context.Context, *AddRegionRequest) (*AddRegionResponse, error)
 	// 获取职业信息
 	GetIndustry(context.Context, *GetIndustryRequest) (*GetIndustryResponse, error)
 	// 根据父级id获取职业信息
 	GetIndustries(context.Context, *GetIndustriesRequest) (*GetIndustriesResponse, error)
-	AddRegion(context.Context, *AddRegionRequest) (*AddRegionResponse, error)
+	// 获取分类信息
+	GetClassify(context.Context, *GetClassifyRequest) (*GetClassifyResponse, error)
+	// 根据父级id获取分类信息
+	GetClassifies(context.Context, *GetClassifiesRequest) (*GetClassifiesResponse, error)
+	// 添加分类信息
+	AddClassify(context.Context, *AddClassifyRequest) (*AddClassifyResponse, error)
+	// 获取类别信息
+	GetCategory(context.Context, *GetCategoryRequest) (*GetCategoryResponse, error)
+	// 根据父级id获取类别信息
+	GetCategories(context.Context, *GetCategoriesRequest) (*GetCategoriesResponse, error)
+	// 添加类别信息
+	AddCategory(context.Context, *AddCategoryRequest) (*AddCategoryResponse, error)
 	mustEmbedUnimplementedBasicServer()
 }
 
@@ -135,14 +221,32 @@ func (UnimplementedBasicServer) GetRegion(context.Context, *GetRegionRequest) (*
 func (UnimplementedBasicServer) GetRegions(context.Context, *GetRegionsRequest) (*GetRegionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRegions not implemented")
 }
+func (UnimplementedBasicServer) AddRegion(context.Context, *AddRegionRequest) (*AddRegionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddRegion not implemented")
+}
 func (UnimplementedBasicServer) GetIndustry(context.Context, *GetIndustryRequest) (*GetIndustryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetIndustry not implemented")
 }
 func (UnimplementedBasicServer) GetIndustries(context.Context, *GetIndustriesRequest) (*GetIndustriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetIndustries not implemented")
 }
-func (UnimplementedBasicServer) AddRegion(context.Context, *AddRegionRequest) (*AddRegionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddRegion not implemented")
+func (UnimplementedBasicServer) GetClassify(context.Context, *GetClassifyRequest) (*GetClassifyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClassify not implemented")
+}
+func (UnimplementedBasicServer) GetClassifies(context.Context, *GetClassifiesRequest) (*GetClassifiesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClassifies not implemented")
+}
+func (UnimplementedBasicServer) AddClassify(context.Context, *AddClassifyRequest) (*AddClassifyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddClassify not implemented")
+}
+func (UnimplementedBasicServer) GetCategory(context.Context, *GetCategoryRequest) (*GetCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategory not implemented")
+}
+func (UnimplementedBasicServer) GetCategories(context.Context, *GetCategoriesRequest) (*GetCategoriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategories not implemented")
+}
+func (UnimplementedBasicServer) AddCategory(context.Context, *AddCategoryRequest) (*AddCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddCategory not implemented")
 }
 func (UnimplementedBasicServer) mustEmbedUnimplementedBasicServer() {}
 
@@ -211,6 +315,24 @@ func _Basic_GetRegions_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Basic_AddRegion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddRegionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).AddRegion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_AddRegion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).AddRegion(ctx, req.(*AddRegionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Basic_GetIndustry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetIndustryRequest)
 	if err := dec(in); err != nil {
@@ -247,20 +369,110 @@ func _Basic_GetIndustries_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Basic_AddRegion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddRegionRequest)
+func _Basic_GetClassify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetClassifyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BasicServer).AddRegion(ctx, in)
+		return srv.(BasicServer).GetClassify(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Basic_AddRegion_FullMethodName,
+		FullMethod: Basic_GetClassify_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BasicServer).AddRegion(ctx, req.(*AddRegionRequest))
+		return srv.(BasicServer).GetClassify(ctx, req.(*GetClassifyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_GetClassifies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetClassifiesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).GetClassifies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_GetClassifies_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).GetClassifies(ctx, req.(*GetClassifiesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_AddClassify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddClassifyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).AddClassify(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_AddClassify_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).AddClassify(ctx, req.(*AddClassifyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_GetCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCategoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).GetCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_GetCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).GetCategory(ctx, req.(*GetCategoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_GetCategories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCategoriesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).GetCategories(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_GetCategories_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).GetCategories(ctx, req.(*GetCategoriesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_AddCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddCategoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).AddCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_AddCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).AddCategory(ctx, req.(*AddCategoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -285,6 +497,10 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Basic_GetRegions_Handler,
 		},
 		{
+			MethodName: "addRegion",
+			Handler:    _Basic_AddRegion_Handler,
+		},
+		{
 			MethodName: "getIndustry",
 			Handler:    _Basic_GetIndustry_Handler,
 		},
@@ -293,8 +509,28 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Basic_GetIndustries_Handler,
 		},
 		{
-			MethodName: "addRegion",
-			Handler:    _Basic_AddRegion_Handler,
+			MethodName: "getClassify",
+			Handler:    _Basic_GetClassify_Handler,
+		},
+		{
+			MethodName: "getClassifies",
+			Handler:    _Basic_GetClassifies_Handler,
+		},
+		{
+			MethodName: "addClassify",
+			Handler:    _Basic_AddClassify_Handler,
+		},
+		{
+			MethodName: "getCategory",
+			Handler:    _Basic_GetCategory_Handler,
+		},
+		{
+			MethodName: "getCategories",
+			Handler:    _Basic_GetCategories_Handler,
+		},
+		{
+			MethodName: "addCategory",
+			Handler:    _Basic_AddCategory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

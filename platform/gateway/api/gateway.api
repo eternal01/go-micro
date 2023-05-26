@@ -40,6 +40,16 @@ type (
 		Children []GatewayRegionTreeNode `json:"children"`
 	}
 
+	//添加地区信息
+	GatewayAddRegionRequest {
+		ParentId int64  `json:"parent_id"`
+		Name     string `json:"name"`
+	}
+
+	GatewayAddRegionReply {
+		Id int64 `json:"id"`
+	}
+
 	//获取职业信息
 	GatewayGetIndustryRequest {
 		IndustryId string `path:"industry_id"`
@@ -90,16 +100,114 @@ type (
 		Children    []GatewayIndustryTreeNode `json:"children"`
 	}
 
-	//添加地区信息
-	GatewayAddRegionRequest {
-		ParentId int64  `json:"parent_id"`
-		Name     string `json:"name"`
+	//获取类别信息
+	GatewayGetCategoryRequest {
+		Id int64 `path:"id"`
 	}
 
-	GatewayAddRegionReply {
-		Id       int64  `json:"id"`
-		ParentId int64  `json:"parent_id"`
-		Name     string `json:"name"`
+	GatewayGetCategoryReply {
+		Id          int64  `json:"id"`
+		Name        string `json:"name"`
+		ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	//根据父级id获取类别信息
+	GatewayGetCategoriesRequest {
+		ParentId int64 `path:"parent_id"`
+	}
+
+	GatewayGetCategoriesReply {
+		List []GatewayGetCategoriesChild `json:"list"`
+	}
+
+	GatewayGetCategoriesChild {
+		Id          int64  `json:"id"`
+		Name        string `json:"name"`
+		ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	//获取类别信息树
+	GatewayGetCategoryTreeRequest {
+	}
+
+	GatewayGetCategoryTreeReply {
+		Tree []GatewayCategoryTreeNode `json:"tree"`
+	}
+
+	GatewayCategoryTreeNode {
+		Id          int64                     `json:"id"`
+		Name        string                    `json:"name"`
+		ParentId    int64                     `json:"parent_id"`
+		Description string                    `json:"description"`
+		Children    []GatewayCategoryTreeNode `json:"children"`
+	}
+
+	//添加类别信息
+	GatewayAddCategoryRequest {
+		Name        string `json:"name"`
+		ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	GatewayAddCategoryReply {
+		Id int64 `json:"id"`
+	}
+
+	//获取分类信息
+	GatewayGetClassifyRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayGetClassifyReply {
+		Id          int64  `json:"id"`
+		Name        string `json:"name"`
+		ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	//根据父级id获取分类信息
+	GatewayGetClassifiesRequest {
+		ParentId int64 `path:"parent_id"`
+	}
+
+	GatewayGetClassifiesReply {
+		List []GatewayGetClassifiesChild `json:"list"`
+	}
+
+	GatewayGetClassifiesChild {
+		Id          int64  `json:"id"`
+		Name        string `json:"name"`
+		ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	//获取分类信息树
+	GatewayGetClassifyTreeRequest {
+	}
+
+	GatewayGetClassifyTreeReply {
+		Tree []GatewayClassifyTreeNode `json:"tree"`
+	}
+
+	GatewayClassifyTreeNode {
+		Id          int64                     `json:"id"`
+		Name        string                    `json:"name"`
+		ParentId    int64                     `json:"parent_id"`
+		Description string                    `json:"description"`
+		Children    []GatewayClassifyTreeNode `json:"children"`
+	}
+
+	//添加分类信息
+	GatewayAddClassifyRequest {
+		Name        string `json:"name"`
+		ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	GatewayAddClassifyReply {
+		Id int64 `json:"id"`
 	}
 )
 
@@ -187,6 +295,10 @@ service gateway {
 	@handler getRegionTree
 	get /regionTree (GatewayGetRegionTreeRequest) returns (GatewayGetRegionTreeReply)
 	
+	@doc "添加地区信息"
+	@handler addRegion
+	post /region (GatewayAddRegionRequest) returns (GatewayAddRegionReply)
+	
 	@doc "获取职业信息"
 	@handler getIndustry
 	get /industry/:industry_id (GatewayGetIndustryRequest) returns (GatewayGetIndustryReply)
@@ -199,8 +311,37 @@ service gateway {
 	@handler getIndustryTree
 	get /industryTree (GatewayGetIndustryTreeRequest) returns (GatewayGetIndustryTreeReply)
 	
-	@handler addRegion
-	post /region (GatewayAddRegionRequest) returns (GatewayAddRegionReply)
+	@doc "获取类别信息"
+	@handler getCategory
+	get /category/:id (GatewayGetCategoryRequest) returns (GatewayGetCategoryReply)
+	
+	@doc "根据父级id获取类别信息"
+	@handler getCategories
+	get /categories/:parent_id (GatewayGetCategoriesRequest) returns (GatewayGetCategoriesReply)
+	
+	@doc "获取类别信息树"
+	@handler getCategoryTree
+	get /categoryTree (GatewayGetCategoryTreeRequest) returns (GatewayGetCategoryTreeReply)
+	
+	@doc "添加类别信息"
+	@handler addCategory
+	post /category (GatewayAddCategoryRequest) returns (GatewayAddCategoryReply)
+	
+	@doc "获取分类信息"
+	@handler getClassify
+	get /classify/:id (GatewayGetClassifyRequest) returns (GatewayGetClassifyReply)
+	
+	@doc "根据父级id获取分类信息"
+	@handler getClassifies
+	get /classifies/:parent_id (GatewayGetClassifiesRequest) returns (GatewayGetClassifiesReply)
+	
+	@doc "获取分类信息树"
+	@handler getClassifyTree
+	get /classifyTree (GatewayGetClassifyTreeRequest) returns (GatewayGetClassifyTreeReply)
+	
+	@doc "添加分类信息"
+	@handler addClassify
+	post /classify (GatewayAddClassifyRequest) returns (GatewayAddClassifyReply)
 	
 	@doc "注册"
 	@handler register

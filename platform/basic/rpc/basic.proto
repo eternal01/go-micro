@@ -35,6 +35,15 @@ message GetRegionChild {
   string Name = 3;
 }
 
+message AddRegionRequest {
+  int64 ParentId = 1;
+  string Name = 2;
+}
+
+message AddRegionResponse {
+  int64 Id = 1;
+}
+
 
 message GetIndustryRequest {
   string IndustryId = 1;
@@ -67,16 +76,79 @@ message GetIndustryChild {
 }
 
 
-message AddRegionRequest {
-  int64 ParentId = 1;
-  string Name = 2;
+message GetClassifyRequest {
+  int64 Id = 1;
 }
 
-message AddRegionResponse {
+message GetClassifyResponse {
   int64 Id = 1;
   int64 ParentId = 2;
   string Name = 3;
+  string Description = 4;
 }
+
+message GetClassifiesRequest {
+  int64 ParentId = 1;
+}
+
+message GetClassifiesResponse {
+  repeated GetClassifyChild List = 1;
+}
+
+message GetClassifyChild {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string Name = 3;
+  string Description = 4;
+}
+
+message AddClassifyRequest {
+  int64 ParentId = 1;
+  string Name = 2;
+  string Description = 3;
+}
+
+message AddClassifyResponse {
+  int64 Id = 1;
+}
+
+
+message GetCategoryRequest {
+  int64 Id = 1;
+}
+
+message GetCategoryResponse {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string Name = 3;
+  string Description = 4;
+}
+
+message GetCategoriesRequest {
+  int64 ParentId = 1;
+}
+
+message GetCategoriesResponse {
+  repeated GetCategoryChild List = 1;
+}
+
+message GetCategoryChild {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string Name = 3;
+  string Description = 4;
+}
+
+message AddCategoryRequest {
+  int64 ParentId = 1;
+  string Name = 2;
+  string Description = 3;
+}
+
+message AddCategoryResponse {
+  int64 Id = 1;
+}
+
 
 service Basic {
   rpc Ping(Request) returns(Response);
@@ -85,10 +157,25 @@ service Basic {
   rpc getRegion(GetRegionRequest) returns(GetRegionResponse);
   //根据父级id获取地区信息
   rpc getRegions(GetRegionsRequest) returns(GetRegionsResponse);
+  //添加地区信息
+  rpc addRegion(AddRegionRequest) returns(AddRegionResponse);
+
   //获取职业信息
   rpc getIndustry(GetIndustryRequest) returns(GetIndustryResponse);
   //根据父级id获取职业信息
   rpc getIndustries(GetIndustriesRequest) returns(GetIndustriesResponse);
 
-  rpc addRegion(AddRegionRequest) returns(AddRegionResponse);
+  //获取分类信息
+  rpc getClassify(GetClassifyRequest) returns(GetClassifyResponse);
+  //根据父级id获取分类信息
+  rpc getClassifies(GetClassifiesRequest) returns(GetClassifiesResponse);
+  //添加分类信息
+  rpc addClassify(AddClassifyRequest) returns(AddClassifyResponse);
+  
+  //获取类别信息
+  rpc getCategory(GetCategoryRequest) returns(GetCategoryResponse);
+  //根据父级id获取类别信息
+  rpc getCategories(GetCategoriesRequest) returns(GetCategoriesResponse);
+  //添加类别信息
+  rpc addCategory(AddCategoryRequest) returns(AddCategoryResponse);
 }

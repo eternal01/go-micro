@@ -25,17 +25,19 @@ func NewAddRegionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddRegi
 }
 
 func (l *AddRegionLogic) AddRegion(in *basic.AddRegionRequest) (*basic.AddRegionResponse, error) {
-	// todo: add your logic here and delete this line
-
 	region := new(model.SystemRegion)
-	region.Id = 1
 	region.ParentId = in.ParentId
 	region.Name = in.Name
 
-	_, err := l.svcCtx.RegionModel.Insert(l.ctx, region)
+	result, err := l.svcCtx.RegionModel.Insert(l.ctx, region)
 	if err != nil {
 		return nil, err
 	}
-
-	return &basic.AddRegionResponse{}, nil
+	id, err := result.LastInsertId()
+	if err != nil {
+		return nil, err
+	}
+	return &basic.AddRegionResponse{
+		Id: id,
+	}, nil
 }

@@ -28,6 +28,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: getRegionTreeHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodPost,
+				Path:    "/region",
+				Handler: addRegionHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodGet,
 				Path:    "/industry/:industry_id",
 				Handler: getIndustryHandler(serverCtx),
@@ -43,9 +48,44 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: getIndustryTreeHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodGet,
+				Path:    "/category/:id",
+				Handler: getCategoryHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/categories/:parent_id",
+				Handler: getCategoriesHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/categoryTree",
+				Handler: getCategoryTreeHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodPost,
-				Path:    "/region",
-				Handler: addRegionHandler(serverCtx),
+				Path:    "/category",
+				Handler: addCategoryHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/classify/:id",
+				Handler: getClassifyHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/classifies/:parent_id",
+				Handler: getClassifiesHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/classifyTree",
+				Handler: getClassifyTreeHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/classify",
+				Handler: addClassifyHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,

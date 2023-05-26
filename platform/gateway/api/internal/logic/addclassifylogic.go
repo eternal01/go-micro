@@ -11,33 +11,34 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type AddRegionLogic struct {
+type AddClassifyLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewAddRegionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddRegionLogic {
-	return &AddRegionLogic{
+func NewAddClassifyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddClassifyLogic {
+	return &AddClassifyLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *AddRegionLogic) AddRegion(req *types.GatewayAddRegionRequest) (resp *types.GatewayAddRegionReply, err error) {
+func (l *AddClassifyLogic) AddClassify(req *types.GatewayAddClassifyRequest) (resp *types.GatewayAddClassifyReply, err error) {
 	if req.ParentId < 0 || len(req.Name) <= 0 {
 		return nil, errorx.ParamsError
 	}
-	result, err := l.svcCtx.BasicRpc.AddRegion(l.ctx, &basic.AddRegionRequest{
-		Name:     req.Name,
-		ParentId: req.ParentId,
+	result, err := l.svcCtx.BasicRpc.AddClassify(l.ctx, &basic.AddClassifyRequest{
+		Name:        req.Name,
+		ParentId:    req.ParentId,
+		Description: req.Description,
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	return &types.GatewayAddRegionReply{
+	return &types.GatewayAddClassifyReply{
 		Id: result.Id,
 	}, nil
 }

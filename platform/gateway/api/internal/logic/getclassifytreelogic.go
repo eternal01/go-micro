@@ -75,7 +75,7 @@ func (l *GetClassifyTreeLogic) GetClassifyTree(req *types.GatewayGetClassifyTree
 	resp.Tree = node.Children
 
 	cacheTree, err := json.Marshal(*resp)
-	r.SetRedisCache(l.ctx, model.ClassifyTreeCacheKey, string(cacheTree))
+	r.SetRedisCache(model.ClassifyTreeCacheKey, string(cacheTree))
 
 	return
 }

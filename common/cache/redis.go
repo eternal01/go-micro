@@ -1,8 +1,6 @@
 package cache
 
 import (
-	"context"
-	"go-micro/platform/gateway/model"
 	"sync"
 
 	"github.com/zeromicro/go-zero/core/stores/redis"
@@ -26,10 +24,14 @@ func GetSingleton(conf redis.RedisConf) *Singleton {
 	return RedisSingleton
 }
 
-func (r Singleton) GetRedisCache(key string) (string, error) {
+func (r *Singleton) GetRedisCache(key string) (string, error) {
 	return r.RedisCluster.Get(key)
 }
 
-func (r Singleton) SetRedisCache(ctx context.Context, key string, value string) error {
-	return r.RedisCluster.Set(model.RegionTreeCacheKey, value)
+func (r *Singleton) SetRedisCache(key string, value string) error {
+	return r.RedisCluster.Set(key, value)
+}
+
+func (r *Singleton) DelRedisCache(key string) (int, error) {
+	return r.RedisCluster.Del(key)
 }

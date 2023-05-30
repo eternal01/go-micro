@@ -75,7 +75,7 @@ func (l *GetCategoryTreeLogic) GetCategoryTree(req *types.GatewayGetCategoryTree
 	resp.Tree = node.Children
 
 	cacheTree, err := json.Marshal(*resp)
-	r.SetRedisCache(l.ctx, model.CategoryTreeCacheKey, string(cacheTree))
+	r.SetRedisCache(model.CategoryTreeCacheKey, string(cacheTree))
 
 	return
 }

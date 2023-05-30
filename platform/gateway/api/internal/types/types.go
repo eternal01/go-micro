@@ -95,6 +95,18 @@ type GatewayIndustryTreeNode struct {
 	Children    []GatewayIndustryTreeNode `json:"children"`
 }
 
+type GatewayAddIndustryRequest struct {
+	IndustryId  string `json:"industry_id"`
+	Name        string `json:"name"`
+	ParentId    string `json:"parent_id"`
+	LevelType   int64  `json:"level_type"`
+	Description string `json:"description"`
+}
+
+type GatewayAddIndustryReply struct {
+	Id int64 `json:"id"`
+}
+
 type GatewayGetCategoryRequest struct {
 	Id int64 `path:"id"`
 }

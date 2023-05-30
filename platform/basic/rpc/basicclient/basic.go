@@ -17,6 +17,8 @@ type (
 	AddCategoryResponse   = basic.AddCategoryResponse
 	AddClassifyRequest    = basic.AddClassifyRequest
 	AddClassifyResponse   = basic.AddClassifyResponse
+	AddIndustryRequest    = basic.AddIndustryRequest
+	AddIndustryResponse   = basic.AddIndustryResponse
 	AddRegionRequest      = basic.AddRegionRequest
 	AddRegionResponse     = basic.AddRegionResponse
 	GetCategoriesRequest  = basic.GetCategoriesRequest
@@ -54,6 +56,8 @@ type (
 		GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error)
 		// 根据父级id获取职业信息
 		GetIndustries(ctx context.Context, in *GetIndustriesRequest, opts ...grpc.CallOption) (*GetIndustriesResponse, error)
+		// 添加职业信息
+		AddIndustry(ctx context.Context, in *AddIndustryRequest, opts ...grpc.CallOption) (*AddIndustryResponse, error)
 		// 获取分类信息
 		GetClassify(ctx context.Context, in *GetClassifyRequest, opts ...grpc.CallOption) (*GetClassifyResponse, error)
 		// 根据父级id获取分类信息
@@ -112,6 +116,12 @@ func (m *defaultBasic) GetIndustry(ctx context.Context, in *GetIndustryRequest, 
 func (m *defaultBasic) GetIndustries(ctx context.Context, in *GetIndustriesRequest, opts ...grpc.CallOption) (*GetIndustriesResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
 	return client.GetIndustries(ctx, in, opts...)
+}
+
+// 添加职业信息
+func (m *defaultBasic) AddIndustry(ctx context.Context, in *AddIndustryRequest, opts ...grpc.CallOption) (*AddIndustryResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.AddIndustry(ctx, in, opts...)
 }
 
 // 获取分类信息

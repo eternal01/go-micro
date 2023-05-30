@@ -25,6 +25,7 @@ const (
 	Basic_AddRegion_FullMethodName     = "/basic.Basic/addRegion"
 	Basic_GetIndustry_FullMethodName   = "/basic.Basic/getIndustry"
 	Basic_GetIndustries_FullMethodName = "/basic.Basic/getIndustries"
+	Basic_AddIndustry_FullMethodName   = "/basic.Basic/addIndustry"
 	Basic_GetClassify_FullMethodName   = "/basic.Basic/getClassify"
 	Basic_GetClassifies_FullMethodName = "/basic.Basic/getClassifies"
 	Basic_AddClassify_FullMethodName   = "/basic.Basic/addClassify"
@@ -48,6 +49,8 @@ type BasicClient interface {
 	GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error)
 	// 根据父级id获取职业信息
 	GetIndustries(ctx context.Context, in *GetIndustriesRequest, opts ...grpc.CallOption) (*GetIndustriesResponse, error)
+	// 添加职业信息
+	AddIndustry(ctx context.Context, in *AddIndustryRequest, opts ...grpc.CallOption) (*AddIndustryResponse, error)
 	// 获取分类信息
 	GetClassify(ctx context.Context, in *GetClassifyRequest, opts ...grpc.CallOption) (*GetClassifyResponse, error)
 	// 根据父级id获取分类信息
@@ -124,6 +127,15 @@ func (c *basicClient) GetIndustries(ctx context.Context, in *GetIndustriesReques
 	return out, nil
 }
 
+func (c *basicClient) AddIndustry(ctx context.Context, in *AddIndustryRequest, opts ...grpc.CallOption) (*AddIndustryResponse, error) {
+	out := new(AddIndustryResponse)
+	err := c.cc.Invoke(ctx, Basic_AddIndustry_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *basicClient) GetClassify(ctx context.Context, in *GetClassifyRequest, opts ...grpc.CallOption) (*GetClassifyResponse, error) {
 	out := new(GetClassifyResponse)
 	err := c.cc.Invoke(ctx, Basic_GetClassify_FullMethodName, in, out, opts...)
@@ -193,6 +205,8 @@ type BasicServer interface {
 	GetIndustry(context.Context, *GetIndustryRequest) (*GetIndustryResponse, error)
 	// 根据父级id获取职业信息
 	GetIndustries(context.Context, *GetIndustriesRequest) (*GetIndustriesResponse, error)
+	// 添加职业信息
+	AddIndustry(context.Context, *AddIndustryRequest) (*AddIndustryResponse, error)
 	// 获取分类信息
 	GetClassify(context.Context, *GetClassifyRequest) (*GetClassifyResponse, error)
 	// 根据父级id获取分类信息
@@ -229,6 +243,9 @@ func (UnimplementedBasicServer) GetIndustry(context.Context, *GetIndustryRequest
 }
 func (UnimplementedBasicServer) GetIndustries(context.Context, *GetIndustriesRequest) (*GetIndustriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetIndustries not implemented")
+}
+func (UnimplementedBasicServer) AddIndustry(context.Context, *AddIndustryRequest) (*AddIndustryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddIndustry not implemented")
 }
 func (UnimplementedBasicServer) GetClassify(context.Context, *GetClassifyRequest) (*GetClassifyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetClassify not implemented")
@@ -365,6 +382,24 @@ func _Basic_GetIndustries_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BasicServer).GetIndustries(ctx, req.(*GetIndustriesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_AddIndustry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddIndustryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).AddIndustry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_AddIndustry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).AddIndustry(ctx, req.(*AddIndustryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -507,6 +542,10 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "getIndustries",
 			Handler:    _Basic_GetIndustries_Handler,
+		},
+		{
+			MethodName: "addIndustry",
+			Handler:    _Basic_AddIndustry_Handler,
 		},
 		{
 			MethodName: "getClassify",

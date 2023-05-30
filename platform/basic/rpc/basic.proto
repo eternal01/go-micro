@@ -75,6 +75,18 @@ message GetIndustryChild {
   string Description = 6;
 }
 
+message AddIndustryRequest {
+  string IndustryId = 1;
+  string Name = 2;
+  string ParentId = 3;
+  int64 LevelType = 4;
+  string Description = 5;
+}
+
+message AddIndustryResponse {
+  int64 Id = 1;
+}
+
 
 message GetClassifyRequest {
   int64 Id = 1;
@@ -164,6 +176,8 @@ service Basic {
   rpc getIndustry(GetIndustryRequest) returns(GetIndustryResponse);
   //根据父级id获取职业信息
   rpc getIndustries(GetIndustriesRequest) returns(GetIndustriesResponse);
+  //添加职业信息
+  rpc addIndustry(AddIndustryRequest) returns(AddIndustryResponse);
 
   //获取分类信息
   rpc getClassify(GetClassifyRequest) returns(GetClassifyResponse);

@@ -48,6 +48,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: getIndustryTreeHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodPost,
+				Path:    "/industry",
+				Handler: addIndustryHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodGet,
 				Path:    "/category/:id",
 				Handler: getCategoryHandler(serverCtx),

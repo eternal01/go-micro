@@ -57,6 +57,12 @@ func (s *BasicServer) GetIndustries(ctx context.Context, in *basic.GetIndustries
 	return l.GetIndustries(in)
 }
 
+// 添加职业信息
+func (s *BasicServer) AddIndustry(ctx context.Context, in *basic.AddIndustryRequest) (*basic.AddIndustryResponse, error) {
+	l := logic.NewAddIndustryLogic(ctx, s.svcCtx)
+	return l.AddIndustry(in)
+}
+
 // 获取分类信息
 func (s *BasicServer) GetClassify(ctx context.Context, in *basic.GetClassifyRequest) (*basic.GetClassifyResponse, error) {
 	l := logic.NewGetClassifyLogic(ctx, s.svcCtx)

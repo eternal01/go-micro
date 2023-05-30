@@ -100,6 +100,19 @@ type (
 		Children    []GatewayIndustryTreeNode `json:"children"`
 	}
 
+	//添加职业信息
+	GatewayAddIndustryRequest {
+		IndustryId  string `json:"industry_id"`
+		Name        string `json:"name"`
+		ParentId    string `json:"parent_id"`
+		LevelType   int64  `json:"level_type"`
+		Description string `json:"description"`
+	}
+
+	GatewayAddIndustryReply {
+		Id int64 `json:"id"`
+	}
+
 	//获取类别信息
 	GatewayGetCategoryRequest {
 		Id int64 `path:"id"`
@@ -310,6 +323,10 @@ service gateway {
 	@doc "获取职业信息树"
 	@handler getIndustryTree
 	get /industryTree (GatewayGetIndustryTreeRequest) returns (GatewayGetIndustryTreeReply)
+	
+	@doc "添加职业信息"
+	@handler addIndustry
+	post /industry (GatewayAddIndustryRequest) returns (GatewayAddIndustryReply)
 	
 	@doc "获取类别信息"
 	@handler getCategory

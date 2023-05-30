@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 
+	"go-micro/common/cache"
 	"go-micro/common/errorx"
 	"go-micro/platform/basic/rpc/basic"
 	"go-micro/platform/gateway/api/internal/svc"
@@ -11,7 +12,6 @@ import (
 	"go-micro/platform/gateway/model"
 
 	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/stores/redis"
 )
 
 type GetIndustryTreeLogic struct {
@@ -30,16 +30,8 @@ func NewGetIndustryTreeLogic(ctx context.Context, svcCtx *svc.ServiceContext) *G
 
 func (l *GetIndustryTreeLogic) GetIndustryTree(req *types.GatewayGetIndustryTreeRequest) (resp *types.GatewayGetIndustryTreeReply, err error) {
 	resp = new(types.GatewayGetIndustryTreeReply)
-	r, err := redis.NewRedis(redis.RedisConf{
-		Host: "redis:6379",
-		Type: redis.NodeType,
-		Pass: "secret_redis",
-	})
-
-	if err != nil {
-		return
-	}
-	v, err := r.Get(model.IndustryTreeCacheKey)
+	r := cache.GetSingleton(l.svcCtx.Config.CacheRedis[0].RedisConf)
+	v, err := r.GetRedisCache(model.IndustryTreeCacheKey)
 	if err != nil {
 		l.Logger.Errorf("REDIS CACHE ERR - %+v", err)
 		return resp, errorx.CacheError
@@ -84,7 +76,7 @@ func (l *GetIndustryTreeLogic) GetIndustryTree(req *types.GatewayGetIndustryTree
 	resp.Tree = industry.Children
 
 	cacheTree, err := json.Marshal(*resp)
-	r.Set(model.IndustryTreeCacheKey, string(cacheTree))
+	r.SetRedisCache(model.IndustryTreeCacheKey, string(cacheTree))
 
 	return
 }

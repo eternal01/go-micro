@@ -13,27 +13,30 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type AddRegionLogic struct {
+type AddIndustryLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewAddRegionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddRegionLogic {
-	return &AddRegionLogic{
+func NewAddIndustryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddIndustryLogic {
+	return &AddIndustryLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *AddRegionLogic) AddRegion(req *types.GatewayAddRegionRequest) (resp *types.GatewayAddRegionReply, err error) {
-	if req.ParentId < 0 || len(req.Name) <= 0 {
+func (l *AddIndustryLogic) AddIndustry(req *types.GatewayAddIndustryRequest) (resp *types.GatewayAddIndustryReply, err error) {
+	if len(req.ParentId) <= 0 || len(req.Name) <= 0 {
 		return nil, errorx.ParamsError
 	}
-	result, err := l.svcCtx.BasicRpc.AddRegion(l.ctx, &basic.AddRegionRequest{
-		Name:     req.Name,
-		ParentId: req.ParentId,
+	result, err := l.svcCtx.BasicRpc.AddIndustry(l.ctx, &basic.AddIndustryRequest{
+		IndustryId:  req.IndustryId,
+		Name:        req.Name,
+		ParentId:    req.ParentId,
+		LevelType:   req.LevelType,
+		Description: req.Description,
 	})
 	if err != nil {
 		return nil, err
@@ -41,7 +44,7 @@ func (l *AddRegionLogic) AddRegion(req *types.GatewayAddRegionRequest) (resp *ty
 
 	cache.GetSingleton(l.svcCtx.Config.CacheRedis[0].RedisConf).DelRedisCache(model.RegionTreeCacheKey)
 
-	return &types.GatewayAddRegionReply{
+	return &types.GatewayAddIndustryReply{
 		Id: result.Id,
 	}, nil
 }

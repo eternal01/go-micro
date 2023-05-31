@@ -34,12 +34,12 @@ func (l *GetCategoriesLogic) GetCategories(in *basic.GetCategoriesRequest) (*bas
 	l.Logger.Slowf("result is %+v", categories)
 	var list []*basic.GetCategoryChild
 	if len(categories) > 0 {
-		for _, classify := range categories {
+		for _, category := range categories {
 			list = append(list, &basic.GetCategoryChild{
-				Id:          classify.Id,
-				ParentId:    classify.ParentId,
-				Name:        classify.Name,
-				Description: classify.Description,
+				Id:          category.Id,
+				ParentId:    category.ParentId,
+				Name:        category.Name,
+				Description: category.Description,
 			})
 		}
 	}

@@ -21,6 +21,8 @@ type (
 	AddIndustryResponse   = basic.AddIndustryResponse
 	AddRegionRequest      = basic.AddRegionRequest
 	AddRegionResponse     = basic.AddRegionResponse
+	AddStageRequest       = basic.AddStageRequest
+	AddStageResponse      = basic.AddStageResponse
 	GetCategoriesRequest  = basic.GetCategoriesRequest
 	GetCategoriesResponse = basic.GetCategoriesResponse
 	GetCategoryChild      = basic.GetCategoryChild
@@ -41,6 +43,11 @@ type (
 	GetRegionResponse     = basic.GetRegionResponse
 	GetRegionsRequest     = basic.GetRegionsRequest
 	GetRegionsResponse    = basic.GetRegionsResponse
+	GetStageChild         = basic.GetStageChild
+	GetStageRequest       = basic.GetStageRequest
+	GetStageResponse      = basic.GetStageResponse
+	GetStagesRequest      = basic.GetStagesRequest
+	GetStagesResponse     = basic.GetStagesResponse
 	Request               = basic.Request
 	Response              = basic.Response
 
@@ -70,6 +77,12 @@ type (
 		GetCategories(ctx context.Context, in *GetCategoriesRequest, opts ...grpc.CallOption) (*GetCategoriesResponse, error)
 		// 添加类别信息
 		AddCategory(ctx context.Context, in *AddCategoryRequest, opts ...grpc.CallOption) (*AddCategoryResponse, error)
+		// 获取阶段信息
+		GetStage(ctx context.Context, in *GetStageRequest, opts ...grpc.CallOption) (*GetStageResponse, error)
+		// 根据父级id获取阶段信息
+		GetStages(ctx context.Context, in *GetStagesRequest, opts ...grpc.CallOption) (*GetStagesResponse, error)
+		// 添加阶段信息
+		AddStage(ctx context.Context, in *AddStageRequest, opts ...grpc.CallOption) (*AddStageResponse, error)
 	}
 
 	defaultBasic struct {
@@ -158,4 +171,22 @@ func (m *defaultBasic) GetCategories(ctx context.Context, in *GetCategoriesReque
 func (m *defaultBasic) AddCategory(ctx context.Context, in *AddCategoryRequest, opts ...grpc.CallOption) (*AddCategoryResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
 	return client.AddCategory(ctx, in, opts...)
+}
+
+// 获取阶段信息
+func (m *defaultBasic) GetStage(ctx context.Context, in *GetStageRequest, opts ...grpc.CallOption) (*GetStageResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.GetStage(ctx, in, opts...)
+}
+
+// 根据父级id获取阶段信息
+func (m *defaultBasic) GetStages(ctx context.Context, in *GetStagesRequest, opts ...grpc.CallOption) (*GetStagesResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.GetStages(ctx, in, opts...)
+}
+
+// 添加阶段信息
+func (m *defaultBasic) AddStage(ctx context.Context, in *AddStageRequest, opts ...grpc.CallOption) (*AddStageResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.AddStage(ctx, in, opts...)
 }

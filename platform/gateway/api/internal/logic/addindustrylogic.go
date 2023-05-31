@@ -42,7 +42,7 @@ func (l *AddIndustryLogic) AddIndustry(req *types.GatewayAddIndustryRequest) (re
 		return nil, err
 	}
 
-	cache.GetSingleton(l.svcCtx.Config.CacheRedis[0].RedisConf).DelRedisCache(model.RegionTreeCacheKey)
+	cache.GetSingleton(l.svcCtx.Config.CacheRedis[0].RedisConf).DelRedisCache(model.IndustryTreeCacheKey)
 
 	return &types.GatewayAddIndustryReply{
 		Id: result.Id,

@@ -32,6 +32,9 @@ const (
 	Basic_GetCategory_FullMethodName   = "/basic.Basic/getCategory"
 	Basic_GetCategories_FullMethodName = "/basic.Basic/getCategories"
 	Basic_AddCategory_FullMethodName   = "/basic.Basic/addCategory"
+	Basic_GetStage_FullMethodName      = "/basic.Basic/getStage"
+	Basic_GetStages_FullMethodName     = "/basic.Basic/getStages"
+	Basic_AddStage_FullMethodName      = "/basic.Basic/addStage"
 )
 
 // BasicClient is the client API for Basic service.
@@ -63,6 +66,12 @@ type BasicClient interface {
 	GetCategories(ctx context.Context, in *GetCategoriesRequest, opts ...grpc.CallOption) (*GetCategoriesResponse, error)
 	// 添加类别信息
 	AddCategory(ctx context.Context, in *AddCategoryRequest, opts ...grpc.CallOption) (*AddCategoryResponse, error)
+	// 获取阶段信息
+	GetStage(ctx context.Context, in *GetStageRequest, opts ...grpc.CallOption) (*GetStageResponse, error)
+	// 根据父级id获取阶段信息
+	GetStages(ctx context.Context, in *GetStagesRequest, opts ...grpc.CallOption) (*GetStagesResponse, error)
+	// 添加阶段信息
+	AddStage(ctx context.Context, in *AddStageRequest, opts ...grpc.CallOption) (*AddStageResponse, error)
 }
 
 type basicClient struct {
@@ -190,6 +199,33 @@ func (c *basicClient) AddCategory(ctx context.Context, in *AddCategoryRequest, o
 	return out, nil
 }
 
+func (c *basicClient) GetStage(ctx context.Context, in *GetStageRequest, opts ...grpc.CallOption) (*GetStageResponse, error) {
+	out := new(GetStageResponse)
+	err := c.cc.Invoke(ctx, Basic_GetStage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) GetStages(ctx context.Context, in *GetStagesRequest, opts ...grpc.CallOption) (*GetStagesResponse, error) {
+	out := new(GetStagesResponse)
+	err := c.cc.Invoke(ctx, Basic_GetStages_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) AddStage(ctx context.Context, in *AddStageRequest, opts ...grpc.CallOption) (*AddStageResponse, error) {
+	out := new(AddStageResponse)
+	err := c.cc.Invoke(ctx, Basic_AddStage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BasicServer is the server API for Basic service.
 // All implementations must embed UnimplementedBasicServer
 // for forward compatibility
@@ -219,6 +255,12 @@ type BasicServer interface {
 	GetCategories(context.Context, *GetCategoriesRequest) (*GetCategoriesResponse, error)
 	// 添加类别信息
 	AddCategory(context.Context, *AddCategoryRequest) (*AddCategoryResponse, error)
+	// 获取阶段信息
+	GetStage(context.Context, *GetStageRequest) (*GetStageResponse, error)
+	// 根据父级id获取阶段信息
+	GetStages(context.Context, *GetStagesRequest) (*GetStagesResponse, error)
+	// 添加阶段信息
+	AddStage(context.Context, *AddStageRequest) (*AddStageResponse, error)
 	mustEmbedUnimplementedBasicServer()
 }
 
@@ -264,6 +306,15 @@ func (UnimplementedBasicServer) GetCategories(context.Context, *GetCategoriesReq
 }
 func (UnimplementedBasicServer) AddCategory(context.Context, *AddCategoryRequest) (*AddCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddCategory not implemented")
+}
+func (UnimplementedBasicServer) GetStage(context.Context, *GetStageRequest) (*GetStageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetStage not implemented")
+}
+func (UnimplementedBasicServer) GetStages(context.Context, *GetStagesRequest) (*GetStagesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetStages not implemented")
+}
+func (UnimplementedBasicServer) AddStage(context.Context, *AddStageRequest) (*AddStageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddStage not implemented")
 }
 func (UnimplementedBasicServer) mustEmbedUnimplementedBasicServer() {}
 
@@ -512,6 +563,60 @@ func _Basic_AddCategory_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Basic_GetStage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetStageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).GetStage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_GetStage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).GetStage(ctx, req.(*GetStageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_GetStages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetStagesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).GetStages(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_GetStages_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).GetStages(ctx, req.(*GetStagesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_AddStage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddStageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).AddStage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_AddStage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).AddStage(ctx, req.(*AddStageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Basic_ServiceDesc is the grpc.ServiceDesc for Basic service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -570,6 +675,18 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "addCategory",
 			Handler:    _Basic_AddCategory_Handler,
+		},
+		{
+			MethodName: "getStage",
+			Handler:    _Basic_GetStage_Handler,
+		},
+		{
+			MethodName: "getStages",
+			Handler:    _Basic_GetStages_Handler,
+		},
+		{
+			MethodName: "addStage",
+			Handler:    _Basic_AddStage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

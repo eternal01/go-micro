@@ -222,6 +222,45 @@ type (
 	GatewayAddClassifyReply {
 		Id int64 `json:"id"`
 	}
+
+	//获取阶段信息
+	GatewayGetStageRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayGetStageReply {
+		Id   int64  `json:"id"`
+		Name string `json:"name"`
+		//ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	//根据父级id获取阶段信息
+	GatewayGetStagesRequest {
+		//ParentId int64 `path:"parent_id"`
+	}
+
+	GatewayGetStagesReply {
+		List []GatewayGetStagesChild `json:"list"`
+	}
+
+	GatewayGetStagesChild {
+		Id   int64  `json:"id"`
+		Name string `json:"name"`
+		//ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	//添加阶段信息
+	GatewayAddStageRequest {
+		Name string `json:"name"`
+		//ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	GatewayAddStageReply {
+		Id int64 `json:"id"`
+	}
 )
 
 type (
@@ -359,6 +398,18 @@ service gateway {
 	@doc "添加分类信息"
 	@handler addClassify
 	post /classify (GatewayAddClassifyRequest) returns (GatewayAddClassifyReply)
+	
+	@doc "获取阶段信息"
+	@handler getStage
+	get /stage/:id (GatewayGetStageRequest) returns (GatewayGetStageReply)
+	
+	@doc "获取阶段列表信息"
+	@handler getStages
+	get /stages (GatewayGetStagesRequest) returns (GatewayGetStagesReply)
+	
+	@doc "添加阶段信息"
+	@handler addStage
+	post /stage (GatewayAddStageRequest) returns (GatewayAddStageReply)
 	
 	@doc "注册"
 	@handler register

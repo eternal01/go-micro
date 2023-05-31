@@ -93,6 +93,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: addClassifyHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodGet,
+				Path:    "/stage/:id",
+				Handler: getStageHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/stages",
+				Handler: getStagesHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/stage",
+				Handler: addStageHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodPost,
 				Path:    "/register",
 				Handler: registerHandler(serverCtx),

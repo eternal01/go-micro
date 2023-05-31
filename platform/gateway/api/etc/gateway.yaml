@@ -3,6 +3,19 @@ Host: 0.0.0.0
 Port: 8888
 Timeout: 10000
 
+# 监控
+Prometheus:
+  Host: 0.0.0.0
+  Port: 8999
+  Path: /metrics
+
+# 链路追踪
+Telemetry:
+  Name: gateway-api
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+
 Log: 
   ServiceName: gateway-api
   Mode: file
@@ -12,13 +25,6 @@ Log:
   KeepDays: 3
   StackCooldownMillis: 100
 
-# 监控
-Prometheus:
-  Host: 0.0.0.0
-  Port: 8999
-  Path: /metrics
-
-
 Mysql:
   DataSource: root:root@tcp(mysql:3306)/gateway?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 
@@ -27,13 +33,17 @@ CacheRedis:
     Type: node
     Pass: secret_redis
 
-
 JwtAuth:
   AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
   AccessExpire: 7200
 
-
 # RPC服务
+FileRpc:
+  Etcd:
+    Hosts:
+    - etcd:2379
+    key: file.rpc
+
 BasicRpc: 
   Etcd: 
     Hosts: 
@@ -46,10 +56,8 @@ AccountRpc:
     - etcd:2379
     key: account.rpc
 
-
-# 链路追踪
-Telemetry:
-  Name: gateway-api
-  Endpoint: http://jaeger:14268/api/traces
-  Sampler: 1.0
-  Batcher: jaeger
+InformationRpc:
+  Etcd:
+    Hosts:
+    - etcd:2379
+    key: information.rpc

@@ -9,8 +9,10 @@ import (
 type Config struct {
 	rest.RestConf
 
-	BasicRpc   zrpc.RpcClientConf
-	AccountRpc zrpc.RpcClientConf
+	FileRpc        zrpc.RpcClientConf
+	BasicRpc       zrpc.RpcClientConf
+	AccountRpc     zrpc.RpcClientConf
+	InformationRpc zrpc.RpcClientConf
 
 	Mysql struct {
 		DataSource string

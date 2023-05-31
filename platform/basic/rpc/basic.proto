@@ -162,6 +162,42 @@ message AddCategoryResponse {
 }
 
 
+message GetStageRequest {
+  int64 Id = 1;
+}
+
+message GetStageResponse {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string Name = 3;
+  string Description = 4;
+}
+
+message GetStagesRequest {
+  int64 ParentId = 1;
+}
+
+message GetStagesResponse {
+  repeated GetStageChild List = 1;
+}
+
+message GetStageChild {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string Name = 3;
+  string Description = 4;
+}
+
+message AddStageRequest {
+  int64 ParentId = 1;
+  string Name = 2;
+  string Description = 3;
+}
+
+message AddStageResponse {
+  int64 Id = 1;
+}
+
 service Basic {
   rpc Ping(Request) returns(Response);
 
@@ -192,4 +228,11 @@ service Basic {
   rpc getCategories(GetCategoriesRequest) returns(GetCategoriesResponse);
   //添加类别信息
   rpc addCategory(AddCategoryRequest) returns(AddCategoryResponse);
+
+  //获取阶段信息
+  rpc getStage(GetStageRequest) returns(GetStageResponse);
+  //根据父级id获取阶段信息
+  rpc getStages(GetStagesRequest) returns(GetStagesResponse);
+  //添加阶段信息
+  rpc addStage(AddStageRequest) returns(AddStageResponse);
 }

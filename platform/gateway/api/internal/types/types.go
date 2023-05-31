@@ -209,6 +209,38 @@ type GatewayAddClassifyReply struct {
 	Id int64 `json:"id"`
 }
 
+type GatewayGetStageRequest struct {
+	Id int64 `path:"id"`
+}
+
+type GatewayGetStageReply struct {
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
+
+type GatewayGetStagesRequest struct {
+}
+
+type GatewayGetStagesReply struct {
+	List []GatewayGetStagesChild `json:"list"`
+}
+
+type GatewayGetStagesChild struct {
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
+
+type GatewayAddStageRequest struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
+
+type GatewayAddStageReply struct {
+	Id int64 `json:"id"`
+}
+
 type GatewayRegisterRequest struct {
 	Mobile         string `json:"mobile"`
 	Email          string `json:"email"`

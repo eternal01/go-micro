@@ -1,26 +1,26 @@
-Name: basic.rpc
-ListenOn: 0.0.0.0:9502
+Name: information.rpc
+ListenOn: 0.0.0.0:9504
 
 Etcd:
   Hosts:
   - etcd:2379
-  Key: basic.rpc
+  Key: information.rpc
 
 # 监控
 Prometheus:
   Host: 0.0.0.0
-  Port: 9602
+  Port: 9604
   Path: /metrics
 
 # 链路追踪
 Telemetry:
-  Name: basic-rpc
+  Name: information-api
   Endpoint: http://jaeger:14268/api/traces
   Sampler: 1.0
   Batcher: jaeger
 
 Log: 
-  ServiceName: basic-rpc
+  ServiceName: information-rpc
   Mode: file
   Path: logs
   Level: error
@@ -29,7 +29,7 @@ Log:
   StackCooldownMillis: 100
 
 Mysql:
-  DataSource: root:root@tcp(mysql:3306)/basic?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+  DataSource: root:root@tcp(mysql:3306)/information?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 
 CacheRedis:
   - Host: redis:6379

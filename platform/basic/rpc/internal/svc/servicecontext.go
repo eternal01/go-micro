@@ -13,6 +13,7 @@ type ServiceContext struct {
 	IndustryModel model.SystemIndustryModel
 	ClassifyModel model.SystemClassifyModel
 	CategoryModel model.SystemCategoryModel
+	StageModel    model.SystemStageModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -23,5 +24,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		IndustryModel: model.NewSystemIndustryModel(conn, c.CacheRedis),
 		ClassifyModel: model.NewSystemClassifyModel(conn, c.CacheRedis),
 		CategoryModel: model.NewSystemCategoryModel(conn, c.CacheRedis),
+		StageModel:    model.NewSystemStageModel(conn, c.CacheRedis),
 	}
 }

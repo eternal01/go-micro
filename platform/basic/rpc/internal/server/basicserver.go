@@ -98,3 +98,21 @@ func (s *BasicServer) AddCategory(ctx context.Context, in *basic.AddCategoryRequ
 	l := logic.NewAddCategoryLogic(ctx, s.svcCtx)
 	return l.AddCategory(in)
 }
+
+// 获取阶段信息
+func (s *BasicServer) GetStage(ctx context.Context, in *basic.GetStageRequest) (*basic.GetStageResponse, error) {
+	l := logic.NewGetStageLogic(ctx, s.svcCtx)
+	return l.GetStage(in)
+}
+
+// 根据父级id获取阶段信息
+func (s *BasicServer) GetStages(ctx context.Context, in *basic.GetStagesRequest) (*basic.GetStagesResponse, error) {
+	l := logic.NewGetStagesLogic(ctx, s.svcCtx)
+	return l.GetStages(in)
+}
+
+// 添加阶段信息
+func (s *BasicServer) AddStage(ctx context.Context, in *basic.AddStageRequest) (*basic.AddStageResponse, error) {
+	l := logic.NewAddStageLogic(ctx, s.svcCtx)
+	return l.AddStage(in)
+}

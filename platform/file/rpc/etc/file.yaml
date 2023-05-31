@@ -1,0 +1,31 @@
+Name: file.rpc
+ListenOn: 0.0.0.0:9501
+
+Etcd:
+  Hosts:
+  - etcd:2379
+  Key: file.rpc
+
+# 监控
+Prometheus:
+  Host: 0.0.0.0
+  Port: 9601
+  Path: /metrics
+
+# 链路追踪
+Telemetry:
+  Name: file-rpc
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+
+Log: 
+  ServiceName: file-rpc
+  Mode: file
+  Path: logs
+  Level: error
+  Compress: false
+  KeepDays: 3
+  StackCooldownMillis: 100
+
+

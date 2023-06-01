@@ -139,7 +139,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/configuration/:name",
+				Path:    "/configurationByName/:name",
 				Handler: getConfigurationByNameHandler(serverCtx),
 			},
 			{

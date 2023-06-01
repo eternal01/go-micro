@@ -552,7 +552,7 @@ service gateway {
 	
 	@doc "根据配置名称获取配置信息"
 	@handler getConfigurationByName
-	get /configuration/:name (GatewayGetConfigurationByNameRequest) returns (GatewayGetConfigurationReply)
+	get /configurationByName/:name (GatewayGetConfigurationByNameRequest) returns (GatewayGetConfigurationReply)
 	
 	@doc "获取配置列表"
 	@handler getConfigurations

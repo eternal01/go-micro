@@ -48,6 +48,16 @@ type GatewayAddRegionReply struct {
 	Id int64 `json:"id"`
 }
 
+type GatewayUpdateRegionRequest struct {
+	Id       int64  `path:"id"`
+	ParentId int64  `json:"parent_id"`
+	Name     string `json:"name"`
+}
+
+type GatewayUpdateRegionReply struct {
+	Id int64 `json:"id"`
+}
+
 type GatewayGetIndustryRequest struct {
 	IndustryId string `path:"industry_id"`
 }
@@ -107,6 +117,19 @@ type GatewayAddIndustryReply struct {
 	Id int64 `json:"id"`
 }
 
+type GatewayUpdateIndustryRequest struct {
+	Id          int64  `path:"id"`
+	IndustryId  string `json:"industry_id"`
+	Name        string `json:"name"`
+	ParentId    string `json:"parent_id"`
+	LevelType   int64  `json:"level_type"`
+	Description string `json:"description"`
+}
+
+type GatewayUpdateIndustryReply struct {
+	Id int64 `json:"id"`
+}
+
 type GatewayGetCategoryRequest struct {
 	Id int64 `path:"id"`
 }
@@ -155,6 +178,17 @@ type GatewayAddCategoryRequest struct {
 }
 
 type GatewayAddCategoryReply struct {
+	Id int64 `json:"id"`
+}
+
+type GatewayUpdateCategoryRequest struct {
+	Id          int64  `path:"id"`
+	Name        string `json:"name"`
+	ParentId    int64  `json:"parent_id"`
+	Description string `json:"description"`
+}
+
+type GatewayUpdateCategoryReply struct {
 	Id int64 `json:"id"`
 }
 
@@ -209,6 +243,17 @@ type GatewayAddClassifyReply struct {
 	Id int64 `json:"id"`
 }
 
+type GatewayUpdateClassifyRequest struct {
+	Id          int64  `path:"id"`
+	Name        string `json:"name"`
+	ParentId    int64  `json:"parent_id"`
+	Description string `json:"description"`
+}
+
+type GatewayUpdateClassifyReply struct {
+	Id int64 `json:"id"`
+}
+
 type GatewayGetStageRequest struct {
 	Id int64 `path:"id"`
 }
@@ -238,6 +283,66 @@ type GatewayAddStageRequest struct {
 }
 
 type GatewayAddStageReply struct {
+	Id int64 `json:"id"`
+}
+
+type GatewayUpdateStageRequest struct {
+	Id          int64  `path:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
+
+type GatewayUpdateStageReply struct {
+	Id int64 `json:"id"`
+}
+
+type GatewayGetConfigurationRequest struct {
+	Id int64 `path:"id"`
+}
+
+type GatewayGetConfigurationByNameRequest struct {
+	Name string `path:"name"`
+}
+
+type GatewayGetConfigurationReply struct {
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Content     string `json:"content"`
+}
+
+type GatewayGetConfigurationsRequest struct {
+}
+
+type GatewayGetConfigurationsReply struct {
+	List []GatewayConfiguration `json:"list"`
+}
+
+type GatewayConfiguration struct {
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Content     string `json:"content"`
+}
+
+type GatewayAddConfigurationRequest struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Content     string `json:"content"`
+}
+
+type GatewayAddConfigurationReply struct {
+	Id int64 `json:"id"`
+}
+
+type GatewayUpdateConfigurationRequest struct {
+	Id          int64  `path:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Content     string `json:"content"`
+}
+
+type GatewayUpdateConfigurationReply struct {
 	Id int64 `json:"id"`
 }
 

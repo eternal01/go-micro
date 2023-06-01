@@ -13,43 +13,63 @@ import (
 )
 
 type (
-	AddCategoryRequest    = basic.AddCategoryRequest
-	AddCategoryResponse   = basic.AddCategoryResponse
-	AddClassifyRequest    = basic.AddClassifyRequest
-	AddClassifyResponse   = basic.AddClassifyResponse
-	AddIndustryRequest    = basic.AddIndustryRequest
-	AddIndustryResponse   = basic.AddIndustryResponse
-	AddRegionRequest      = basic.AddRegionRequest
-	AddRegionResponse     = basic.AddRegionResponse
-	AddStageRequest       = basic.AddStageRequest
-	AddStageResponse      = basic.AddStageResponse
-	GetCategoriesRequest  = basic.GetCategoriesRequest
-	GetCategoriesResponse = basic.GetCategoriesResponse
-	GetCategoryChild      = basic.GetCategoryChild
-	GetCategoryRequest    = basic.GetCategoryRequest
-	GetCategoryResponse   = basic.GetCategoryResponse
-	GetClassifiesRequest  = basic.GetClassifiesRequest
-	GetClassifiesResponse = basic.GetClassifiesResponse
-	GetClassifyChild      = basic.GetClassifyChild
-	GetClassifyRequest    = basic.GetClassifyRequest
-	GetClassifyResponse   = basic.GetClassifyResponse
-	GetIndustriesRequest  = basic.GetIndustriesRequest
-	GetIndustriesResponse = basic.GetIndustriesResponse
-	GetIndustryChild      = basic.GetIndustryChild
-	GetIndustryRequest    = basic.GetIndustryRequest
-	GetIndustryResponse   = basic.GetIndustryResponse
-	GetRegionChild        = basic.GetRegionChild
-	GetRegionRequest      = basic.GetRegionRequest
-	GetRegionResponse     = basic.GetRegionResponse
-	GetRegionsRequest     = basic.GetRegionsRequest
-	GetRegionsResponse    = basic.GetRegionsResponse
-	GetStageChild         = basic.GetStageChild
-	GetStageRequest       = basic.GetStageRequest
-	GetStageResponse      = basic.GetStageResponse
-	GetStagesRequest      = basic.GetStagesRequest
-	GetStagesResponse     = basic.GetStagesResponse
-	Request               = basic.Request
-	Response              = basic.Response
+	AddCategoryRequest            = basic.AddCategoryRequest
+	AddCategoryResponse           = basic.AddCategoryResponse
+	AddClassifyRequest            = basic.AddClassifyRequest
+	AddClassifyResponse           = basic.AddClassifyResponse
+	AddConfigurationRequest       = basic.AddConfigurationRequest
+	AddConfigurationResponse      = basic.AddConfigurationResponse
+	AddIndustryRequest            = basic.AddIndustryRequest
+	AddIndustryResponse           = basic.AddIndustryResponse
+	AddRegionRequest              = basic.AddRegionRequest
+	AddRegionResponse             = basic.AddRegionResponse
+	AddStageRequest               = basic.AddStageRequest
+	AddStageResponse              = basic.AddStageResponse
+	Configuration                 = basic.Configuration
+	GetCategoriesRequest          = basic.GetCategoriesRequest
+	GetCategoriesResponse         = basic.GetCategoriesResponse
+	GetCategoryChild              = basic.GetCategoryChild
+	GetCategoryRequest            = basic.GetCategoryRequest
+	GetCategoryResponse           = basic.GetCategoryResponse
+	GetClassifiesRequest          = basic.GetClassifiesRequest
+	GetClassifiesResponse         = basic.GetClassifiesResponse
+	GetClassifyChild              = basic.GetClassifyChild
+	GetClassifyRequest            = basic.GetClassifyRequest
+	GetClassifyResponse           = basic.GetClassifyResponse
+	GetConfigurationByNameRequest = basic.GetConfigurationByNameRequest
+	GetConfigurationRequest       = basic.GetConfigurationRequest
+	GetConfigurationResponse      = basic.GetConfigurationResponse
+	GetConfigurationsRequest      = basic.GetConfigurationsRequest
+	GetConfigurationsResponse     = basic.GetConfigurationsResponse
+	GetIndustriesRequest          = basic.GetIndustriesRequest
+	GetIndustriesResponse         = basic.GetIndustriesResponse
+	GetIndustryChild              = basic.GetIndustryChild
+	GetIndustryRequest            = basic.GetIndustryRequest
+	GetIndustryResponse           = basic.GetIndustryResponse
+	GetRegionChild                = basic.GetRegionChild
+	GetRegionRequest              = basic.GetRegionRequest
+	GetRegionResponse             = basic.GetRegionResponse
+	GetRegionsRequest             = basic.GetRegionsRequest
+	GetRegionsResponse            = basic.GetRegionsResponse
+	GetStageChild                 = basic.GetStageChild
+	GetStageRequest               = basic.GetStageRequest
+	GetStageResponse              = basic.GetStageResponse
+	GetStagesRequest              = basic.GetStagesRequest
+	GetStagesResponse             = basic.GetStagesResponse
+	Request                       = basic.Request
+	Response                      = basic.Response
+	UpdateCategoryRequest         = basic.UpdateCategoryRequest
+	UpdateCategoryResponse        = basic.UpdateCategoryResponse
+	UpdateClassifyRequest         = basic.UpdateClassifyRequest
+	UpdateClassifyResponse        = basic.UpdateClassifyResponse
+	UpdateConfigurationRequest    = basic.UpdateConfigurationRequest
+	UpdateConfigurationResponse   = basic.UpdateConfigurationResponse
+	UpdateIndustryRequest         = basic.UpdateIndustryRequest
+	UpdateIndustryResponse        = basic.UpdateIndustryResponse
+	UpdateRegionRequest           = basic.UpdateRegionRequest
+	UpdateRegionResponse          = basic.UpdateRegionResponse
+	UpdateStageRequest            = basic.UpdateStageRequest
+	UpdateStageResponse           = basic.UpdateStageResponse
 
 	Basic interface {
 		Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
@@ -59,30 +79,50 @@ type (
 		GetRegions(ctx context.Context, in *GetRegionsRequest, opts ...grpc.CallOption) (*GetRegionsResponse, error)
 		// 添加地区信息
 		AddRegion(ctx context.Context, in *AddRegionRequest, opts ...grpc.CallOption) (*AddRegionResponse, error)
+		// 更新地区信息
+		UpdateRegion(ctx context.Context, in *UpdateRegionRequest, opts ...grpc.CallOption) (*UpdateRegionResponse, error)
 		// 获取职业信息
 		GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error)
 		// 根据父级id获取职业信息
 		GetIndustries(ctx context.Context, in *GetIndustriesRequest, opts ...grpc.CallOption) (*GetIndustriesResponse, error)
 		// 添加职业信息
 		AddIndustry(ctx context.Context, in *AddIndustryRequest, opts ...grpc.CallOption) (*AddIndustryResponse, error)
+		// 更新职业信息
+		UpdateIndustry(ctx context.Context, in *UpdateIndustryRequest, opts ...grpc.CallOption) (*UpdateIndustryResponse, error)
 		// 获取分类信息
 		GetClassify(ctx context.Context, in *GetClassifyRequest, opts ...grpc.CallOption) (*GetClassifyResponse, error)
 		// 根据父级id获取分类信息
 		GetClassifies(ctx context.Context, in *GetClassifiesRequest, opts ...grpc.CallOption) (*GetClassifiesResponse, error)
 		// 添加分类信息
 		AddClassify(ctx context.Context, in *AddClassifyRequest, opts ...grpc.CallOption) (*AddClassifyResponse, error)
+		// 更新分类信息
+		UpdateClassify(ctx context.Context, in *UpdateClassifyRequest, opts ...grpc.CallOption) (*UpdateClassifyResponse, error)
 		// 获取类别信息
 		GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetCategoryResponse, error)
 		// 根据父级id获取类别信息
 		GetCategories(ctx context.Context, in *GetCategoriesRequest, opts ...grpc.CallOption) (*GetCategoriesResponse, error)
 		// 添加类别信息
 		AddCategory(ctx context.Context, in *AddCategoryRequest, opts ...grpc.CallOption) (*AddCategoryResponse, error)
+		// 更新类别信息
+		UpdateCategory(ctx context.Context, in *UpdateCategoryRequest, opts ...grpc.CallOption) (*UpdateCategoryResponse, error)
 		// 获取阶段信息
 		GetStage(ctx context.Context, in *GetStageRequest, opts ...grpc.CallOption) (*GetStageResponse, error)
 		// 根据父级id获取阶段信息
 		GetStages(ctx context.Context, in *GetStagesRequest, opts ...grpc.CallOption) (*GetStagesResponse, error)
 		// 添加阶段信息
 		AddStage(ctx context.Context, in *AddStageRequest, opts ...grpc.CallOption) (*AddStageResponse, error)
+		// 更新阶段信息
+		UpdateStage(ctx context.Context, in *UpdateStageRequest, opts ...grpc.CallOption) (*UpdateStageResponse, error)
+		// 获取配置信息
+		GetConfiguration(ctx context.Context, in *GetConfigurationRequest, opts ...grpc.CallOption) (*GetConfigurationResponse, error)
+		// 根据配置名称获取配置信息
+		GetConfigurationByName(ctx context.Context, in *GetConfigurationByNameRequest, opts ...grpc.CallOption) (*GetConfigurationResponse, error)
+		// 获取配置列表
+		GetConfigurations(ctx context.Context, in *GetConfigurationsRequest, opts ...grpc.CallOption) (*GetConfigurationsResponse, error)
+		// 添加配置信息
+		AddConfiguration(ctx context.Context, in *AddConfigurationRequest, opts ...grpc.CallOption) (*AddConfigurationResponse, error)
+		// 更新配置信息
+		UpdateConfiguration(ctx context.Context, in *UpdateConfigurationRequest, opts ...grpc.CallOption) (*UpdateConfigurationResponse, error)
 	}
 
 	defaultBasic struct {
@@ -119,6 +159,12 @@ func (m *defaultBasic) AddRegion(ctx context.Context, in *AddRegionRequest, opts
 	return client.AddRegion(ctx, in, opts...)
 }
 
+// 更新地区信息
+func (m *defaultBasic) UpdateRegion(ctx context.Context, in *UpdateRegionRequest, opts ...grpc.CallOption) (*UpdateRegionResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.UpdateRegion(ctx, in, opts...)
+}
+
 // 获取职业信息
 func (m *defaultBasic) GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
@@ -135,6 +181,12 @@ func (m *defaultBasic) GetIndustries(ctx context.Context, in *GetIndustriesReque
 func (m *defaultBasic) AddIndustry(ctx context.Context, in *AddIndustryRequest, opts ...grpc.CallOption) (*AddIndustryResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
 	return client.AddIndustry(ctx, in, opts...)
+}
+
+// 更新职业信息
+func (m *defaultBasic) UpdateIndustry(ctx context.Context, in *UpdateIndustryRequest, opts ...grpc.CallOption) (*UpdateIndustryResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.UpdateIndustry(ctx, in, opts...)
 }
 
 // 获取分类信息
@@ -155,6 +207,12 @@ func (m *defaultBasic) AddClassify(ctx context.Context, in *AddClassifyRequest, 
 	return client.AddClassify(ctx, in, opts...)
 }
 
+// 更新分类信息
+func (m *defaultBasic) UpdateClassify(ctx context.Context, in *UpdateClassifyRequest, opts ...grpc.CallOption) (*UpdateClassifyResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.UpdateClassify(ctx, in, opts...)
+}
+
 // 获取类别信息
 func (m *defaultBasic) GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetCategoryResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
@@ -173,6 +231,12 @@ func (m *defaultBasic) AddCategory(ctx context.Context, in *AddCategoryRequest, 
 	return client.AddCategory(ctx, in, opts...)
 }
 
+// 更新类别信息
+func (m *defaultBasic) UpdateCategory(ctx context.Context, in *UpdateCategoryRequest, opts ...grpc.CallOption) (*UpdateCategoryResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.UpdateCategory(ctx, in, opts...)
+}
+
 // 获取阶段信息
 func (m *defaultBasic) GetStage(ctx context.Context, in *GetStageRequest, opts ...grpc.CallOption) (*GetStageResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
@@ -189,4 +253,40 @@ func (m *defaultBasic) GetStages(ctx context.Context, in *GetStagesRequest, opts
 func (m *defaultBasic) AddStage(ctx context.Context, in *AddStageRequest, opts ...grpc.CallOption) (*AddStageResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
 	return client.AddStage(ctx, in, opts...)
+}
+
+// 更新阶段信息
+func (m *defaultBasic) UpdateStage(ctx context.Context, in *UpdateStageRequest, opts ...grpc.CallOption) (*UpdateStageResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.UpdateStage(ctx, in, opts...)
+}
+
+// 获取配置信息
+func (m *defaultBasic) GetConfiguration(ctx context.Context, in *GetConfigurationRequest, opts ...grpc.CallOption) (*GetConfigurationResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.GetConfiguration(ctx, in, opts...)
+}
+
+// 根据配置名称获取配置信息
+func (m *defaultBasic) GetConfigurationByName(ctx context.Context, in *GetConfigurationByNameRequest, opts ...grpc.CallOption) (*GetConfigurationResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.GetConfigurationByName(ctx, in, opts...)
+}
+
+// 获取配置列表
+func (m *defaultBasic) GetConfigurations(ctx context.Context, in *GetConfigurationsRequest, opts ...grpc.CallOption) (*GetConfigurationsResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.GetConfigurations(ctx, in, opts...)
+}
+
+// 添加配置信息
+func (m *defaultBasic) AddConfiguration(ctx context.Context, in *AddConfigurationRequest, opts ...grpc.CallOption) (*AddConfigurationResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.AddConfiguration(ctx, in, opts...)
+}
+
+// 更新配置信息
+func (m *defaultBasic) UpdateConfiguration(ctx context.Context, in *UpdateConfigurationRequest, opts ...grpc.CallOption) (*UpdateConfigurationResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.UpdateConfiguration(ctx, in, opts...)
 }

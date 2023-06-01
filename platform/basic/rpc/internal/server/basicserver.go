@@ -45,6 +45,12 @@ func (s *BasicServer) AddRegion(ctx context.Context, in *basic.AddRegionRequest)
 	return l.AddRegion(in)
 }
 
+// 更新地区信息
+func (s *BasicServer) UpdateRegion(ctx context.Context, in *basic.UpdateRegionRequest) (*basic.UpdateRegionResponse, error) {
+	l := logic.NewUpdateRegionLogic(ctx, s.svcCtx)
+	return l.UpdateRegion(in)
+}
+
 // 获取职业信息
 func (s *BasicServer) GetIndustry(ctx context.Context, in *basic.GetIndustryRequest) (*basic.GetIndustryResponse, error) {
 	l := logic.NewGetIndustryLogic(ctx, s.svcCtx)
@@ -61,6 +67,12 @@ func (s *BasicServer) GetIndustries(ctx context.Context, in *basic.GetIndustries
 func (s *BasicServer) AddIndustry(ctx context.Context, in *basic.AddIndustryRequest) (*basic.AddIndustryResponse, error) {
 	l := logic.NewAddIndustryLogic(ctx, s.svcCtx)
 	return l.AddIndustry(in)
+}
+
+// 更新职业信息
+func (s *BasicServer) UpdateIndustry(ctx context.Context, in *basic.UpdateIndustryRequest) (*basic.UpdateIndustryResponse, error) {
+	l := logic.NewUpdateIndustryLogic(ctx, s.svcCtx)
+	return l.UpdateIndustry(in)
 }
 
 // 获取分类信息
@@ -81,6 +93,12 @@ func (s *BasicServer) AddClassify(ctx context.Context, in *basic.AddClassifyRequ
 	return l.AddClassify(in)
 }
 
+// 更新分类信息
+func (s *BasicServer) UpdateClassify(ctx context.Context, in *basic.UpdateClassifyRequest) (*basic.UpdateClassifyResponse, error) {
+	l := logic.NewUpdateClassifyLogic(ctx, s.svcCtx)
+	return l.UpdateClassify(in)
+}
+
 // 获取类别信息
 func (s *BasicServer) GetCategory(ctx context.Context, in *basic.GetCategoryRequest) (*basic.GetCategoryResponse, error) {
 	l := logic.NewGetCategoryLogic(ctx, s.svcCtx)
@@ -99,6 +117,12 @@ func (s *BasicServer) AddCategory(ctx context.Context, in *basic.AddCategoryRequ
 	return l.AddCategory(in)
 }
 
+// 更新类别信息
+func (s *BasicServer) UpdateCategory(ctx context.Context, in *basic.UpdateCategoryRequest) (*basic.UpdateCategoryResponse, error) {
+	l := logic.NewUpdateCategoryLogic(ctx, s.svcCtx)
+	return l.UpdateCategory(in)
+}
+
 // 获取阶段信息
 func (s *BasicServer) GetStage(ctx context.Context, in *basic.GetStageRequest) (*basic.GetStageResponse, error) {
 	l := logic.NewGetStageLogic(ctx, s.svcCtx)
@@ -115,4 +139,40 @@ func (s *BasicServer) GetStages(ctx context.Context, in *basic.GetStagesRequest)
 func (s *BasicServer) AddStage(ctx context.Context, in *basic.AddStageRequest) (*basic.AddStageResponse, error) {
 	l := logic.NewAddStageLogic(ctx, s.svcCtx)
 	return l.AddStage(in)
+}
+
+// 更新阶段信息
+func (s *BasicServer) UpdateStage(ctx context.Context, in *basic.UpdateStageRequest) (*basic.UpdateStageResponse, error) {
+	l := logic.NewUpdateStageLogic(ctx, s.svcCtx)
+	return l.UpdateStage(in)
+}
+
+// 获取配置信息
+func (s *BasicServer) GetConfiguration(ctx context.Context, in *basic.GetConfigurationRequest) (*basic.GetConfigurationResponse, error) {
+	l := logic.NewGetConfigurationLogic(ctx, s.svcCtx)
+	return l.GetConfiguration(in)
+}
+
+// 根据配置名称获取配置信息
+func (s *BasicServer) GetConfigurationByName(ctx context.Context, in *basic.GetConfigurationByNameRequest) (*basic.GetConfigurationResponse, error) {
+	l := logic.NewGetConfigurationByNameLogic(ctx, s.svcCtx)
+	return l.GetConfigurationByName(in)
+}
+
+// 获取配置列表
+func (s *BasicServer) GetConfigurations(ctx context.Context, in *basic.GetConfigurationsRequest) (*basic.GetConfigurationsResponse, error) {
+	l := logic.NewGetConfigurationsLogic(ctx, s.svcCtx)
+	return l.GetConfigurations(in)
+}
+
+// 添加配置信息
+func (s *BasicServer) AddConfiguration(ctx context.Context, in *basic.AddConfigurationRequest) (*basic.AddConfigurationResponse, error) {
+	l := logic.NewAddConfigurationLogic(ctx, s.svcCtx)
+	return l.AddConfiguration(in)
+}
+
+// 更新配置信息
+func (s *BasicServer) UpdateConfiguration(ctx context.Context, in *basic.UpdateConfigurationRequest) (*basic.UpdateConfigurationResponse, error) {
+	l := logic.NewUpdateConfigurationLogic(ctx, s.svcCtx)
+	return l.UpdateConfiguration(in)
 }

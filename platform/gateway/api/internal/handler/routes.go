@@ -33,6 +33,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: addRegionHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodPut,
+				Path:    "/region/:id",
+				Handler: updateRegionHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodGet,
 				Path:    "/industry/:industry_id",
 				Handler: getIndustryHandler(serverCtx),
@@ -51,6 +56,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/industry",
 				Handler: addIndustryHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/industry/:id",
+				Handler: updateIndustryHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
@@ -73,6 +83,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: addCategoryHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodPut,
+				Path:    "/category/:id",
+				Handler: updateCategoryHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodGet,
 				Path:    "/classify/:id",
 				Handler: getClassifyHandler(serverCtx),
@@ -93,6 +108,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: addClassifyHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodPut,
+				Path:    "/classify/:id",
+				Handler: updateClassifyHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodGet,
 				Path:    "/stage/:id",
 				Handler: getStageHandler(serverCtx),
@@ -106,6 +126,36 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/stage",
 				Handler: addStageHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/stage/:id",
+				Handler: updateStageHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/configuration/:id",
+				Handler: getConfigurationHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/configuration/:name",
+				Handler: getConfigurationByNameHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/configurations",
+				Handler: getConfigurationsHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/configuration",
+				Handler: addConfigurationHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/configuration/:id",
+				Handler: updateConfigurationHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,

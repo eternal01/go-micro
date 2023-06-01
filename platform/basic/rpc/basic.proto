@@ -11,6 +11,8 @@ message Response {
   string pong = 1;
 }
 
+
+//地区
 message GetRegionRequest {
   int64 Id = 1;
 }
@@ -44,7 +46,18 @@ message AddRegionResponse {
   int64 Id = 1;
 }
 
+message UpdateRegionRequest {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string Name = 3;
+}
 
+message UpdateRegionResponse {
+  int64 Id = 1;
+}
+
+
+//职业
 message GetIndustryRequest {
   string IndustryId = 1;
 }
@@ -87,7 +100,21 @@ message AddIndustryResponse {
   int64 Id = 1;
 }
 
+message UpdateIndustryRequest {
+  int64 Id = 1;
+  string IndustryId = 2;
+  string Name = 3;
+  string ParentId = 4;
+  int64 LevelType = 5;
+  string Description = 6;
+}
 
+message UpdateIndustryResponse {
+  int64 Id = 1;
+}
+
+
+//分类
 message GetClassifyRequest {
   int64 Id = 1;
 }
@@ -124,7 +151,19 @@ message AddClassifyResponse {
   int64 Id = 1;
 }
 
+message UpdateClassifyRequest {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string Name = 3;
+  string Description = 4;
+}
 
+message UpdateClassifyResponse {
+  int64 Id = 1;
+}
+
+
+//类别
 message GetCategoryRequest {
   int64 Id = 1;
 }
@@ -161,7 +200,19 @@ message AddCategoryResponse {
   int64 Id = 1;
 }
 
+message UpdateCategoryRequest {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string Name = 3;
+  string Description = 4;
+}
 
+message UpdateCategoryResponse {
+  int64 Id = 1;
+}
+
+
+//阶段
 message GetStageRequest {
   int64 Id = 1;
 }
@@ -198,6 +249,72 @@ message AddStageResponse {
   int64 Id = 1;
 }
 
+message UpdateStageRequest {
+  int64 Id = 1;
+  int64 ParentId = 2;
+  string Name = 3;
+  string Description = 4;
+}
+
+message UpdateStageResponse {
+  int64 Id = 1;
+}
+
+
+//配置
+message GetConfigurationRequest {
+  int64 Id = 1;
+}
+
+message GetConfigurationByNameRequest {
+  string Name = 1;
+}
+
+message GetConfigurationResponse {
+  int64 Id = 1;
+  string Name = 2;
+  string Description = 3;
+  string Content = 4;
+}
+
+message GetConfigurationsRequest {
+
+}
+
+message GetConfigurationsResponse {
+  repeated Configuration List = 1;
+}
+
+message Configuration {
+  int64 Id = 1;
+  string Name = 2;
+  string Description = 3;
+  string Content = 4;
+}
+
+message AddConfigurationRequest {
+  string Name = 1;
+  string Description = 2;
+  string Content = 3;
+}
+
+message AddConfigurationResponse {
+  int64 Id = 1;
+}
+
+message UpdateConfigurationRequest {
+  int64 Id = 1;
+  string Name = 2;
+  string Description = 3;
+  string Content = 4;
+}
+
+message UpdateConfigurationResponse {
+  int64 Id = 1;
+}
+
+
+
 service Basic {
   rpc Ping(Request) returns(Response);
 
@@ -207,6 +324,8 @@ service Basic {
   rpc getRegions(GetRegionsRequest) returns(GetRegionsResponse);
   //添加地区信息
   rpc addRegion(AddRegionRequest) returns(AddRegionResponse);
+  //更新地区信息
+  rpc updateRegion(UpdateRegionRequest) returns(UpdateRegionResponse);
 
   //获取职业信息
   rpc getIndustry(GetIndustryRequest) returns(GetIndustryResponse);
@@ -214,6 +333,8 @@ service Basic {
   rpc getIndustries(GetIndustriesRequest) returns(GetIndustriesResponse);
   //添加职业信息
   rpc addIndustry(AddIndustryRequest) returns(AddIndustryResponse);
+  //更新职业信息
+  rpc updateIndustry(UpdateIndustryRequest) returns(UpdateIndustryResponse);
 
   //获取分类信息
   rpc getClassify(GetClassifyRequest) returns(GetClassifyResponse);
@@ -221,6 +342,8 @@ service Basic {
   rpc getClassifies(GetClassifiesRequest) returns(GetClassifiesResponse);
   //添加分类信息
   rpc addClassify(AddClassifyRequest) returns(AddClassifyResponse);
+  //更新分类信息
+  rpc updateClassify(UpdateClassifyRequest) returns(UpdateClassifyResponse);
   
   //获取类别信息
   rpc getCategory(GetCategoryRequest) returns(GetCategoryResponse);
@@ -228,6 +351,8 @@ service Basic {
   rpc getCategories(GetCategoriesRequest) returns(GetCategoriesResponse);
   //添加类别信息
   rpc addCategory(AddCategoryRequest) returns(AddCategoryResponse);
+  //更新类别信息
+  rpc updateCategory(UpdateCategoryRequest) returns(UpdateCategoryResponse);
 
   //获取阶段信息
   rpc getStage(GetStageRequest) returns(GetStageResponse);
@@ -235,4 +360,17 @@ service Basic {
   rpc getStages(GetStagesRequest) returns(GetStagesResponse);
   //添加阶段信息
   rpc addStage(AddStageRequest) returns(AddStageResponse);
+  //更新阶段信息
+  rpc updateStage(UpdateStageRequest) returns(UpdateStageResponse);
+
+  //获取配置信息
+  rpc getConfiguration(GetConfigurationRequest) returns(GetConfigurationResponse);
+  //根据配置名称获取配置信息
+  rpc getConfigurationByName(GetConfigurationByNameRequest) returns(GetConfigurationResponse);
+  //获取配置列表
+  rpc getConfigurations(GetConfigurationsRequest) returns(GetConfigurationsResponse);
+  //添加配置信息
+  rpc addConfiguration(AddConfigurationRequest) returns(AddConfigurationResponse);
+  //更新配置信息
+  rpc updateConfiguration(UpdateConfigurationRequest) returns(UpdateConfigurationResponse);
 }

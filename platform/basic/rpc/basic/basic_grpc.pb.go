@@ -19,22 +19,32 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Basic_Ping_FullMethodName          = "/basic.Basic/Ping"
-	Basic_GetRegion_FullMethodName     = "/basic.Basic/getRegion"
-	Basic_GetRegions_FullMethodName    = "/basic.Basic/getRegions"
-	Basic_AddRegion_FullMethodName     = "/basic.Basic/addRegion"
-	Basic_GetIndustry_FullMethodName   = "/basic.Basic/getIndustry"
-	Basic_GetIndustries_FullMethodName = "/basic.Basic/getIndustries"
-	Basic_AddIndustry_FullMethodName   = "/basic.Basic/addIndustry"
-	Basic_GetClassify_FullMethodName   = "/basic.Basic/getClassify"
-	Basic_GetClassifies_FullMethodName = "/basic.Basic/getClassifies"
-	Basic_AddClassify_FullMethodName   = "/basic.Basic/addClassify"
-	Basic_GetCategory_FullMethodName   = "/basic.Basic/getCategory"
-	Basic_GetCategories_FullMethodName = "/basic.Basic/getCategories"
-	Basic_AddCategory_FullMethodName   = "/basic.Basic/addCategory"
-	Basic_GetStage_FullMethodName      = "/basic.Basic/getStage"
-	Basic_GetStages_FullMethodName     = "/basic.Basic/getStages"
-	Basic_AddStage_FullMethodName      = "/basic.Basic/addStage"
+	Basic_Ping_FullMethodName                   = "/basic.Basic/Ping"
+	Basic_GetRegion_FullMethodName              = "/basic.Basic/getRegion"
+	Basic_GetRegions_FullMethodName             = "/basic.Basic/getRegions"
+	Basic_AddRegion_FullMethodName              = "/basic.Basic/addRegion"
+	Basic_UpdateRegion_FullMethodName           = "/basic.Basic/updateRegion"
+	Basic_GetIndustry_FullMethodName            = "/basic.Basic/getIndustry"
+	Basic_GetIndustries_FullMethodName          = "/basic.Basic/getIndustries"
+	Basic_AddIndustry_FullMethodName            = "/basic.Basic/addIndustry"
+	Basic_UpdateIndustry_FullMethodName         = "/basic.Basic/updateIndustry"
+	Basic_GetClassify_FullMethodName            = "/basic.Basic/getClassify"
+	Basic_GetClassifies_FullMethodName          = "/basic.Basic/getClassifies"
+	Basic_AddClassify_FullMethodName            = "/basic.Basic/addClassify"
+	Basic_UpdateClassify_FullMethodName         = "/basic.Basic/updateClassify"
+	Basic_GetCategory_FullMethodName            = "/basic.Basic/getCategory"
+	Basic_GetCategories_FullMethodName          = "/basic.Basic/getCategories"
+	Basic_AddCategory_FullMethodName            = "/basic.Basic/addCategory"
+	Basic_UpdateCategory_FullMethodName         = "/basic.Basic/updateCategory"
+	Basic_GetStage_FullMethodName               = "/basic.Basic/getStage"
+	Basic_GetStages_FullMethodName              = "/basic.Basic/getStages"
+	Basic_AddStage_FullMethodName               = "/basic.Basic/addStage"
+	Basic_UpdateStage_FullMethodName            = "/basic.Basic/updateStage"
+	Basic_GetConfiguration_FullMethodName       = "/basic.Basic/getConfiguration"
+	Basic_GetConfigurationByName_FullMethodName = "/basic.Basic/getConfigurationByName"
+	Basic_GetConfigurations_FullMethodName      = "/basic.Basic/getConfigurations"
+	Basic_AddConfiguration_FullMethodName       = "/basic.Basic/addConfiguration"
+	Basic_UpdateConfiguration_FullMethodName    = "/basic.Basic/updateConfiguration"
 )
 
 // BasicClient is the client API for Basic service.
@@ -48,30 +58,50 @@ type BasicClient interface {
 	GetRegions(ctx context.Context, in *GetRegionsRequest, opts ...grpc.CallOption) (*GetRegionsResponse, error)
 	// 添加地区信息
 	AddRegion(ctx context.Context, in *AddRegionRequest, opts ...grpc.CallOption) (*AddRegionResponse, error)
+	// 更新地区信息
+	UpdateRegion(ctx context.Context, in *UpdateRegionRequest, opts ...grpc.CallOption) (*UpdateRegionResponse, error)
 	// 获取职业信息
 	GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error)
 	// 根据父级id获取职业信息
 	GetIndustries(ctx context.Context, in *GetIndustriesRequest, opts ...grpc.CallOption) (*GetIndustriesResponse, error)
 	// 添加职业信息
 	AddIndustry(ctx context.Context, in *AddIndustryRequest, opts ...grpc.CallOption) (*AddIndustryResponse, error)
+	// 更新职业信息
+	UpdateIndustry(ctx context.Context, in *UpdateIndustryRequest, opts ...grpc.CallOption) (*UpdateIndustryResponse, error)
 	// 获取分类信息
 	GetClassify(ctx context.Context, in *GetClassifyRequest, opts ...grpc.CallOption) (*GetClassifyResponse, error)
 	// 根据父级id获取分类信息
 	GetClassifies(ctx context.Context, in *GetClassifiesRequest, opts ...grpc.CallOption) (*GetClassifiesResponse, error)
 	// 添加分类信息
 	AddClassify(ctx context.Context, in *AddClassifyRequest, opts ...grpc.CallOption) (*AddClassifyResponse, error)
+	// 更新分类信息
+	UpdateClassify(ctx context.Context, in *UpdateClassifyRequest, opts ...grpc.CallOption) (*UpdateClassifyResponse, error)
 	// 获取类别信息
 	GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetCategoryResponse, error)
 	// 根据父级id获取类别信息
 	GetCategories(ctx context.Context, in *GetCategoriesRequest, opts ...grpc.CallOption) (*GetCategoriesResponse, error)
 	// 添加类别信息
 	AddCategory(ctx context.Context, in *AddCategoryRequest, opts ...grpc.CallOption) (*AddCategoryResponse, error)
+	// 更新类别信息
+	UpdateCategory(ctx context.Context, in *UpdateCategoryRequest, opts ...grpc.CallOption) (*UpdateCategoryResponse, error)
 	// 获取阶段信息
 	GetStage(ctx context.Context, in *GetStageRequest, opts ...grpc.CallOption) (*GetStageResponse, error)
 	// 根据父级id获取阶段信息
 	GetStages(ctx context.Context, in *GetStagesRequest, opts ...grpc.CallOption) (*GetStagesResponse, error)
 	// 添加阶段信息
 	AddStage(ctx context.Context, in *AddStageRequest, opts ...grpc.CallOption) (*AddStageResponse, error)
+	// 更新阶段信息
+	UpdateStage(ctx context.Context, in *UpdateStageRequest, opts ...grpc.CallOption) (*UpdateStageResponse, error)
+	// 获取配置信息
+	GetConfiguration(ctx context.Context, in *GetConfigurationRequest, opts ...grpc.CallOption) (*GetConfigurationResponse, error)
+	// 根据配置名称获取配置信息
+	GetConfigurationByName(ctx context.Context, in *GetConfigurationByNameRequest, opts ...grpc.CallOption) (*GetConfigurationResponse, error)
+	// 获取配置列表
+	GetConfigurations(ctx context.Context, in *GetConfigurationsRequest, opts ...grpc.CallOption) (*GetConfigurationsResponse, error)
+	// 添加配置信息
+	AddConfiguration(ctx context.Context, in *AddConfigurationRequest, opts ...grpc.CallOption) (*AddConfigurationResponse, error)
+	// 更新配置信息
+	UpdateConfiguration(ctx context.Context, in *UpdateConfigurationRequest, opts ...grpc.CallOption) (*UpdateConfigurationResponse, error)
 }
 
 type basicClient struct {
@@ -118,6 +148,15 @@ func (c *basicClient) AddRegion(ctx context.Context, in *AddRegionRequest, opts 
 	return out, nil
 }
 
+func (c *basicClient) UpdateRegion(ctx context.Context, in *UpdateRegionRequest, opts ...grpc.CallOption) (*UpdateRegionResponse, error) {
+	out := new(UpdateRegionResponse)
+	err := c.cc.Invoke(ctx, Basic_UpdateRegion_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *basicClient) GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error) {
 	out := new(GetIndustryResponse)
 	err := c.cc.Invoke(ctx, Basic_GetIndustry_FullMethodName, in, out, opts...)
@@ -139,6 +178,15 @@ func (c *basicClient) GetIndustries(ctx context.Context, in *GetIndustriesReques
 func (c *basicClient) AddIndustry(ctx context.Context, in *AddIndustryRequest, opts ...grpc.CallOption) (*AddIndustryResponse, error) {
 	out := new(AddIndustryResponse)
 	err := c.cc.Invoke(ctx, Basic_AddIndustry_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) UpdateIndustry(ctx context.Context, in *UpdateIndustryRequest, opts ...grpc.CallOption) (*UpdateIndustryResponse, error) {
+	out := new(UpdateIndustryResponse)
+	err := c.cc.Invoke(ctx, Basic_UpdateIndustry_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -172,6 +220,15 @@ func (c *basicClient) AddClassify(ctx context.Context, in *AddClassifyRequest, o
 	return out, nil
 }
 
+func (c *basicClient) UpdateClassify(ctx context.Context, in *UpdateClassifyRequest, opts ...grpc.CallOption) (*UpdateClassifyResponse, error) {
+	out := new(UpdateClassifyResponse)
+	err := c.cc.Invoke(ctx, Basic_UpdateClassify_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *basicClient) GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetCategoryResponse, error) {
 	out := new(GetCategoryResponse)
 	err := c.cc.Invoke(ctx, Basic_GetCategory_FullMethodName, in, out, opts...)
@@ -193,6 +250,15 @@ func (c *basicClient) GetCategories(ctx context.Context, in *GetCategoriesReques
 func (c *basicClient) AddCategory(ctx context.Context, in *AddCategoryRequest, opts ...grpc.CallOption) (*AddCategoryResponse, error) {
 	out := new(AddCategoryResponse)
 	err := c.cc.Invoke(ctx, Basic_AddCategory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) UpdateCategory(ctx context.Context, in *UpdateCategoryRequest, opts ...grpc.CallOption) (*UpdateCategoryResponse, error) {
+	out := new(UpdateCategoryResponse)
+	err := c.cc.Invoke(ctx, Basic_UpdateCategory_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -226,6 +292,60 @@ func (c *basicClient) AddStage(ctx context.Context, in *AddStageRequest, opts ..
 	return out, nil
 }
 
+func (c *basicClient) UpdateStage(ctx context.Context, in *UpdateStageRequest, opts ...grpc.CallOption) (*UpdateStageResponse, error) {
+	out := new(UpdateStageResponse)
+	err := c.cc.Invoke(ctx, Basic_UpdateStage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) GetConfiguration(ctx context.Context, in *GetConfigurationRequest, opts ...grpc.CallOption) (*GetConfigurationResponse, error) {
+	out := new(GetConfigurationResponse)
+	err := c.cc.Invoke(ctx, Basic_GetConfiguration_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) GetConfigurationByName(ctx context.Context, in *GetConfigurationByNameRequest, opts ...grpc.CallOption) (*GetConfigurationResponse, error) {
+	out := new(GetConfigurationResponse)
+	err := c.cc.Invoke(ctx, Basic_GetConfigurationByName_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) GetConfigurations(ctx context.Context, in *GetConfigurationsRequest, opts ...grpc.CallOption) (*GetConfigurationsResponse, error) {
+	out := new(GetConfigurationsResponse)
+	err := c.cc.Invoke(ctx, Basic_GetConfigurations_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) AddConfiguration(ctx context.Context, in *AddConfigurationRequest, opts ...grpc.CallOption) (*AddConfigurationResponse, error) {
+	out := new(AddConfigurationResponse)
+	err := c.cc.Invoke(ctx, Basic_AddConfiguration_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) UpdateConfiguration(ctx context.Context, in *UpdateConfigurationRequest, opts ...grpc.CallOption) (*UpdateConfigurationResponse, error) {
+	out := new(UpdateConfigurationResponse)
+	err := c.cc.Invoke(ctx, Basic_UpdateConfiguration_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BasicServer is the server API for Basic service.
 // All implementations must embed UnimplementedBasicServer
 // for forward compatibility
@@ -237,30 +357,50 @@ type BasicServer interface {
 	GetRegions(context.Context, *GetRegionsRequest) (*GetRegionsResponse, error)
 	// 添加地区信息
 	AddRegion(context.Context, *AddRegionRequest) (*AddRegionResponse, error)
+	// 更新地区信息
+	UpdateRegion(context.Context, *UpdateRegionRequest) (*UpdateRegionResponse, error)
 	// 获取职业信息
 	GetIndustry(context.Context, *GetIndustryRequest) (*GetIndustryResponse, error)
 	// 根据父级id获取职业信息
 	GetIndustries(context.Context, *GetIndustriesRequest) (*GetIndustriesResponse, error)
 	// 添加职业信息
 	AddIndustry(context.Context, *AddIndustryRequest) (*AddIndustryResponse, error)
+	// 更新职业信息
+	UpdateIndustry(context.Context, *UpdateIndustryRequest) (*UpdateIndustryResponse, error)
 	// 获取分类信息
 	GetClassify(context.Context, *GetClassifyRequest) (*GetClassifyResponse, error)
 	// 根据父级id获取分类信息
 	GetClassifies(context.Context, *GetClassifiesRequest) (*GetClassifiesResponse, error)
 	// 添加分类信息
 	AddClassify(context.Context, *AddClassifyRequest) (*AddClassifyResponse, error)
+	// 更新分类信息
+	UpdateClassify(context.Context, *UpdateClassifyRequest) (*UpdateClassifyResponse, error)
 	// 获取类别信息
 	GetCategory(context.Context, *GetCategoryRequest) (*GetCategoryResponse, error)
 	// 根据父级id获取类别信息
 	GetCategories(context.Context, *GetCategoriesRequest) (*GetCategoriesResponse, error)
 	// 添加类别信息
 	AddCategory(context.Context, *AddCategoryRequest) (*AddCategoryResponse, error)
+	// 更新类别信息
+	UpdateCategory(context.Context, *UpdateCategoryRequest) (*UpdateCategoryResponse, error)
 	// 获取阶段信息
 	GetStage(context.Context, *GetStageRequest) (*GetStageResponse, error)
 	// 根据父级id获取阶段信息
 	GetStages(context.Context, *GetStagesRequest) (*GetStagesResponse, error)
 	// 添加阶段信息
 	AddStage(context.Context, *AddStageRequest) (*AddStageResponse, error)
+	// 更新阶段信息
+	UpdateStage(context.Context, *UpdateStageRequest) (*UpdateStageResponse, error)
+	// 获取配置信息
+	GetConfiguration(context.Context, *GetConfigurationRequest) (*GetConfigurationResponse, error)
+	// 根据配置名称获取配置信息
+	GetConfigurationByName(context.Context, *GetConfigurationByNameRequest) (*GetConfigurationResponse, error)
+	// 获取配置列表
+	GetConfigurations(context.Context, *GetConfigurationsRequest) (*GetConfigurationsResponse, error)
+	// 添加配置信息
+	AddConfiguration(context.Context, *AddConfigurationRequest) (*AddConfigurationResponse, error)
+	// 更新配置信息
+	UpdateConfiguration(context.Context, *UpdateConfigurationRequest) (*UpdateConfigurationResponse, error)
 	mustEmbedUnimplementedBasicServer()
 }
 
@@ -280,6 +420,9 @@ func (UnimplementedBasicServer) GetRegions(context.Context, *GetRegionsRequest) 
 func (UnimplementedBasicServer) AddRegion(context.Context, *AddRegionRequest) (*AddRegionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddRegion not implemented")
 }
+func (UnimplementedBasicServer) UpdateRegion(context.Context, *UpdateRegionRequest) (*UpdateRegionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRegion not implemented")
+}
 func (UnimplementedBasicServer) GetIndustry(context.Context, *GetIndustryRequest) (*GetIndustryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetIndustry not implemented")
 }
@@ -288,6 +431,9 @@ func (UnimplementedBasicServer) GetIndustries(context.Context, *GetIndustriesReq
 }
 func (UnimplementedBasicServer) AddIndustry(context.Context, *AddIndustryRequest) (*AddIndustryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddIndustry not implemented")
+}
+func (UnimplementedBasicServer) UpdateIndustry(context.Context, *UpdateIndustryRequest) (*UpdateIndustryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateIndustry not implemented")
 }
 func (UnimplementedBasicServer) GetClassify(context.Context, *GetClassifyRequest) (*GetClassifyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetClassify not implemented")
@@ -298,6 +444,9 @@ func (UnimplementedBasicServer) GetClassifies(context.Context, *GetClassifiesReq
 func (UnimplementedBasicServer) AddClassify(context.Context, *AddClassifyRequest) (*AddClassifyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddClassify not implemented")
 }
+func (UnimplementedBasicServer) UpdateClassify(context.Context, *UpdateClassifyRequest) (*UpdateClassifyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateClassify not implemented")
+}
 func (UnimplementedBasicServer) GetCategory(context.Context, *GetCategoryRequest) (*GetCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategory not implemented")
 }
@@ -307,6 +456,9 @@ func (UnimplementedBasicServer) GetCategories(context.Context, *GetCategoriesReq
 func (UnimplementedBasicServer) AddCategory(context.Context, *AddCategoryRequest) (*AddCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddCategory not implemented")
 }
+func (UnimplementedBasicServer) UpdateCategory(context.Context, *UpdateCategoryRequest) (*UpdateCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCategory not implemented")
+}
 func (UnimplementedBasicServer) GetStage(context.Context, *GetStageRequest) (*GetStageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStage not implemented")
 }
@@ -315,6 +467,24 @@ func (UnimplementedBasicServer) GetStages(context.Context, *GetStagesRequest) (*
 }
 func (UnimplementedBasicServer) AddStage(context.Context, *AddStageRequest) (*AddStageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddStage not implemented")
+}
+func (UnimplementedBasicServer) UpdateStage(context.Context, *UpdateStageRequest) (*UpdateStageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateStage not implemented")
+}
+func (UnimplementedBasicServer) GetConfiguration(context.Context, *GetConfigurationRequest) (*GetConfigurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetConfiguration not implemented")
+}
+func (UnimplementedBasicServer) GetConfigurationByName(context.Context, *GetConfigurationByNameRequest) (*GetConfigurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetConfigurationByName not implemented")
+}
+func (UnimplementedBasicServer) GetConfigurations(context.Context, *GetConfigurationsRequest) (*GetConfigurationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetConfigurations not implemented")
+}
+func (UnimplementedBasicServer) AddConfiguration(context.Context, *AddConfigurationRequest) (*AddConfigurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddConfiguration not implemented")
+}
+func (UnimplementedBasicServer) UpdateConfiguration(context.Context, *UpdateConfigurationRequest) (*UpdateConfigurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateConfiguration not implemented")
 }
 func (UnimplementedBasicServer) mustEmbedUnimplementedBasicServer() {}
 
@@ -401,6 +571,24 @@ func _Basic_AddRegion_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Basic_UpdateRegion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRegionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).UpdateRegion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_UpdateRegion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).UpdateRegion(ctx, req.(*UpdateRegionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Basic_GetIndustry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetIndustryRequest)
 	if err := dec(in); err != nil {
@@ -451,6 +639,24 @@ func _Basic_AddIndustry_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BasicServer).AddIndustry(ctx, req.(*AddIndustryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_UpdateIndustry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateIndustryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).UpdateIndustry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_UpdateIndustry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).UpdateIndustry(ctx, req.(*UpdateIndustryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -509,6 +715,24 @@ func _Basic_AddClassify_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Basic_UpdateClassify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateClassifyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).UpdateClassify(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_UpdateClassify_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).UpdateClassify(ctx, req.(*UpdateClassifyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Basic_GetCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetCategoryRequest)
 	if err := dec(in); err != nil {
@@ -559,6 +783,24 @@ func _Basic_AddCategory_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BasicServer).AddCategory(ctx, req.(*AddCategoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_UpdateCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCategoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).UpdateCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_UpdateCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).UpdateCategory(ctx, req.(*UpdateCategoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -617,6 +859,114 @@ func _Basic_AddStage_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Basic_UpdateStage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateStageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).UpdateStage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_UpdateStage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).UpdateStage(ctx, req.(*UpdateStageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_GetConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetConfigurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).GetConfiguration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_GetConfiguration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).GetConfiguration(ctx, req.(*GetConfigurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_GetConfigurationByName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetConfigurationByNameRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).GetConfigurationByName(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_GetConfigurationByName_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).GetConfigurationByName(ctx, req.(*GetConfigurationByNameRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_GetConfigurations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetConfigurationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).GetConfigurations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_GetConfigurations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).GetConfigurations(ctx, req.(*GetConfigurationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_AddConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddConfigurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).AddConfiguration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_AddConfiguration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).AddConfiguration(ctx, req.(*AddConfigurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_UpdateConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateConfigurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).UpdateConfiguration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_UpdateConfiguration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).UpdateConfiguration(ctx, req.(*UpdateConfigurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Basic_ServiceDesc is the grpc.ServiceDesc for Basic service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -641,6 +991,10 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Basic_AddRegion_Handler,
 		},
 		{
+			MethodName: "updateRegion",
+			Handler:    _Basic_UpdateRegion_Handler,
+		},
+		{
 			MethodName: "getIndustry",
 			Handler:    _Basic_GetIndustry_Handler,
 		},
@@ -651,6 +1005,10 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "addIndustry",
 			Handler:    _Basic_AddIndustry_Handler,
+		},
+		{
+			MethodName: "updateIndustry",
+			Handler:    _Basic_UpdateIndustry_Handler,
 		},
 		{
 			MethodName: "getClassify",
@@ -665,6 +1023,10 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Basic_AddClassify_Handler,
 		},
 		{
+			MethodName: "updateClassify",
+			Handler:    _Basic_UpdateClassify_Handler,
+		},
+		{
 			MethodName: "getCategory",
 			Handler:    _Basic_GetCategory_Handler,
 		},
@@ -677,6 +1039,10 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Basic_AddCategory_Handler,
 		},
 		{
+			MethodName: "updateCategory",
+			Handler:    _Basic_UpdateCategory_Handler,
+		},
+		{
 			MethodName: "getStage",
 			Handler:    _Basic_GetStage_Handler,
 		},
@@ -687,6 +1053,30 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "addStage",
 			Handler:    _Basic_AddStage_Handler,
+		},
+		{
+			MethodName: "updateStage",
+			Handler:    _Basic_UpdateStage_Handler,
+		},
+		{
+			MethodName: "getConfiguration",
+			Handler:    _Basic_GetConfiguration_Handler,
+		},
+		{
+			MethodName: "getConfigurationByName",
+			Handler:    _Basic_GetConfigurationByName_Handler,
+		},
+		{
+			MethodName: "getConfigurations",
+			Handler:    _Basic_GetConfigurations_Handler,
+		},
+		{
+			MethodName: "addConfiguration",
+			Handler:    _Basic_AddConfiguration_Handler,
+		},
+		{
+			MethodName: "updateConfiguration",
+			Handler:    _Basic_UpdateConfiguration_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

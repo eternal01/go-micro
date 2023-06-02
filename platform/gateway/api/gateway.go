@@ -32,7 +32,7 @@ func main() {
 	// 全局中间件
 	server.Use(func(next http.HandlerFunc) http.HandlerFunc {
 		return func(w http.ResponseWriter, r *http.Request) {
-			logx.Slow("Glabal Middleware")
+			logx.Slowf("Request - %+v", r)
 			next(w, r)
 		}
 	})

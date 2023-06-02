@@ -38,7 +38,7 @@ func (l *GetUserLogic) GetUser(req *types.GatewayGetUserRequest) (resp *types.Ga
 		return nil, err
 	}
 	if user.Id == 0 {
-		return nil, errorx.UserNotFound
+		return nil, errorx.UserNotFoundError
 	}
 	return &types.GatewayGetUserReply{
 		Id:       user.Id,

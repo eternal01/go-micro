@@ -58,7 +58,18 @@ type GatewayUpdateRegionReply struct {
 	Id int64 `json:"id"`
 }
 
+type GatewayDeleteRegionRequest struct {
+	Id int64 `path:"id"`
+}
+
+type GatewayDeleteRegionReply struct {
+}
+
 type GatewayGetIndustryRequest struct {
+	Id int64 `path:"id"`
+}
+
+type GatewayGetIndustryByIndustryIdRequest struct {
 	IndustryId string `path:"industry_id"`
 }
 
@@ -130,6 +141,13 @@ type GatewayUpdateIndustryReply struct {
 	Id int64 `json:"id"`
 }
 
+type GatewayDeleteIndustryRequest struct {
+	Id int64 `path:"id"`
+}
+
+type GatewayDeleteIndustryReply struct {
+}
+
 type GatewayGetCategoryRequest struct {
 	Id int64 `path:"id"`
 }
@@ -190,6 +208,13 @@ type GatewayUpdateCategoryRequest struct {
 
 type GatewayUpdateCategoryReply struct {
 	Id int64 `json:"id"`
+}
+
+type GatewayDeleteCategoryRequest struct {
+	Id int64 `path:"id"`
+}
+
+type GatewayDeleteCategoryReply struct {
 }
 
 type GatewayGetClassifyRequest struct {
@@ -254,6 +279,13 @@ type GatewayUpdateClassifyReply struct {
 	Id int64 `json:"id"`
 }
 
+type GatewayDeleteClassifyRequest struct {
+	Id int64 `path:"id"`
+}
+
+type GatewayDeleteClassifyReply struct {
+}
+
 type GatewayGetStageRequest struct {
 	Id int64 `path:"id"`
 }
@@ -294,6 +326,13 @@ type GatewayUpdateStageRequest struct {
 
 type GatewayUpdateStageReply struct {
 	Id int64 `json:"id"`
+}
+
+type GatewayDeleteStageRequest struct {
+	Id int64 `path:"id"`
+}
+
+type GatewayDeleteStageReply struct {
 }
 
 type GatewayGetConfigurationRequest struct {
@@ -344,6 +383,13 @@ type GatewayUpdateConfigurationRequest struct {
 
 type GatewayUpdateConfigurationReply struct {
 	Id int64 `json:"id"`
+}
+
+type GatewayDeleteConfigurationRequest struct {
+	Id int64 `path:"id"`
+}
+
+type GatewayDeleteConfigurationReply struct {
 }
 
 type GatewayRegisterRequest struct {

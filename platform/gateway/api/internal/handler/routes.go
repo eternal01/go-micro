@@ -38,9 +38,19 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: updateRegionHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodDelete,
+				Path:    "/region/:id",
+				Handler: deleteRegionHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodGet,
-				Path:    "/industry/:industry_id",
+				Path:    "/industry/:id",
 				Handler: getIndustryHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/industry/industryId/:industry_id",
+				Handler: getIndustryByIndustryIdHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
@@ -61,6 +71,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPut,
 				Path:    "/industry/:id",
 				Handler: updateIndustryHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/industry/:id",
+				Handler: deleteIndustryHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
@@ -88,6 +103,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: updateCategoryHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodDelete,
+				Path:    "/category/:id",
+				Handler: deleteCategoryHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodGet,
 				Path:    "/classify/:id",
 				Handler: getClassifyHandler(serverCtx),
@@ -113,6 +133,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: updateClassifyHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodDelete,
+				Path:    "/classify/:id",
+				Handler: deleteClassifyHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodGet,
 				Path:    "/stage/:id",
 				Handler: getStageHandler(serverCtx),
@@ -133,13 +158,18 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: updateStageHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodDelete,
+				Path:    "/stage/:id",
+				Handler: deleteStageHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodGet,
 				Path:    "/configuration/:id",
 				Handler: getConfigurationHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/configurationByName/:name",
+				Path:    "/configuration/name/:name",
 				Handler: getConfigurationByNameHandler(serverCtx),
 			},
 			{
@@ -156,6 +186,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPut,
 				Path:    "/configuration/:id",
 				Handler: updateConfigurationHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/configuration/:id",
+				Handler: deleteConfigurationHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,

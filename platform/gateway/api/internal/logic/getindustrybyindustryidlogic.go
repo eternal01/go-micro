@@ -11,29 +11,29 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type GetIndustryLogic struct {
+type GetIndustryByIndustryIdLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewGetIndustryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetIndustryLogic {
-	return &GetIndustryLogic{
+func NewGetIndustryByIndustryIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetIndustryByIndustryIdLogic {
+	return &GetIndustryByIndustryIdLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *GetIndustryLogic) GetIndustry(req *types.GatewayGetIndustryRequest) (resp *types.GatewayGetIndustryReply, err error) {
-	if req.Id <= 0 {
+func (l *GetIndustryByIndustryIdLogic) GetIndustryByIndustryId(req *types.GatewayGetIndustryByIndustryIdRequest) (resp *types.GatewayGetIndustryReply, err error) {
+	if len(req.IndustryId) <= 0 {
 		return nil, errorx.ParamsError
 	}
-	industry, err := l.svcCtx.BasicRpc.GetIndustry(l.ctx, &basic.GetIndustryRequest{
-		Id: req.Id,
+	industry, err := l.svcCtx.BasicRpc.GetIndustryByIndustryId(l.ctx, &basic.GetIndustryByIndustryIdRequest{
+		IndustryId: req.IndustryId,
 	})
 	if err != nil {
-		l.Logger.Errorf("RPC-BASIC GetIndustry Error - %+v", err)
+		l.Logger.Errorf("RPC-BASIC GetIndustryByIndustryId Error - %+v", err)
 		return nil, err
 	}
 

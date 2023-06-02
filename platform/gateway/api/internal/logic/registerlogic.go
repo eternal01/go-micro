@@ -54,7 +54,7 @@ func (l *RegisterLogic) Register(req *types.GatewayRegisterRequest) (resp *types
 	}
 
 	if user.Id != 0 {
-		return nil, errorx.UserExist
+		return nil, errorx.UserExistError
 	}
 
 	hash, err := tool.Encryption(req.AuthCredential)

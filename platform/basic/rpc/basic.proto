@@ -56,9 +56,21 @@ message UpdateRegionResponse {
   int64 Id = 1;
 }
 
+message DeleteRegionRequest {
+  int64 Id = 1;
+}
+
+message DeleteRegionResponse {
+
+}
+
 
 //职业
 message GetIndustryRequest {
+  int64 Id = 1;
+}
+
+message GetIndustryByIndustryIdRequest {
   string IndustryId = 1;
 }
 
@@ -113,6 +125,14 @@ message UpdateIndustryResponse {
   int64 Id = 1;
 }
 
+message DeleteIndustryRequest {
+  int64 Id = 1;
+}
+
+message DeleteIndustryResponse {
+
+}
+
 
 //分类
 message GetClassifyRequest {
@@ -160,6 +180,14 @@ message UpdateClassifyRequest {
 
 message UpdateClassifyResponse {
   int64 Id = 1;
+}
+
+message DeleteClassifyRequest {
+  int64 Id = 1;
+}
+
+message DeleteClassifyResponse {
+
 }
 
 
@@ -211,6 +239,14 @@ message UpdateCategoryResponse {
   int64 Id = 1;
 }
 
+message DeleteCategoryRequest {
+  int64 Id = 1;
+}
+
+message DeleteCategoryResponse {
+
+}
+
 
 //阶段
 message GetStageRequest {
@@ -258,6 +294,14 @@ message UpdateStageRequest {
 
 message UpdateStageResponse {
   int64 Id = 1;
+}
+
+message DeleteStageRequest {
+  int64 Id = 1;
+}
+
+message DeleteStageResponse {
+
 }
 
 
@@ -313,6 +357,13 @@ message UpdateConfigurationResponse {
   int64 Id = 1;
 }
 
+message DeleteConfigurationRequest {
+  int64 Id = 1;
+}
+
+message DeleteConfigurationResponse {
+
+}
 
 
 service Basic {
@@ -326,15 +377,21 @@ service Basic {
   rpc addRegion(AddRegionRequest) returns(AddRegionResponse);
   //更新地区信息
   rpc updateRegion(UpdateRegionRequest) returns(UpdateRegionResponse);
+  //删除地区信息
+  rpc deleteRegion(DeleteRegionRequest) returns(DeleteRegionResponse);
 
   //获取职业信息
   rpc getIndustry(GetIndustryRequest) returns(GetIndustryResponse);
+  //根据industry_id获取职业信息
+  rpc getIndustryByIndustryId(GetIndustryByIndustryIdRequest) returns(GetIndustryResponse);
   //根据父级id获取职业信息
   rpc getIndustries(GetIndustriesRequest) returns(GetIndustriesResponse);
   //添加职业信息
   rpc addIndustry(AddIndustryRequest) returns(AddIndustryResponse);
   //更新职业信息
   rpc updateIndustry(UpdateIndustryRequest) returns(UpdateIndustryResponse);
+  //删除职业信息
+  rpc deleteIndustry(DeleteIndustryRequest) returns(DeleteIndustryResponse);
 
   //获取分类信息
   rpc getClassify(GetClassifyRequest) returns(GetClassifyResponse);
@@ -344,6 +401,8 @@ service Basic {
   rpc addClassify(AddClassifyRequest) returns(AddClassifyResponse);
   //更新分类信息
   rpc updateClassify(UpdateClassifyRequest) returns(UpdateClassifyResponse);
+  //删除分类信息
+  rpc deleteClassify(DeleteClassifyRequest) returns(DeleteClassifyResponse);
   
   //获取类别信息
   rpc getCategory(GetCategoryRequest) returns(GetCategoryResponse);
@@ -353,6 +412,8 @@ service Basic {
   rpc addCategory(AddCategoryRequest) returns(AddCategoryResponse);
   //更新类别信息
   rpc updateCategory(UpdateCategoryRequest) returns(UpdateCategoryResponse);
+  //删除类别信息
+  rpc deleteCategory(DeleteCategoryRequest) returns(DeleteCategoryResponse);
 
   //获取阶段信息
   rpc getStage(GetStageRequest) returns(GetStageResponse);
@@ -362,6 +423,8 @@ service Basic {
   rpc addStage(AddStageRequest) returns(AddStageResponse);
   //更新阶段信息
   rpc updateStage(UpdateStageRequest) returns(UpdateStageResponse);
+  //删除阶段信息
+  rpc deleteStage(DeleteStageRequest) returns(DeleteStageResponse);
 
   //获取配置信息
   rpc getConfiguration(GetConfigurationRequest) returns(GetConfigurationResponse);
@@ -373,4 +436,6 @@ service Basic {
   rpc addConfiguration(AddConfigurationRequest) returns(AddConfigurationResponse);
   //更新配置信息
   rpc updateConfiguration(UpdateConfigurationRequest) returns(UpdateConfigurationResponse);
+  //删除配置信息
+  rpc deleteConfiguration(DeleteConfigurationRequest) returns(DeleteConfigurationResponse);
 }

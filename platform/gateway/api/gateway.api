@@ -61,8 +61,21 @@ type (
 		Id int64 `json:"id"`
 	}
 
+	//删除地区信息
+	GatewayDeleteRegionRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayDeleteRegionReply {
+	}
+
 	//获取职业信息
 	GatewayGetIndustryRequest {
+		Id int64 `path:"id"`
+	}
+
+	//根据industry_id获取职业信息
+	GatewayGetIndustryByIndustryIdRequest {
 		IndustryId string `path:"industry_id"`
 	}
 
@@ -138,6 +151,14 @@ type (
 		Id int64 `json:"id"`
 	}
 
+	//删除职业信息
+	GatewayDeleteIndustryRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayDeleteIndustryReply {
+	}
+
 	//获取类别信息
 	GatewayGetCategoryRequest {
 		Id int64 `path:"id"`
@@ -203,6 +224,14 @@ type (
 
 	GatewayUpdateCategoryReply {
 		Id int64 `json:"id"`
+	}
+
+	//删除类别信息
+	GatewayDeleteCategoryRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayDeleteCategoryReply {
 	}
 
 	//获取分类信息
@@ -272,6 +301,14 @@ type (
 		Id int64 `json:"id"`
 	}
 
+	//删除分类信息
+	GatewayDeleteClassifyRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayDeleteClassifyReply {
+	}
+
 	//获取阶段信息
 	GatewayGetStageRequest {
 		Id int64 `path:"id"`
@@ -321,6 +358,14 @@ type (
 
 	GatewayUpdateStageReply {
 		Id int64 `json:"id"`
+	}
+
+	//删除阶段信息
+	GatewayDeleteStageRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayDeleteStageReply {
 	}
 
 	//获取配置信息
@@ -375,6 +420,14 @@ type (
 
 	GatewayUpdateConfigurationReply {
 		Id int64 `json:"id"`
+	}
+
+	//删除配置信息
+	GatewayDeleteConfigurationRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayDeleteConfigurationReply {
 	}
 )
 
@@ -470,9 +523,17 @@ service gateway {
 	@handler updateRegion
 	put /region/:id (GatewayUpdateRegionRequest) returns (GatewayUpdateRegionReply)
 	
+	@doc "删除地区信息"
+	@handler deleteRegion
+	delete /region/:id (GatewayDeleteRegionRequest) returns (GatewayDeleteRegionReply)
+	
 	@doc "获取职业信息"
 	@handler getIndustry
-	get /industry/:industry_id (GatewayGetIndustryRequest) returns (GatewayGetIndustryReply)
+	get /industry/:id (GatewayGetIndustryRequest) returns (GatewayGetIndustryReply)
+	
+	@doc "根据industry_id获取职业信息"
+	@handler getIndustryByIndustryId
+	get /industry/industryId/:industry_id (GatewayGetIndustryByIndustryIdRequest) returns (GatewayGetIndustryReply)
 	
 	@doc "根据父级id获取职业信息"
 	@handler getIndustries
@@ -489,6 +550,10 @@ service gateway {
 	@doc "更新职业信息"
 	@handler updateIndustry
 	put /industry/:id (GatewayUpdateIndustryRequest) returns (GatewayUpdateIndustryReply)
+	
+	@doc "删除职业信息"
+	@handler deleteIndustry
+	delete /industry/:id (GatewayDeleteIndustryRequest) returns (GatewayDeleteIndustryReply)
 	
 	@doc "获取类别信息"
 	@handler getCategory
@@ -510,6 +575,10 @@ service gateway {
 	@handler updateCategory
 	put /category/:id (GatewayUpdateCategoryRequest) returns (GatewayUpdateCategoryReply)
 	
+	@doc "删除类别信息"
+	@handler deleteCategory
+	delete /category/:id (GatewayDeleteCategoryRequest) returns (GatewayDeleteCategoryReply)
+	
 	@doc "获取分类信息"
 	@handler getClassify
 	get /classify/:id (GatewayGetClassifyRequest) returns (GatewayGetClassifyReply)
@@ -530,6 +599,10 @@ service gateway {
 	@handler updateClassify
 	put /classify/:id (GatewayUpdateClassifyRequest) returns (GatewayUpdateClassifyReply)
 	
+	@doc "删除分类信息"
+	@handler deleteClassify
+	delete /classify/:id (GatewayDeleteClassifyRequest) returns (GatewayDeleteClassifyReply)
+	
 	@doc "获取阶段信息"
 	@handler getStage
 	get /stage/:id (GatewayGetStageRequest) returns (GatewayGetStageReply)
@@ -546,13 +619,17 @@ service gateway {
 	@handler updateStage
 	put /stage/:id (GatewayUpdateStageRequest) returns (GatewayUpdateStageReply)
 	
+	@doc "删除阶段信息"
+	@handler deleteStage
+	delete /stage/:id (GatewayDeleteStageRequest) returns (GatewayDeleteStageReply)
+	
 	@doc "获取配置信息"
 	@handler getConfiguration
 	get /configuration/:id (GatewayGetConfigurationRequest) returns (GatewayGetConfigurationReply)
 	
 	@doc "根据配置名称获取配置信息"
 	@handler getConfigurationByName
-	get /configurationByName/:name (GatewayGetConfigurationByNameRequest) returns (GatewayGetConfigurationReply)
+	get /configuration/name/:name (GatewayGetConfigurationByNameRequest) returns (GatewayGetConfigurationReply)
 	
 	@doc "获取配置列表"
 	@handler getConfigurations
@@ -565,6 +642,10 @@ service gateway {
 	@doc "更新配置信息"
 	@handler updateConfiguration
 	put /configuration/:id (GatewayUpdateConfigurationRequest) returns (GatewayUpdateConfigurationReply)
+	
+	@doc "删除配置信息"
+	@handler deleteConfiguration
+	delete /configuration/:id (GatewayDeleteConfigurationRequest) returns (GatewayDeleteConfigurationReply)
 	
 	@doc "注册"
 	@handler register

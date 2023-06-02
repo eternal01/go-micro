@@ -13,63 +13,76 @@ import (
 )
 
 type (
-	AddCategoryRequest            = basic.AddCategoryRequest
-	AddCategoryResponse           = basic.AddCategoryResponse
-	AddClassifyRequest            = basic.AddClassifyRequest
-	AddClassifyResponse           = basic.AddClassifyResponse
-	AddConfigurationRequest       = basic.AddConfigurationRequest
-	AddConfigurationResponse      = basic.AddConfigurationResponse
-	AddIndustryRequest            = basic.AddIndustryRequest
-	AddIndustryResponse           = basic.AddIndustryResponse
-	AddRegionRequest              = basic.AddRegionRequest
-	AddRegionResponse             = basic.AddRegionResponse
-	AddStageRequest               = basic.AddStageRequest
-	AddStageResponse              = basic.AddStageResponse
-	Configuration                 = basic.Configuration
-	GetCategoriesRequest          = basic.GetCategoriesRequest
-	GetCategoriesResponse         = basic.GetCategoriesResponse
-	GetCategoryChild              = basic.GetCategoryChild
-	GetCategoryRequest            = basic.GetCategoryRequest
-	GetCategoryResponse           = basic.GetCategoryResponse
-	GetClassifiesRequest          = basic.GetClassifiesRequest
-	GetClassifiesResponse         = basic.GetClassifiesResponse
-	GetClassifyChild              = basic.GetClassifyChild
-	GetClassifyRequest            = basic.GetClassifyRequest
-	GetClassifyResponse           = basic.GetClassifyResponse
-	GetConfigurationByNameRequest = basic.GetConfigurationByNameRequest
-	GetConfigurationRequest       = basic.GetConfigurationRequest
-	GetConfigurationResponse      = basic.GetConfigurationResponse
-	GetConfigurationsRequest      = basic.GetConfigurationsRequest
-	GetConfigurationsResponse     = basic.GetConfigurationsResponse
-	GetIndustriesRequest          = basic.GetIndustriesRequest
-	GetIndustriesResponse         = basic.GetIndustriesResponse
-	GetIndustryChild              = basic.GetIndustryChild
-	GetIndustryRequest            = basic.GetIndustryRequest
-	GetIndustryResponse           = basic.GetIndustryResponse
-	GetRegionChild                = basic.GetRegionChild
-	GetRegionRequest              = basic.GetRegionRequest
-	GetRegionResponse             = basic.GetRegionResponse
-	GetRegionsRequest             = basic.GetRegionsRequest
-	GetRegionsResponse            = basic.GetRegionsResponse
-	GetStageChild                 = basic.GetStageChild
-	GetStageRequest               = basic.GetStageRequest
-	GetStageResponse              = basic.GetStageResponse
-	GetStagesRequest              = basic.GetStagesRequest
-	GetStagesResponse             = basic.GetStagesResponse
-	Request                       = basic.Request
-	Response                      = basic.Response
-	UpdateCategoryRequest         = basic.UpdateCategoryRequest
-	UpdateCategoryResponse        = basic.UpdateCategoryResponse
-	UpdateClassifyRequest         = basic.UpdateClassifyRequest
-	UpdateClassifyResponse        = basic.UpdateClassifyResponse
-	UpdateConfigurationRequest    = basic.UpdateConfigurationRequest
-	UpdateConfigurationResponse   = basic.UpdateConfigurationResponse
-	UpdateIndustryRequest         = basic.UpdateIndustryRequest
-	UpdateIndustryResponse        = basic.UpdateIndustryResponse
-	UpdateRegionRequest           = basic.UpdateRegionRequest
-	UpdateRegionResponse          = basic.UpdateRegionResponse
-	UpdateStageRequest            = basic.UpdateStageRequest
-	UpdateStageResponse           = basic.UpdateStageResponse
+	AddCategoryRequest             = basic.AddCategoryRequest
+	AddCategoryResponse            = basic.AddCategoryResponse
+	AddClassifyRequest             = basic.AddClassifyRequest
+	AddClassifyResponse            = basic.AddClassifyResponse
+	AddConfigurationRequest        = basic.AddConfigurationRequest
+	AddConfigurationResponse       = basic.AddConfigurationResponse
+	AddIndustryRequest             = basic.AddIndustryRequest
+	AddIndustryResponse            = basic.AddIndustryResponse
+	AddRegionRequest               = basic.AddRegionRequest
+	AddRegionResponse              = basic.AddRegionResponse
+	AddStageRequest                = basic.AddStageRequest
+	AddStageResponse               = basic.AddStageResponse
+	Configuration                  = basic.Configuration
+	DeleteCategoryRequest          = basic.DeleteCategoryRequest
+	DeleteCategoryResponse         = basic.DeleteCategoryResponse
+	DeleteClassifyRequest          = basic.DeleteClassifyRequest
+	DeleteClassifyResponse         = basic.DeleteClassifyResponse
+	DeleteConfigurationRequest     = basic.DeleteConfigurationRequest
+	DeleteConfigurationResponse    = basic.DeleteConfigurationResponse
+	DeleteIndustryRequest          = basic.DeleteIndustryRequest
+	DeleteIndustryResponse         = basic.DeleteIndustryResponse
+	DeleteRegionRequest            = basic.DeleteRegionRequest
+	DeleteRegionResponse           = basic.DeleteRegionResponse
+	DeleteStageRequest             = basic.DeleteStageRequest
+	DeleteStageResponse            = basic.DeleteStageResponse
+	GetCategoriesRequest           = basic.GetCategoriesRequest
+	GetCategoriesResponse          = basic.GetCategoriesResponse
+	GetCategoryChild               = basic.GetCategoryChild
+	GetCategoryRequest             = basic.GetCategoryRequest
+	GetCategoryResponse            = basic.GetCategoryResponse
+	GetClassifiesRequest           = basic.GetClassifiesRequest
+	GetClassifiesResponse          = basic.GetClassifiesResponse
+	GetClassifyChild               = basic.GetClassifyChild
+	GetClassifyRequest             = basic.GetClassifyRequest
+	GetClassifyResponse            = basic.GetClassifyResponse
+	GetConfigurationByNameRequest  = basic.GetConfigurationByNameRequest
+	GetConfigurationRequest        = basic.GetConfigurationRequest
+	GetConfigurationResponse       = basic.GetConfigurationResponse
+	GetConfigurationsRequest       = basic.GetConfigurationsRequest
+	GetConfigurationsResponse      = basic.GetConfigurationsResponse
+	GetIndustriesRequest           = basic.GetIndustriesRequest
+	GetIndustriesResponse          = basic.GetIndustriesResponse
+	GetIndustryByIndustryIdRequest = basic.GetIndustryByIndustryIdRequest
+	GetIndustryChild               = basic.GetIndustryChild
+	GetIndustryRequest             = basic.GetIndustryRequest
+	GetIndustryResponse            = basic.GetIndustryResponse
+	GetRegionChild                 = basic.GetRegionChild
+	GetRegionRequest               = basic.GetRegionRequest
+	GetRegionResponse              = basic.GetRegionResponse
+	GetRegionsRequest              = basic.GetRegionsRequest
+	GetRegionsResponse             = basic.GetRegionsResponse
+	GetStageChild                  = basic.GetStageChild
+	GetStageRequest                = basic.GetStageRequest
+	GetStageResponse               = basic.GetStageResponse
+	GetStagesRequest               = basic.GetStagesRequest
+	GetStagesResponse              = basic.GetStagesResponse
+	Request                        = basic.Request
+	Response                       = basic.Response
+	UpdateCategoryRequest          = basic.UpdateCategoryRequest
+	UpdateCategoryResponse         = basic.UpdateCategoryResponse
+	UpdateClassifyRequest          = basic.UpdateClassifyRequest
+	UpdateClassifyResponse         = basic.UpdateClassifyResponse
+	UpdateConfigurationRequest     = basic.UpdateConfigurationRequest
+	UpdateConfigurationResponse    = basic.UpdateConfigurationResponse
+	UpdateIndustryRequest          = basic.UpdateIndustryRequest
+	UpdateIndustryResponse         = basic.UpdateIndustryResponse
+	UpdateRegionRequest            = basic.UpdateRegionRequest
+	UpdateRegionResponse           = basic.UpdateRegionResponse
+	UpdateStageRequest             = basic.UpdateStageRequest
+	UpdateStageResponse            = basic.UpdateStageResponse
 
 	Basic interface {
 		Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
@@ -81,14 +94,20 @@ type (
 		AddRegion(ctx context.Context, in *AddRegionRequest, opts ...grpc.CallOption) (*AddRegionResponse, error)
 		// 更新地区信息
 		UpdateRegion(ctx context.Context, in *UpdateRegionRequest, opts ...grpc.CallOption) (*UpdateRegionResponse, error)
+		// 删除地区信息
+		DeleteRegion(ctx context.Context, in *DeleteRegionRequest, opts ...grpc.CallOption) (*DeleteRegionResponse, error)
 		// 获取职业信息
 		GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error)
+		// 根据industry_id获取职业信息
+		GetIndustryByIndustryId(ctx context.Context, in *GetIndustryByIndustryIdRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error)
 		// 根据父级id获取职业信息
 		GetIndustries(ctx context.Context, in *GetIndustriesRequest, opts ...grpc.CallOption) (*GetIndustriesResponse, error)
 		// 添加职业信息
 		AddIndustry(ctx context.Context, in *AddIndustryRequest, opts ...grpc.CallOption) (*AddIndustryResponse, error)
 		// 更新职业信息
 		UpdateIndustry(ctx context.Context, in *UpdateIndustryRequest, opts ...grpc.CallOption) (*UpdateIndustryResponse, error)
+		// 删除职业信息
+		DeleteIndustry(ctx context.Context, in *DeleteIndustryRequest, opts ...grpc.CallOption) (*DeleteIndustryResponse, error)
 		// 获取分类信息
 		GetClassify(ctx context.Context, in *GetClassifyRequest, opts ...grpc.CallOption) (*GetClassifyResponse, error)
 		// 根据父级id获取分类信息
@@ -97,6 +116,8 @@ type (
 		AddClassify(ctx context.Context, in *AddClassifyRequest, opts ...grpc.CallOption) (*AddClassifyResponse, error)
 		// 更新分类信息
 		UpdateClassify(ctx context.Context, in *UpdateClassifyRequest, opts ...grpc.CallOption) (*UpdateClassifyResponse, error)
+		// 删除分类信息
+		DeleteClassify(ctx context.Context, in *DeleteClassifyRequest, opts ...grpc.CallOption) (*DeleteClassifyResponse, error)
 		// 获取类别信息
 		GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetCategoryResponse, error)
 		// 根据父级id获取类别信息
@@ -105,6 +126,8 @@ type (
 		AddCategory(ctx context.Context, in *AddCategoryRequest, opts ...grpc.CallOption) (*AddCategoryResponse, error)
 		// 更新类别信息
 		UpdateCategory(ctx context.Context, in *UpdateCategoryRequest, opts ...grpc.CallOption) (*UpdateCategoryResponse, error)
+		// 删除类别信息
+		DeleteCategory(ctx context.Context, in *DeleteCategoryRequest, opts ...grpc.CallOption) (*DeleteCategoryResponse, error)
 		// 获取阶段信息
 		GetStage(ctx context.Context, in *GetStageRequest, opts ...grpc.CallOption) (*GetStageResponse, error)
 		// 根据父级id获取阶段信息
@@ -113,6 +136,8 @@ type (
 		AddStage(ctx context.Context, in *AddStageRequest, opts ...grpc.CallOption) (*AddStageResponse, error)
 		// 更新阶段信息
 		UpdateStage(ctx context.Context, in *UpdateStageRequest, opts ...grpc.CallOption) (*UpdateStageResponse, error)
+		// 删除阶段信息
+		DeleteStage(ctx context.Context, in *DeleteStageRequest, opts ...grpc.CallOption) (*DeleteStageResponse, error)
 		// 获取配置信息
 		GetConfiguration(ctx context.Context, in *GetConfigurationRequest, opts ...grpc.CallOption) (*GetConfigurationResponse, error)
 		// 根据配置名称获取配置信息
@@ -123,6 +148,8 @@ type (
 		AddConfiguration(ctx context.Context, in *AddConfigurationRequest, opts ...grpc.CallOption) (*AddConfigurationResponse, error)
 		// 更新配置信息
 		UpdateConfiguration(ctx context.Context, in *UpdateConfigurationRequest, opts ...grpc.CallOption) (*UpdateConfigurationResponse, error)
+		// 删除配置信息
+		DeleteConfiguration(ctx context.Context, in *DeleteConfigurationRequest, opts ...grpc.CallOption) (*DeleteConfigurationResponse, error)
 	}
 
 	defaultBasic struct {
@@ -165,10 +192,22 @@ func (m *defaultBasic) UpdateRegion(ctx context.Context, in *UpdateRegionRequest
 	return client.UpdateRegion(ctx, in, opts...)
 }
 
+// 删除地区信息
+func (m *defaultBasic) DeleteRegion(ctx context.Context, in *DeleteRegionRequest, opts ...grpc.CallOption) (*DeleteRegionResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.DeleteRegion(ctx, in, opts...)
+}
+
 // 获取职业信息
 func (m *defaultBasic) GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
 	return client.GetIndustry(ctx, in, opts...)
+}
+
+// 根据industry_id获取职业信息
+func (m *defaultBasic) GetIndustryByIndustryId(ctx context.Context, in *GetIndustryByIndustryIdRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.GetIndustryByIndustryId(ctx, in, opts...)
 }
 
 // 根据父级id获取职业信息
@@ -187,6 +226,12 @@ func (m *defaultBasic) AddIndustry(ctx context.Context, in *AddIndustryRequest, 
 func (m *defaultBasic) UpdateIndustry(ctx context.Context, in *UpdateIndustryRequest, opts ...grpc.CallOption) (*UpdateIndustryResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
 	return client.UpdateIndustry(ctx, in, opts...)
+}
+
+// 删除职业信息
+func (m *defaultBasic) DeleteIndustry(ctx context.Context, in *DeleteIndustryRequest, opts ...grpc.CallOption) (*DeleteIndustryResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.DeleteIndustry(ctx, in, opts...)
 }
 
 // 获取分类信息
@@ -213,6 +258,12 @@ func (m *defaultBasic) UpdateClassify(ctx context.Context, in *UpdateClassifyReq
 	return client.UpdateClassify(ctx, in, opts...)
 }
 
+// 删除分类信息
+func (m *defaultBasic) DeleteClassify(ctx context.Context, in *DeleteClassifyRequest, opts ...grpc.CallOption) (*DeleteClassifyResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.DeleteClassify(ctx, in, opts...)
+}
+
 // 获取类别信息
 func (m *defaultBasic) GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetCategoryResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
@@ -237,6 +288,12 @@ func (m *defaultBasic) UpdateCategory(ctx context.Context, in *UpdateCategoryReq
 	return client.UpdateCategory(ctx, in, opts...)
 }
 
+// 删除类别信息
+func (m *defaultBasic) DeleteCategory(ctx context.Context, in *DeleteCategoryRequest, opts ...grpc.CallOption) (*DeleteCategoryResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.DeleteCategory(ctx, in, opts...)
+}
+
 // 获取阶段信息
 func (m *defaultBasic) GetStage(ctx context.Context, in *GetStageRequest, opts ...grpc.CallOption) (*GetStageResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
@@ -259,6 +316,12 @@ func (m *defaultBasic) AddStage(ctx context.Context, in *AddStageRequest, opts .
 func (m *defaultBasic) UpdateStage(ctx context.Context, in *UpdateStageRequest, opts ...grpc.CallOption) (*UpdateStageResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
 	return client.UpdateStage(ctx, in, opts...)
+}
+
+// 删除阶段信息
+func (m *defaultBasic) DeleteStage(ctx context.Context, in *DeleteStageRequest, opts ...grpc.CallOption) (*DeleteStageResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.DeleteStage(ctx, in, opts...)
 }
 
 // 获取配置信息
@@ -289,4 +352,10 @@ func (m *defaultBasic) AddConfiguration(ctx context.Context, in *AddConfiguratio
 func (m *defaultBasic) UpdateConfiguration(ctx context.Context, in *UpdateConfigurationRequest, opts ...grpc.CallOption) (*UpdateConfigurationResponse, error) {
 	client := basic.NewBasicClient(m.cli.Conn())
 	return client.UpdateConfiguration(ctx, in, opts...)
+}
+
+// 删除配置信息
+func (m *defaultBasic) DeleteConfiguration(ctx context.Context, in *DeleteConfigurationRequest, opts ...grpc.CallOption) (*DeleteConfigurationResponse, error) {
+	client := basic.NewBasicClient(m.cli.Conn())
+	return client.DeleteConfiguration(ctx, in, opts...)
 }

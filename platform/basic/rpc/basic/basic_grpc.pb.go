@@ -19,32 +19,39 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Basic_Ping_FullMethodName                   = "/basic.Basic/Ping"
-	Basic_GetRegion_FullMethodName              = "/basic.Basic/getRegion"
-	Basic_GetRegions_FullMethodName             = "/basic.Basic/getRegions"
-	Basic_AddRegion_FullMethodName              = "/basic.Basic/addRegion"
-	Basic_UpdateRegion_FullMethodName           = "/basic.Basic/updateRegion"
-	Basic_GetIndustry_FullMethodName            = "/basic.Basic/getIndustry"
-	Basic_GetIndustries_FullMethodName          = "/basic.Basic/getIndustries"
-	Basic_AddIndustry_FullMethodName            = "/basic.Basic/addIndustry"
-	Basic_UpdateIndustry_FullMethodName         = "/basic.Basic/updateIndustry"
-	Basic_GetClassify_FullMethodName            = "/basic.Basic/getClassify"
-	Basic_GetClassifies_FullMethodName          = "/basic.Basic/getClassifies"
-	Basic_AddClassify_FullMethodName            = "/basic.Basic/addClassify"
-	Basic_UpdateClassify_FullMethodName         = "/basic.Basic/updateClassify"
-	Basic_GetCategory_FullMethodName            = "/basic.Basic/getCategory"
-	Basic_GetCategories_FullMethodName          = "/basic.Basic/getCategories"
-	Basic_AddCategory_FullMethodName            = "/basic.Basic/addCategory"
-	Basic_UpdateCategory_FullMethodName         = "/basic.Basic/updateCategory"
-	Basic_GetStage_FullMethodName               = "/basic.Basic/getStage"
-	Basic_GetStages_FullMethodName              = "/basic.Basic/getStages"
-	Basic_AddStage_FullMethodName               = "/basic.Basic/addStage"
-	Basic_UpdateStage_FullMethodName            = "/basic.Basic/updateStage"
-	Basic_GetConfiguration_FullMethodName       = "/basic.Basic/getConfiguration"
-	Basic_GetConfigurationByName_FullMethodName = "/basic.Basic/getConfigurationByName"
-	Basic_GetConfigurations_FullMethodName      = "/basic.Basic/getConfigurations"
-	Basic_AddConfiguration_FullMethodName       = "/basic.Basic/addConfiguration"
-	Basic_UpdateConfiguration_FullMethodName    = "/basic.Basic/updateConfiguration"
+	Basic_Ping_FullMethodName                    = "/basic.Basic/Ping"
+	Basic_GetRegion_FullMethodName               = "/basic.Basic/getRegion"
+	Basic_GetRegions_FullMethodName              = "/basic.Basic/getRegions"
+	Basic_AddRegion_FullMethodName               = "/basic.Basic/addRegion"
+	Basic_UpdateRegion_FullMethodName            = "/basic.Basic/updateRegion"
+	Basic_DeleteRegion_FullMethodName            = "/basic.Basic/deleteRegion"
+	Basic_GetIndustry_FullMethodName             = "/basic.Basic/getIndustry"
+	Basic_GetIndustryByIndustryId_FullMethodName = "/basic.Basic/getIndustryByIndustryId"
+	Basic_GetIndustries_FullMethodName           = "/basic.Basic/getIndustries"
+	Basic_AddIndustry_FullMethodName             = "/basic.Basic/addIndustry"
+	Basic_UpdateIndustry_FullMethodName          = "/basic.Basic/updateIndustry"
+	Basic_DeleteIndustry_FullMethodName          = "/basic.Basic/deleteIndustry"
+	Basic_GetClassify_FullMethodName             = "/basic.Basic/getClassify"
+	Basic_GetClassifies_FullMethodName           = "/basic.Basic/getClassifies"
+	Basic_AddClassify_FullMethodName             = "/basic.Basic/addClassify"
+	Basic_UpdateClassify_FullMethodName          = "/basic.Basic/updateClassify"
+	Basic_DeleteClassify_FullMethodName          = "/basic.Basic/deleteClassify"
+	Basic_GetCategory_FullMethodName             = "/basic.Basic/getCategory"
+	Basic_GetCategories_FullMethodName           = "/basic.Basic/getCategories"
+	Basic_AddCategory_FullMethodName             = "/basic.Basic/addCategory"
+	Basic_UpdateCategory_FullMethodName          = "/basic.Basic/updateCategory"
+	Basic_DeleteCategory_FullMethodName          = "/basic.Basic/deleteCategory"
+	Basic_GetStage_FullMethodName                = "/basic.Basic/getStage"
+	Basic_GetStages_FullMethodName               = "/basic.Basic/getStages"
+	Basic_AddStage_FullMethodName                = "/basic.Basic/addStage"
+	Basic_UpdateStage_FullMethodName             = "/basic.Basic/updateStage"
+	Basic_DeleteStage_FullMethodName             = "/basic.Basic/deleteStage"
+	Basic_GetConfiguration_FullMethodName        = "/basic.Basic/getConfiguration"
+	Basic_GetConfigurationByName_FullMethodName  = "/basic.Basic/getConfigurationByName"
+	Basic_GetConfigurations_FullMethodName       = "/basic.Basic/getConfigurations"
+	Basic_AddConfiguration_FullMethodName        = "/basic.Basic/addConfiguration"
+	Basic_UpdateConfiguration_FullMethodName     = "/basic.Basic/updateConfiguration"
+	Basic_DeleteConfiguration_FullMethodName     = "/basic.Basic/deleteConfiguration"
 )
 
 // BasicClient is the client API for Basic service.
@@ -60,14 +67,20 @@ type BasicClient interface {
 	AddRegion(ctx context.Context, in *AddRegionRequest, opts ...grpc.CallOption) (*AddRegionResponse, error)
 	// 更新地区信息
 	UpdateRegion(ctx context.Context, in *UpdateRegionRequest, opts ...grpc.CallOption) (*UpdateRegionResponse, error)
+	// 删除地区信息
+	DeleteRegion(ctx context.Context, in *DeleteRegionRequest, opts ...grpc.CallOption) (*DeleteRegionResponse, error)
 	// 获取职业信息
 	GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error)
+	// 根据industry_id获取职业信息
+	GetIndustryByIndustryId(ctx context.Context, in *GetIndustryByIndustryIdRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error)
 	// 根据父级id获取职业信息
 	GetIndustries(ctx context.Context, in *GetIndustriesRequest, opts ...grpc.CallOption) (*GetIndustriesResponse, error)
 	// 添加职业信息
 	AddIndustry(ctx context.Context, in *AddIndustryRequest, opts ...grpc.CallOption) (*AddIndustryResponse, error)
 	// 更新职业信息
 	UpdateIndustry(ctx context.Context, in *UpdateIndustryRequest, opts ...grpc.CallOption) (*UpdateIndustryResponse, error)
+	// 删除职业信息
+	DeleteIndustry(ctx context.Context, in *DeleteIndustryRequest, opts ...grpc.CallOption) (*DeleteIndustryResponse, error)
 	// 获取分类信息
 	GetClassify(ctx context.Context, in *GetClassifyRequest, opts ...grpc.CallOption) (*GetClassifyResponse, error)
 	// 根据父级id获取分类信息
@@ -76,6 +89,8 @@ type BasicClient interface {
 	AddClassify(ctx context.Context, in *AddClassifyRequest, opts ...grpc.CallOption) (*AddClassifyResponse, error)
 	// 更新分类信息
 	UpdateClassify(ctx context.Context, in *UpdateClassifyRequest, opts ...grpc.CallOption) (*UpdateClassifyResponse, error)
+	// 删除分类信息
+	DeleteClassify(ctx context.Context, in *DeleteClassifyRequest, opts ...grpc.CallOption) (*DeleteClassifyResponse, error)
 	// 获取类别信息
 	GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetCategoryResponse, error)
 	// 根据父级id获取类别信息
@@ -84,6 +99,8 @@ type BasicClient interface {
 	AddCategory(ctx context.Context, in *AddCategoryRequest, opts ...grpc.CallOption) (*AddCategoryResponse, error)
 	// 更新类别信息
 	UpdateCategory(ctx context.Context, in *UpdateCategoryRequest, opts ...grpc.CallOption) (*UpdateCategoryResponse, error)
+	// 删除类别信息
+	DeleteCategory(ctx context.Context, in *DeleteCategoryRequest, opts ...grpc.CallOption) (*DeleteCategoryResponse, error)
 	// 获取阶段信息
 	GetStage(ctx context.Context, in *GetStageRequest, opts ...grpc.CallOption) (*GetStageResponse, error)
 	// 根据父级id获取阶段信息
@@ -92,6 +109,8 @@ type BasicClient interface {
 	AddStage(ctx context.Context, in *AddStageRequest, opts ...grpc.CallOption) (*AddStageResponse, error)
 	// 更新阶段信息
 	UpdateStage(ctx context.Context, in *UpdateStageRequest, opts ...grpc.CallOption) (*UpdateStageResponse, error)
+	// 删除阶段信息
+	DeleteStage(ctx context.Context, in *DeleteStageRequest, opts ...grpc.CallOption) (*DeleteStageResponse, error)
 	// 获取配置信息
 	GetConfiguration(ctx context.Context, in *GetConfigurationRequest, opts ...grpc.CallOption) (*GetConfigurationResponse, error)
 	// 根据配置名称获取配置信息
@@ -102,6 +121,8 @@ type BasicClient interface {
 	AddConfiguration(ctx context.Context, in *AddConfigurationRequest, opts ...grpc.CallOption) (*AddConfigurationResponse, error)
 	// 更新配置信息
 	UpdateConfiguration(ctx context.Context, in *UpdateConfigurationRequest, opts ...grpc.CallOption) (*UpdateConfigurationResponse, error)
+	// 删除配置信息
+	DeleteConfiguration(ctx context.Context, in *DeleteConfigurationRequest, opts ...grpc.CallOption) (*DeleteConfigurationResponse, error)
 }
 
 type basicClient struct {
@@ -157,9 +178,27 @@ func (c *basicClient) UpdateRegion(ctx context.Context, in *UpdateRegionRequest,
 	return out, nil
 }
 
+func (c *basicClient) DeleteRegion(ctx context.Context, in *DeleteRegionRequest, opts ...grpc.CallOption) (*DeleteRegionResponse, error) {
+	out := new(DeleteRegionResponse)
+	err := c.cc.Invoke(ctx, Basic_DeleteRegion_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *basicClient) GetIndustry(ctx context.Context, in *GetIndustryRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error) {
 	out := new(GetIndustryResponse)
 	err := c.cc.Invoke(ctx, Basic_GetIndustry_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) GetIndustryByIndustryId(ctx context.Context, in *GetIndustryByIndustryIdRequest, opts ...grpc.CallOption) (*GetIndustryResponse, error) {
+	out := new(GetIndustryResponse)
+	err := c.cc.Invoke(ctx, Basic_GetIndustryByIndustryId_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -187,6 +226,15 @@ func (c *basicClient) AddIndustry(ctx context.Context, in *AddIndustryRequest, o
 func (c *basicClient) UpdateIndustry(ctx context.Context, in *UpdateIndustryRequest, opts ...grpc.CallOption) (*UpdateIndustryResponse, error) {
 	out := new(UpdateIndustryResponse)
 	err := c.cc.Invoke(ctx, Basic_UpdateIndustry_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) DeleteIndustry(ctx context.Context, in *DeleteIndustryRequest, opts ...grpc.CallOption) (*DeleteIndustryResponse, error) {
+	out := new(DeleteIndustryResponse)
+	err := c.cc.Invoke(ctx, Basic_DeleteIndustry_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -229,6 +277,15 @@ func (c *basicClient) UpdateClassify(ctx context.Context, in *UpdateClassifyRequ
 	return out, nil
 }
 
+func (c *basicClient) DeleteClassify(ctx context.Context, in *DeleteClassifyRequest, opts ...grpc.CallOption) (*DeleteClassifyResponse, error) {
+	out := new(DeleteClassifyResponse)
+	err := c.cc.Invoke(ctx, Basic_DeleteClassify_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *basicClient) GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetCategoryResponse, error) {
 	out := new(GetCategoryResponse)
 	err := c.cc.Invoke(ctx, Basic_GetCategory_FullMethodName, in, out, opts...)
@@ -265,6 +322,15 @@ func (c *basicClient) UpdateCategory(ctx context.Context, in *UpdateCategoryRequ
 	return out, nil
 }
 
+func (c *basicClient) DeleteCategory(ctx context.Context, in *DeleteCategoryRequest, opts ...grpc.CallOption) (*DeleteCategoryResponse, error) {
+	out := new(DeleteCategoryResponse)
+	err := c.cc.Invoke(ctx, Basic_DeleteCategory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *basicClient) GetStage(ctx context.Context, in *GetStageRequest, opts ...grpc.CallOption) (*GetStageResponse, error) {
 	out := new(GetStageResponse)
 	err := c.cc.Invoke(ctx, Basic_GetStage_FullMethodName, in, out, opts...)
@@ -295,6 +361,15 @@ func (c *basicClient) AddStage(ctx context.Context, in *AddStageRequest, opts ..
 func (c *basicClient) UpdateStage(ctx context.Context, in *UpdateStageRequest, opts ...grpc.CallOption) (*UpdateStageResponse, error) {
 	out := new(UpdateStageResponse)
 	err := c.cc.Invoke(ctx, Basic_UpdateStage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *basicClient) DeleteStage(ctx context.Context, in *DeleteStageRequest, opts ...grpc.CallOption) (*DeleteStageResponse, error) {
+	out := new(DeleteStageResponse)
+	err := c.cc.Invoke(ctx, Basic_DeleteStage_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -346,6 +421,15 @@ func (c *basicClient) UpdateConfiguration(ctx context.Context, in *UpdateConfigu
 	return out, nil
 }
 
+func (c *basicClient) DeleteConfiguration(ctx context.Context, in *DeleteConfigurationRequest, opts ...grpc.CallOption) (*DeleteConfigurationResponse, error) {
+	out := new(DeleteConfigurationResponse)
+	err := c.cc.Invoke(ctx, Basic_DeleteConfiguration_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BasicServer is the server API for Basic service.
 // All implementations must embed UnimplementedBasicServer
 // for forward compatibility
@@ -359,14 +443,20 @@ type BasicServer interface {
 	AddRegion(context.Context, *AddRegionRequest) (*AddRegionResponse, error)
 	// 更新地区信息
 	UpdateRegion(context.Context, *UpdateRegionRequest) (*UpdateRegionResponse, error)
+	// 删除地区信息
+	DeleteRegion(context.Context, *DeleteRegionRequest) (*DeleteRegionResponse, error)
 	// 获取职业信息
 	GetIndustry(context.Context, *GetIndustryRequest) (*GetIndustryResponse, error)
+	// 根据industry_id获取职业信息
+	GetIndustryByIndustryId(context.Context, *GetIndustryByIndustryIdRequest) (*GetIndustryResponse, error)
 	// 根据父级id获取职业信息
 	GetIndustries(context.Context, *GetIndustriesRequest) (*GetIndustriesResponse, error)
 	// 添加职业信息
 	AddIndustry(context.Context, *AddIndustryRequest) (*AddIndustryResponse, error)
 	// 更新职业信息
 	UpdateIndustry(context.Context, *UpdateIndustryRequest) (*UpdateIndustryResponse, error)
+	// 删除职业信息
+	DeleteIndustry(context.Context, *DeleteIndustryRequest) (*DeleteIndustryResponse, error)
 	// 获取分类信息
 	GetClassify(context.Context, *GetClassifyRequest) (*GetClassifyResponse, error)
 	// 根据父级id获取分类信息
@@ -375,6 +465,8 @@ type BasicServer interface {
 	AddClassify(context.Context, *AddClassifyRequest) (*AddClassifyResponse, error)
 	// 更新分类信息
 	UpdateClassify(context.Context, *UpdateClassifyRequest) (*UpdateClassifyResponse, error)
+	// 删除分类信息
+	DeleteClassify(context.Context, *DeleteClassifyRequest) (*DeleteClassifyResponse, error)
 	// 获取类别信息
 	GetCategory(context.Context, *GetCategoryRequest) (*GetCategoryResponse, error)
 	// 根据父级id获取类别信息
@@ -383,6 +475,8 @@ type BasicServer interface {
 	AddCategory(context.Context, *AddCategoryRequest) (*AddCategoryResponse, error)
 	// 更新类别信息
 	UpdateCategory(context.Context, *UpdateCategoryRequest) (*UpdateCategoryResponse, error)
+	// 删除类别信息
+	DeleteCategory(context.Context, *DeleteCategoryRequest) (*DeleteCategoryResponse, error)
 	// 获取阶段信息
 	GetStage(context.Context, *GetStageRequest) (*GetStageResponse, error)
 	// 根据父级id获取阶段信息
@@ -391,6 +485,8 @@ type BasicServer interface {
 	AddStage(context.Context, *AddStageRequest) (*AddStageResponse, error)
 	// 更新阶段信息
 	UpdateStage(context.Context, *UpdateStageRequest) (*UpdateStageResponse, error)
+	// 删除阶段信息
+	DeleteStage(context.Context, *DeleteStageRequest) (*DeleteStageResponse, error)
 	// 获取配置信息
 	GetConfiguration(context.Context, *GetConfigurationRequest) (*GetConfigurationResponse, error)
 	// 根据配置名称获取配置信息
@@ -401,6 +497,8 @@ type BasicServer interface {
 	AddConfiguration(context.Context, *AddConfigurationRequest) (*AddConfigurationResponse, error)
 	// 更新配置信息
 	UpdateConfiguration(context.Context, *UpdateConfigurationRequest) (*UpdateConfigurationResponse, error)
+	// 删除配置信息
+	DeleteConfiguration(context.Context, *DeleteConfigurationRequest) (*DeleteConfigurationResponse, error)
 	mustEmbedUnimplementedBasicServer()
 }
 
@@ -423,8 +521,14 @@ func (UnimplementedBasicServer) AddRegion(context.Context, *AddRegionRequest) (*
 func (UnimplementedBasicServer) UpdateRegion(context.Context, *UpdateRegionRequest) (*UpdateRegionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateRegion not implemented")
 }
+func (UnimplementedBasicServer) DeleteRegion(context.Context, *DeleteRegionRequest) (*DeleteRegionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRegion not implemented")
+}
 func (UnimplementedBasicServer) GetIndustry(context.Context, *GetIndustryRequest) (*GetIndustryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetIndustry not implemented")
+}
+func (UnimplementedBasicServer) GetIndustryByIndustryId(context.Context, *GetIndustryByIndustryIdRequest) (*GetIndustryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetIndustryByIndustryId not implemented")
 }
 func (UnimplementedBasicServer) GetIndustries(context.Context, *GetIndustriesRequest) (*GetIndustriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetIndustries not implemented")
@@ -434,6 +538,9 @@ func (UnimplementedBasicServer) AddIndustry(context.Context, *AddIndustryRequest
 }
 func (UnimplementedBasicServer) UpdateIndustry(context.Context, *UpdateIndustryRequest) (*UpdateIndustryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateIndustry not implemented")
+}
+func (UnimplementedBasicServer) DeleteIndustry(context.Context, *DeleteIndustryRequest) (*DeleteIndustryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteIndustry not implemented")
 }
 func (UnimplementedBasicServer) GetClassify(context.Context, *GetClassifyRequest) (*GetClassifyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetClassify not implemented")
@@ -447,6 +554,9 @@ func (UnimplementedBasicServer) AddClassify(context.Context, *AddClassifyRequest
 func (UnimplementedBasicServer) UpdateClassify(context.Context, *UpdateClassifyRequest) (*UpdateClassifyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateClassify not implemented")
 }
+func (UnimplementedBasicServer) DeleteClassify(context.Context, *DeleteClassifyRequest) (*DeleteClassifyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteClassify not implemented")
+}
 func (UnimplementedBasicServer) GetCategory(context.Context, *GetCategoryRequest) (*GetCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategory not implemented")
 }
@@ -459,6 +569,9 @@ func (UnimplementedBasicServer) AddCategory(context.Context, *AddCategoryRequest
 func (UnimplementedBasicServer) UpdateCategory(context.Context, *UpdateCategoryRequest) (*UpdateCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCategory not implemented")
 }
+func (UnimplementedBasicServer) DeleteCategory(context.Context, *DeleteCategoryRequest) (*DeleteCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCategory not implemented")
+}
 func (UnimplementedBasicServer) GetStage(context.Context, *GetStageRequest) (*GetStageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStage not implemented")
 }
@@ -470,6 +583,9 @@ func (UnimplementedBasicServer) AddStage(context.Context, *AddStageRequest) (*Ad
 }
 func (UnimplementedBasicServer) UpdateStage(context.Context, *UpdateStageRequest) (*UpdateStageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateStage not implemented")
+}
+func (UnimplementedBasicServer) DeleteStage(context.Context, *DeleteStageRequest) (*DeleteStageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteStage not implemented")
 }
 func (UnimplementedBasicServer) GetConfiguration(context.Context, *GetConfigurationRequest) (*GetConfigurationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetConfiguration not implemented")
@@ -485,6 +601,9 @@ func (UnimplementedBasicServer) AddConfiguration(context.Context, *AddConfigurat
 }
 func (UnimplementedBasicServer) UpdateConfiguration(context.Context, *UpdateConfigurationRequest) (*UpdateConfigurationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateConfiguration not implemented")
+}
+func (UnimplementedBasicServer) DeleteConfiguration(context.Context, *DeleteConfigurationRequest) (*DeleteConfigurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteConfiguration not implemented")
 }
 func (UnimplementedBasicServer) mustEmbedUnimplementedBasicServer() {}
 
@@ -589,6 +708,24 @@ func _Basic_UpdateRegion_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Basic_DeleteRegion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRegionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).DeleteRegion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_DeleteRegion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).DeleteRegion(ctx, req.(*DeleteRegionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Basic_GetIndustry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetIndustryRequest)
 	if err := dec(in); err != nil {
@@ -603,6 +740,24 @@ func _Basic_GetIndustry_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BasicServer).GetIndustry(ctx, req.(*GetIndustryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_GetIndustryByIndustryId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetIndustryByIndustryIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).GetIndustryByIndustryId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_GetIndustryByIndustryId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).GetIndustryByIndustryId(ctx, req.(*GetIndustryByIndustryIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -657,6 +812,24 @@ func _Basic_UpdateIndustry_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BasicServer).UpdateIndustry(ctx, req.(*UpdateIndustryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_DeleteIndustry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteIndustryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).DeleteIndustry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_DeleteIndustry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).DeleteIndustry(ctx, req.(*DeleteIndustryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -733,6 +906,24 @@ func _Basic_UpdateClassify_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Basic_DeleteClassify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteClassifyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).DeleteClassify(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_DeleteClassify_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).DeleteClassify(ctx, req.(*DeleteClassifyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Basic_GetCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetCategoryRequest)
 	if err := dec(in); err != nil {
@@ -805,6 +996,24 @@ func _Basic_UpdateCategory_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Basic_DeleteCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCategoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).DeleteCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_DeleteCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).DeleteCategory(ctx, req.(*DeleteCategoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Basic_GetStage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetStageRequest)
 	if err := dec(in); err != nil {
@@ -873,6 +1082,24 @@ func _Basic_UpdateStage_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BasicServer).UpdateStage(ctx, req.(*UpdateStageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Basic_DeleteStage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteStageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).DeleteStage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_DeleteStage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).DeleteStage(ctx, req.(*DeleteStageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -967,6 +1194,24 @@ func _Basic_UpdateConfiguration_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Basic_DeleteConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteConfigurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BasicServer).DeleteConfiguration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Basic_DeleteConfiguration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BasicServer).DeleteConfiguration(ctx, req.(*DeleteConfigurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Basic_ServiceDesc is the grpc.ServiceDesc for Basic service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -995,8 +1240,16 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Basic_UpdateRegion_Handler,
 		},
 		{
+			MethodName: "deleteRegion",
+			Handler:    _Basic_DeleteRegion_Handler,
+		},
+		{
 			MethodName: "getIndustry",
 			Handler:    _Basic_GetIndustry_Handler,
+		},
+		{
+			MethodName: "getIndustryByIndustryId",
+			Handler:    _Basic_GetIndustryByIndustryId_Handler,
 		},
 		{
 			MethodName: "getIndustries",
@@ -1009,6 +1262,10 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "updateIndustry",
 			Handler:    _Basic_UpdateIndustry_Handler,
+		},
+		{
+			MethodName: "deleteIndustry",
+			Handler:    _Basic_DeleteIndustry_Handler,
 		},
 		{
 			MethodName: "getClassify",
@@ -1027,6 +1284,10 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Basic_UpdateClassify_Handler,
 		},
 		{
+			MethodName: "deleteClassify",
+			Handler:    _Basic_DeleteClassify_Handler,
+		},
+		{
 			MethodName: "getCategory",
 			Handler:    _Basic_GetCategory_Handler,
 		},
@@ -1043,6 +1304,10 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Basic_UpdateCategory_Handler,
 		},
 		{
+			MethodName: "deleteCategory",
+			Handler:    _Basic_DeleteCategory_Handler,
+		},
+		{
 			MethodName: "getStage",
 			Handler:    _Basic_GetStage_Handler,
 		},
@@ -1057,6 +1322,10 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "updateStage",
 			Handler:    _Basic_UpdateStage_Handler,
+		},
+		{
+			MethodName: "deleteStage",
+			Handler:    _Basic_DeleteStage_Handler,
 		},
 		{
 			MethodName: "getConfiguration",
@@ -1077,6 +1346,10 @@ var Basic_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "updateConfiguration",
 			Handler:    _Basic_UpdateConfiguration_Handler,
+		},
+		{
+			MethodName: "deleteConfiguration",
+			Handler:    _Basic_DeleteConfiguration_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

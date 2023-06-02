@@ -49,7 +49,7 @@ func (l *LoginLogic) Login(req *types.GatewayLoginRequest) (resp *types.GatewayL
 		return nil, err
 	}
 	if user.Id == 0 {
-		return nil, errorx.UserNotFound
+		return nil, errorx.UserNotFoundError
 	}
 
 	userAuth, err := l.svcCtx.AccountRpc.GetUserAuthByUserIdAuthKeyAuthType(l.ctx, &accountclient.GetUserAuthByUserIdAuthKeyAuthTypeRequest{
@@ -62,7 +62,7 @@ func (l *LoginLogic) Login(req *types.GatewayLoginRequest) (resp *types.GatewayL
 	}
 
 	if userAuth.Id == 0 {
-		return nil, errorx.UserNotFound
+		return nil, errorx.UserNotFoundError
 	}
 
 	err = tool.CompareHash(req.AuthCredential, userAuth.AuthCredential)

@@ -51,10 +51,22 @@ func (s *BasicServer) UpdateRegion(ctx context.Context, in *basic.UpdateRegionRe
 	return l.UpdateRegion(in)
 }
 
+// 删除地区信息
+func (s *BasicServer) DeleteRegion(ctx context.Context, in *basic.DeleteRegionRequest) (*basic.DeleteRegionResponse, error) {
+	l := logic.NewDeleteRegionLogic(ctx, s.svcCtx)
+	return l.DeleteRegion(in)
+}
+
 // 获取职业信息
 func (s *BasicServer) GetIndustry(ctx context.Context, in *basic.GetIndustryRequest) (*basic.GetIndustryResponse, error) {
 	l := logic.NewGetIndustryLogic(ctx, s.svcCtx)
 	return l.GetIndustry(in)
+}
+
+// 根据industry_id获取职业信息
+func (s *BasicServer) GetIndustryByIndustryId(ctx context.Context, in *basic.GetIndustryByIndustryIdRequest) (*basic.GetIndustryResponse, error) {
+	l := logic.NewGetIndustryByIndustryIdLogic(ctx, s.svcCtx)
+	return l.GetIndustryByIndustryId(in)
 }
 
 // 根据父级id获取职业信息
@@ -73,6 +85,12 @@ func (s *BasicServer) AddIndustry(ctx context.Context, in *basic.AddIndustryRequ
 func (s *BasicServer) UpdateIndustry(ctx context.Context, in *basic.UpdateIndustryRequest) (*basic.UpdateIndustryResponse, error) {
 	l := logic.NewUpdateIndustryLogic(ctx, s.svcCtx)
 	return l.UpdateIndustry(in)
+}
+
+// 删除职业信息
+func (s *BasicServer) DeleteIndustry(ctx context.Context, in *basic.DeleteIndustryRequest) (*basic.DeleteIndustryResponse, error) {
+	l := logic.NewDeleteIndustryLogic(ctx, s.svcCtx)
+	return l.DeleteIndustry(in)
 }
 
 // 获取分类信息
@@ -99,6 +117,12 @@ func (s *BasicServer) UpdateClassify(ctx context.Context, in *basic.UpdateClassi
 	return l.UpdateClassify(in)
 }
 
+// 删除分类信息
+func (s *BasicServer) DeleteClassify(ctx context.Context, in *basic.DeleteClassifyRequest) (*basic.DeleteClassifyResponse, error) {
+	l := logic.NewDeleteClassifyLogic(ctx, s.svcCtx)
+	return l.DeleteClassify(in)
+}
+
 // 获取类别信息
 func (s *BasicServer) GetCategory(ctx context.Context, in *basic.GetCategoryRequest) (*basic.GetCategoryResponse, error) {
 	l := logic.NewGetCategoryLogic(ctx, s.svcCtx)
@@ -123,6 +147,12 @@ func (s *BasicServer) UpdateCategory(ctx context.Context, in *basic.UpdateCatego
 	return l.UpdateCategory(in)
 }
 
+// 删除类别信息
+func (s *BasicServer) DeleteCategory(ctx context.Context, in *basic.DeleteCategoryRequest) (*basic.DeleteCategoryResponse, error) {
+	l := logic.NewDeleteCategoryLogic(ctx, s.svcCtx)
+	return l.DeleteCategory(in)
+}
+
 // 获取阶段信息
 func (s *BasicServer) GetStage(ctx context.Context, in *basic.GetStageRequest) (*basic.GetStageResponse, error) {
 	l := logic.NewGetStageLogic(ctx, s.svcCtx)
@@ -145,6 +175,12 @@ func (s *BasicServer) AddStage(ctx context.Context, in *basic.AddStageRequest) (
 func (s *BasicServer) UpdateStage(ctx context.Context, in *basic.UpdateStageRequest) (*basic.UpdateStageResponse, error) {
 	l := logic.NewUpdateStageLogic(ctx, s.svcCtx)
 	return l.UpdateStage(in)
+}
+
+// 删除阶段信息
+func (s *BasicServer) DeleteStage(ctx context.Context, in *basic.DeleteStageRequest) (*basic.DeleteStageResponse, error) {
+	l := logic.NewDeleteStageLogic(ctx, s.svcCtx)
+	return l.DeleteStage(in)
 }
 
 // 获取配置信息
@@ -175,4 +211,10 @@ func (s *BasicServer) AddConfiguration(ctx context.Context, in *basic.AddConfigu
 func (s *BasicServer) UpdateConfiguration(ctx context.Context, in *basic.UpdateConfigurationRequest) (*basic.UpdateConfigurationResponse, error) {
 	l := logic.NewUpdateConfigurationLogic(ctx, s.svcCtx)
 	return l.UpdateConfiguration(in)
+}
+
+// 删除配置信息
+func (s *BasicServer) DeleteConfiguration(ctx context.Context, in *basic.DeleteConfigurationRequest) (*basic.DeleteConfigurationResponse, error) {
+	l := logic.NewDeleteConfigurationLogic(ctx, s.svcCtx)
+	return l.DeleteConfiguration(in)
 }

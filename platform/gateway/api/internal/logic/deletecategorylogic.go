@@ -3,10 +3,12 @@ package logic
 import (
 	"context"
 
+	"go-micro/common/cache"
 	"go-micro/common/errorx"
 	"go-micro/platform/basic/rpc/basic"
 	"go-micro/platform/gateway/api/internal/svc"
 	"go-micro/platform/gateway/api/internal/types"
+	"go-micro/platform/gateway/model"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -39,5 +41,9 @@ func (l *DeleteCategoryLogic) DeleteCategory(req *types.GatewayDeleteCategoryReq
 	_, err = l.svcCtx.BasicRpc.DeleteCategory(l.ctx, &basic.DeleteCategoryRequest{
 		Id: req.Id,
 	})
+	if err != nil {
+		return nil, err
+	}
+	cache.GetSingleton(l.svcCtx.Config.CacheRedis[0].RedisConf).DelRedisCache(model.CategoryTreeCacheKey)
 	return
 }

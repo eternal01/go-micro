@@ -46,7 +46,9 @@ func (l *GetIndustryTreeLogic) GetIndustryTree(req *types.GatewayGetIndustryTree
 		return
 	}
 
-	industry := types.GatewayIndustryTreeNode{}
+	industry := types.GatewayIndustryTreeNode{
+		IndustryId: "0",
+	}
 	var industryTree func(node *types.GatewayIndustryTreeNode)
 
 	industryTree = func(node *types.GatewayIndustryTreeNode) {

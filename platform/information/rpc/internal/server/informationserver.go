@@ -26,3 +26,45 @@ func (s *InformationServer) Ping(ctx context.Context, in *information.Request) (
 	l := logic.NewPingLogic(ctx, s.svcCtx)
 	return l.Ping(in)
 }
+
+// 添加文章
+func (s *InformationServer) AddTopic(ctx context.Context, in *information.AddTopicRequest) (*information.AddTopicResponse, error) {
+	l := logic.NewAddTopicLogic(ctx, s.svcCtx)
+	return l.AddTopic(in)
+}
+
+// 获取文章
+func (s *InformationServer) GetTopic(ctx context.Context, in *information.GetTopicRequest) (*information.GetTopicResponse, error) {
+	l := logic.NewGetTopicLogic(ctx, s.svcCtx)
+	return l.GetTopic(in)
+}
+
+// 获取文章列表
+func (s *InformationServer) GetTopicList(ctx context.Context, in *information.GetTopicsRequest) (*information.GetTopicsResponse, error) {
+	l := logic.NewGetTopicListLogic(ctx, s.svcCtx)
+	return l.GetTopicList(in)
+}
+
+// 编辑文章
+func (s *InformationServer) UpdateTopic(ctx context.Context, in *information.UpdateTopicRequest) (*information.UpdateTopicResponse, error) {
+	l := logic.NewUpdateTopicLogic(ctx, s.svcCtx)
+	return l.UpdateTopic(in)
+}
+
+// 删除文章
+func (s *InformationServer) DeleteTopic(ctx context.Context, in *information.DeleteTopicRequest) (*information.DeleteTopicResponse, error) {
+	l := logic.NewDeleteTopicLogic(ctx, s.svcCtx)
+	return l.DeleteTopic(in)
+}
+
+// 添加文章审核记录
+func (s *InformationServer) AddTopicAuditRecord(ctx context.Context, in *information.AddTopicAuditRecordRequest) (*information.AddTopicAuditRecordResponse, error) {
+	l := logic.NewAddTopicAuditRecordLogic(ctx, s.svcCtx)
+	return l.AddTopicAuditRecord(in)
+}
+
+// 获取文章审核记录
+func (s *InformationServer) GetTopicAuditRecord(ctx context.Context, in *information.GetTopicAuditRecordRequest) (*information.GetTopicAuditRecordResponse, error) {
+	l := logic.NewGetTopicAuditRecordLogic(ctx, s.svcCtx)
+	return l.GetTopicAuditRecord(in)
+}

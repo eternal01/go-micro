@@ -23,8 +23,9 @@ Log:
   ServiceName: file-rpc
   Mode: file
   Path: logs
-  Level: error
+  Level: info
   Compress: false
+  Stat: false
   KeepDays: 3
   StackCooldownMillis: 100
 

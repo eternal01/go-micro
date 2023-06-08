@@ -13,11 +13,40 @@ import (
 )
 
 type (
-	Request  = information.Request
-	Response = information.Response
+	AddTopicAuditRecordRequest  = information.AddTopicAuditRecordRequest
+	AddTopicAuditRecordResponse = information.AddTopicAuditRecordResponse
+	AddTopicRequest             = information.AddTopicRequest
+	AddTopicResponse            = information.AddTopicResponse
+	DeleteTopicRequest          = information.DeleteTopicRequest
+	DeleteTopicResponse         = information.DeleteTopicResponse
+	GetTopicAuditRecordRequest  = information.GetTopicAuditRecordRequest
+	GetTopicAuditRecordResponse = information.GetTopicAuditRecordResponse
+	GetTopicRequest             = information.GetTopicRequest
+	GetTopicResponse            = information.GetTopicResponse
+	GetTopicsRequest            = information.GetTopicsRequest
+	GetTopicsResponse           = information.GetTopicsResponse
+	Request                     = information.Request
+	Response                    = information.Response
+	Topic                       = information.Topic
+	UpdateTopicRequest          = information.UpdateTopicRequest
+	UpdateTopicResponse         = information.UpdateTopicResponse
 
 	Information interface {
 		Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+		// 添加文章
+		AddTopic(ctx context.Context, in *AddTopicRequest, opts ...grpc.CallOption) (*AddTopicResponse, error)
+		// 获取文章
+		GetTopic(ctx context.Context, in *GetTopicRequest, opts ...grpc.CallOption) (*GetTopicResponse, error)
+		// 获取文章列表
+		GetTopicList(ctx context.Context, in *GetTopicsRequest, opts ...grpc.CallOption) (*GetTopicsResponse, error)
+		// 编辑文章
+		UpdateTopic(ctx context.Context, in *UpdateTopicRequest, opts ...grpc.CallOption) (*UpdateTopicResponse, error)
+		// 删除文章
+		DeleteTopic(ctx context.Context, in *DeleteTopicRequest, opts ...grpc.CallOption) (*DeleteTopicResponse, error)
+		// 添加文章审核记录
+		AddTopicAuditRecord(ctx context.Context, in *AddTopicAuditRecordRequest, opts ...grpc.CallOption) (*AddTopicAuditRecordResponse, error)
+		// 获取文章审核记录
+		GetTopicAuditRecord(ctx context.Context, in *GetTopicAuditRecordRequest, opts ...grpc.CallOption) (*GetTopicAuditRecordResponse, error)
 	}
 
 	defaultInformation struct {
@@ -34,4 +63,46 @@ func NewInformation(cli zrpc.Client) Information {
 func (m *defaultInformation) Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
 	client := information.NewInformationClient(m.cli.Conn())
 	return client.Ping(ctx, in, opts...)
+}
+
+// 添加文章
+func (m *defaultInformation) AddTopic(ctx context.Context, in *AddTopicRequest, opts ...grpc.CallOption) (*AddTopicResponse, error) {
+	client := information.NewInformationClient(m.cli.Conn())
+	return client.AddTopic(ctx, in, opts...)
+}
+
+// 获取文章
+func (m *defaultInformation) GetTopic(ctx context.Context, in *GetTopicRequest, opts ...grpc.CallOption) (*GetTopicResponse, error) {
+	client := information.NewInformationClient(m.cli.Conn())
+	return client.GetTopic(ctx, in, opts...)
+}
+
+// 获取文章列表
+func (m *defaultInformation) GetTopicList(ctx context.Context, in *GetTopicsRequest, opts ...grpc.CallOption) (*GetTopicsResponse, error) {
+	client := information.NewInformationClient(m.cli.Conn())
+	return client.GetTopicList(ctx, in, opts...)
+}
+
+// 编辑文章
+func (m *defaultInformation) UpdateTopic(ctx context.Context, in *UpdateTopicRequest, opts ...grpc.CallOption) (*UpdateTopicResponse, error) {
+	client := information.NewInformationClient(m.cli.Conn())
+	return client.UpdateTopic(ctx, in, opts...)
+}
+
+// 删除文章
+func (m *defaultInformation) DeleteTopic(ctx context.Context, in *DeleteTopicRequest, opts ...grpc.CallOption) (*DeleteTopicResponse, error) {
+	client := information.NewInformationClient(m.cli.Conn())
+	return client.DeleteTopic(ctx, in, opts...)
+}
+
+// 添加文章审核记录
+func (m *defaultInformation) AddTopicAuditRecord(ctx context.Context, in *AddTopicAuditRecordRequest, opts ...grpc.CallOption) (*AddTopicAuditRecordResponse, error) {
+	client := information.NewInformationClient(m.cli.Conn())
+	return client.AddTopicAuditRecord(ctx, in, opts...)
+}
+
+// 获取文章审核记录
+func (m *defaultInformation) GetTopicAuditRecord(ctx context.Context, in *GetTopicAuditRecordRequest, opts ...grpc.CallOption) (*GetTopicAuditRecordResponse, error) {
+	client := information.NewInformationClient(m.cli.Conn())
+	return client.GetTopicAuditRecord(ctx, in, opts...)
 }

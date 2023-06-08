@@ -11,6 +11,138 @@ message Response {
   string pong = 1;
 }
 
+message GetTopicRequest {
+  int64 id = 1;
+}
+
+message GetTopicResponse {
+  int64 id = 1;
+  string title = 2;
+  string img = 3;
+  string content = 4;
+  int64 status = 5;
+  int64 stageId = 6;
+  int64 categoryId = 7;
+  int64 userId = 8;
+  int64 auditorId = 9;
+  string createdAt = 10;
+  string updatedAt = 11;
+  string auditedAt = 12;
+  string deletedAt = 13;
+}
+
+message AddTopicRequest {
+  string title = 1;
+  string img = 2;
+  string content = 3;
+  int64 status = 4;
+  int64 stageId = 5;
+  int64 categoryId = 6;
+  int64 userId = 7;
+  int64 auditorId = 8;
+}
+
+message AddTopicResponse {
+  int64 id = 1;
+}
+
+message GetTopicsRequest {
+  int64 page = 1;
+  int64 size = 2;
+  int64 lastId = 3;
+  string keyword = 4;
+  string sortField = 5;
+  string sortType = 6;
+}
+
+message GetTopicsResponse {
+  repeated Topic list = 1;
+  int64 page = 2;
+  int64 size = 3;
+  int64 total = 4;
+}
+
+message Topic {
+  int64 id = 1;
+  string title = 2;
+  string img = 3;
+  string content = 4;
+  int64 status = 5;
+  int64 stageId = 6;
+  int64 categoryId = 7;
+  int64 userId = 8;
+  int64 auditorId = 9;
+  string createdAt = 10;
+  string updatedAt = 11;
+  string auditedAt = 12;
+  string deletedAt = 13;
+}
+
+message UpdateTopicRequest {
+  int64 id = 1;
+  string title = 2;
+  string img = 3;
+  string content = 4;
+  int64 status = 5;
+  int64 stageId = 6;
+  int64 categoryId = 7;
+  int64 userId = 8;
+  int64 auditorId = 9;
+}
+
+message UpdateTopicResponse {
+  int64 id = 1;
+}
+
+message DeleteTopicRequest {
+  int64 id = 1;
+}
+
+message DeleteTopicResponse {
+
+}
+
+message AddTopicAuditRecordRequest {
+  int64 topicId = 1;
+  int64 status = 2;
+  string remark = 3;
+}
+
+message AddTopicAuditRecordResponse {
+  int64 id = 1;
+}
+
+message GetTopicAuditRecordRequest {
+  int64 id = 1;
+}
+
+message GetTopicAuditRecordResponse {
+  int64 id = 1;
+  int64 topicId = 2;
+  int64 status = 3;
+  string remark = 4;
+  int64 auditorId = 5;
+  string createdAt = 6;
+  string updatedAt = 7;
+  string deletedAt = 8;
+}
+
 service Information {
   rpc Ping(Request) returns(Response);
+
+  //添加文章
+  rpc AddTopic(AddTopicRequest) returns(AddTopicResponse);
+  //获取文章
+  rpc GetTopic(GetTopicRequest) returns(GetTopicResponse);
+  //获取文章列表
+  rpc GetTopicList(GetTopicsRequest) returns(GetTopicsResponse);
+  //编辑文章
+  rpc UpdateTopic(UpdateTopicRequest) returns(UpdateTopicResponse);
+  //删除文章
+  rpc DeleteTopic(DeleteTopicRequest) returns(DeleteTopicResponse);
+
+  //添加文章审核记录
+  rpc AddTopicAuditRecord(AddTopicAuditRecordRequest) returns(AddTopicAuditRecordResponse);
+  //获取文章审核记录
+  rpc GetTopicAuditRecord(GetTopicAuditRecordRequest) returns(GetTopicAuditRecordResponse);
 }

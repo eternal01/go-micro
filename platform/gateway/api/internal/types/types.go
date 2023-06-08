@@ -392,6 +392,84 @@ type GatewayDeleteConfigurationRequest struct {
 type GatewayDeleteConfigurationReply struct {
 }
 
+type GatewayAddTopicRequest struct {
+	Title      string `json:"title"`
+	Img        string `json:"img"`
+	Content    string `json:"content"`
+	StageId    int64  `json:"stage_id"`
+	CategoryId int64  `json:"category_id"`
+}
+
+type GatewayAddTopicReply struct {
+	Id int64 `json:"id"`
+}
+
+type GatewayUpdateTopicRequest struct {
+	Id         int64  `path:"id"`
+	Title      string `json:"title"`
+	Img        string `json:"img"`
+	Content    string `json:"content"`
+	Status     int64  `json:"status"`
+	StageId    int64  `json:"stage_id"`
+	CategoryId int64  `json:"category_id"`
+}
+
+type GatewayUpdateTopicReply struct {
+	Id int64 `json:"id"`
+}
+
+type GatewayGetTopicRequest struct {
+	Id int64 `path:"id"`
+}
+
+type GatewayGetTopicReply struct {
+	Id         int64  `path:"id"`
+	Title      string `json:"title"`
+	Img        string `json:"img"`
+	Content    string `json:"content"`
+	Status     int64  `json:"status"`
+	StageId    int64  `json:"stage_id"`
+	CategoryId int64  `json:"category_id"`
+	UserId     int64  `json:"user_id"`
+	AuditorId  int64  `json:"auditor_id"`
+	CreatedAt  string `json:"created_at"`
+	UpdatedAt  string `json:"updated_at"`
+	AuditedAt  string `json:"audited_at"`
+	DeletedAt  string `json:"deleted_at"`
+}
+
+type GatewayGetTopicListRequest struct {
+	Page      int64  `form:"page,optional"`
+	Size      int64  `form:"size,optional"`
+	LastId    int64  `form:"last_id,optional"`
+	Keyword   string `form:"keyword,optional"`
+	SortField string `form:"sort_field,optional"`
+	SortType  string `form:"sort_type,optional"`
+}
+
+type GatewayGetTopicListReply struct {
+	List  []GatewayListTopic `json:"list"`
+	Page  int64              `json:"page"`
+	Size  int64              `json:"size"`
+	Total int64              `json:"total"`
+}
+
+type GatewayListTopic struct {
+	Id         int64  `path:"id"`
+	Title      string `json:"title"`
+	Img        string `json:"img"`
+	Content    string `json:"content"`
+	Status     int64  `json:"status"`
+	StageId    int64  `json:"stage_id"`
+	CategoryId int64  `json:"category_id"`
+	UserId     int64  `json:"user_id"`
+	AuditorId  int64  `json:"auditor_id"`
+	CreatedAt  string `json:"created_at"`
+	UpdatedAt  string `json:"updated_at"`
+	AuditedAt  string `json:"audited_at"`
+	DeletedAt  string `json:"deleted_at"`
+}
+
 type GatewayRegisterRequest struct {
 	Mobile         string `json:"mobile"`
 	Email          string `json:"email"`

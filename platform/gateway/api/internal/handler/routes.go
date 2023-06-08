@@ -194,6 +194,26 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/topic",
+				Handler: addTopicHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/topic/:id",
+				Handler: updateTopicHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/topic/:id",
+				Handler: getTopicHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/topic/list",
+				Handler: getTopicListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/register",
 				Handler: registerHandler(serverCtx),
 			},

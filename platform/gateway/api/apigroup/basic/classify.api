@@ -1,0 +1,113 @@
+type (
+    //获取分类信息
+	GatewayGetClassifyRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayGetClassifyReply {
+		Id          int64  `json:"id"`
+		Name        string `json:"name"`
+		ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	//根据父级id获取分类信息
+	GatewayGetClassifiesRequest {
+		ParentId int64 `path:"parent_id"`
+	}
+
+	GatewayGetClassifiesReply {
+		List []GatewayGetClassifiesChild `json:"list"`
+	}
+
+	GatewayGetClassifiesChild {
+		Id          int64  `json:"id"`
+		Name        string `json:"name"`
+		ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	//获取分类信息树
+	GatewayGetClassifyTreeRequest {
+	}
+
+	GatewayGetClassifyTreeReply {
+		Tree []GatewayClassifyTreeNode `json:"tree"`
+	}
+
+	GatewayClassifyTreeNode {
+		Id          int64                     `json:"id"`
+		Name        string                    `json:"name"`
+		ParentId    int64                     `json:"parent_id"`
+		Description string                    `json:"description"`
+		Children    []GatewayClassifyTreeNode `json:"children"`
+	}
+
+	//添加分类信息
+	GatewayAddClassifyRequest {
+		Name        string `json:"name"`
+		ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	GatewayAddClassifyReply {
+		Id int64 `json:"id"`
+	}
+
+	//更新分类信息
+	GatewayUpdateClassifyRequest {
+		Id          int64  `path:"id"`
+		Name        string `json:"name"`
+		ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	GatewayUpdateClassifyReply {
+		Id int64 `json:"id"`
+	}
+
+	//删除分类信息
+	GatewayDeleteClassifyRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayDeleteClassifyReply {
+	}
+)
+
+@server(
+	prefix: /api/gateway/basic
+    group: basic/classify
+)
+service gateway {
+	@doc "获取分类信息"
+	@handler getClassify
+	get /classify/:id (GatewayGetClassifyRequest) returns (GatewayGetClassifyReply)
+	
+	@doc "根据父级id获取分类信息"
+	@handler getClassifies
+	get /classifies/:parent_id (GatewayGetClassifiesRequest) returns (GatewayGetClassifiesReply)
+	
+	@doc "添加分类信息"
+	@handler addClassify
+	post /classify (GatewayAddClassifyRequest) returns (GatewayAddClassifyReply)
+	
+	@doc "更新分类信息"
+	@handler updateClassify
+	put /classify/:id (GatewayUpdateClassifyRequest) returns (GatewayUpdateClassifyReply)
+	
+	@doc "删除分类信息"
+	@handler deleteClassify
+	delete /classify/:id (GatewayDeleteClassifyRequest) returns (GatewayDeleteClassifyReply)
+}
+
+@server(
+	prefix: /api/gateway/basic
+    group: basic/classify
+	timeout: 5s
+)
+service gateway {
+	@doc "获取分类信息树"
+	@handler getClassifyTree
+	get /classifyTree (GatewayGetClassifyTreeRequest) returns (GatewayGetClassifyTreeReply)
+}

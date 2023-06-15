@@ -7,7 +7,13 @@ import (
 	"go-micro/common/interceptor/rpcserver"
 	"go-micro/platform/basic/rpc/basic"
 	"go-micro/platform/basic/rpc/internal/config"
-	"go-micro/platform/basic/rpc/internal/server"
+	basiccategoryserviceServer "go-micro/platform/basic/rpc/internal/server/basiccategoryservice"
+	basicclassifyserviceServer "go-micro/platform/basic/rpc/internal/server/basicclassifyservice"
+	basicconfigurationserviceServer "go-micro/platform/basic/rpc/internal/server/basicconfigurationservice"
+	basicindustryserviceServer "go-micro/platform/basic/rpc/internal/server/basicindustryservice"
+	basicregionserviceServer "go-micro/platform/basic/rpc/internal/server/basicregionservice"
+	basicserviceServer "go-micro/platform/basic/rpc/internal/server/basicservice"
+	basicstageserviceServer "go-micro/platform/basic/rpc/internal/server/basicstageservice"
 	"go-micro/platform/basic/rpc/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
@@ -27,7 +33,13 @@ func main() {
 	ctx := svc.NewServiceContext(c)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
-		basic.RegisterBasicServer(grpcServer, server.NewBasicServer(ctx))
+		basic.RegisterBasicServiceServer(grpcServer, basicserviceServer.NewBasicServiceServer(ctx))
+		basic.RegisterBasicRegionServiceServer(grpcServer, basicregionserviceServer.NewBasicRegionServiceServer(ctx))
+		basic.RegisterBasicIndustryServiceServer(grpcServer, basicindustryserviceServer.NewBasicIndustryServiceServer(ctx))
+		basic.RegisterBasicClassifyServiceServer(grpcServer, basicclassifyserviceServer.NewBasicClassifyServiceServer(ctx))
+		basic.RegisterBasicCategoryServiceServer(grpcServer, basiccategoryserviceServer.NewBasicCategoryServiceServer(ctx))
+		basic.RegisterBasicStageServiceServer(grpcServer, basicstageserviceServer.NewBasicStageServiceServer(ctx))
+		basic.RegisterBasicConfigurationServiceServer(grpcServer, basicconfigurationserviceServer.NewBasicConfigurationServiceServer(ctx))
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)

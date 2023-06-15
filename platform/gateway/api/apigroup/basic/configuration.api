@@ -1,0 +1,93 @@
+type (
+    //获取配置信息
+	GatewayGetConfigurationRequest {
+		Id int64 `path:"id"`
+	}
+	//根据配置名称获取配置信息
+	GatewayGetConfigurationByNameRequest {
+		Name string `path:"name"`
+	}
+
+	GatewayGetConfigurationReply {
+		Id          int64  `json:"id"`
+		Name        string `json:"name"`
+		Description string `json:"description"`
+		Content     string `json:"content"`
+	}
+
+	//获取配置列表
+	GatewayGetConfigurationsRequest {
+	}
+
+	GatewayGetConfigurationsReply {
+		List []GatewayConfiguration `json:"list"`
+	}
+
+	GatewayConfiguration {
+		Id          int64  `json:"id"`
+		Name        string `json:"name"`
+		Description string `json:"description"`
+		Content     string `json:"content"`
+	}
+
+	//添加配置信息
+	GatewayAddConfigurationRequest {
+		Name        string `json:"name"`
+		Description string `json:"description"`
+		Content     string `json:"content"`
+	}
+
+	GatewayAddConfigurationReply {
+		Id int64 `json:"id"`
+	}
+
+	//更新配置信息
+	GatewayUpdateConfigurationRequest {
+		Id          int64  `path:"id"`
+		Name        string `json:"name"`
+		Description string `json:"description"`
+		Content     string `json:"content"`
+	}
+
+	GatewayUpdateConfigurationReply {
+		Id int64 `json:"id"`
+	}
+
+	//删除配置信息
+	GatewayDeleteConfigurationRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayDeleteConfigurationReply {
+	}
+)
+
+@server(
+	prefix: /api/gateway/basic
+    group: basic/configuration
+)
+service gateway {
+	@doc "获取配置信息"
+	@handler getConfiguration
+	get /configuration/:id (GatewayGetConfigurationRequest) returns (GatewayGetConfigurationReply)
+	
+	@doc "根据配置名称获取配置信息"
+	@handler getConfigurationByName
+	get /configuration/name/:name (GatewayGetConfigurationByNameRequest) returns (GatewayGetConfigurationReply)
+	
+	@doc "获取配置列表"
+	@handler getConfigurations
+	get /configurations (GatewayGetConfigurationsRequest) returns (GatewayGetConfigurationsReply)
+	
+	@doc "添加配置信息"
+	@handler addConfiguration
+	post /configuration (GatewayAddConfigurationRequest) returns (GatewayAddConfigurationReply)
+	
+	@doc "更新配置信息"
+	@handler updateConfiguration
+	put /configuration/:id (GatewayUpdateConfigurationRequest) returns (GatewayUpdateConfigurationReply)
+	
+	@doc "删除配置信息"
+	@handler deleteConfiguration
+	delete /configuration/:id (GatewayDeleteConfigurationRequest) returns (GatewayDeleteConfigurationReply)
+}

@@ -1,0 +1,96 @@
+type (
+	//登录注册相关信息
+	GatewayRegisterRequest {
+		Mobile         string `json:"mobile"`
+		Email          string `json:"email"`
+		AuthCredential string `json:"auth_credential"`
+	}
+
+	GatewayRegisterReply {
+		AccessToken  string `json:"access_token"`
+		AccessExpire int64  `json:"access_expire"`
+		RefreshAfter int64  `json:"refresh_after"`
+	}
+
+	GatewayLoginRequest {
+		Mobile         string `json:"mobile"`
+		Email          string `json:"email"`
+		AuthCredential string `json:"auth_credential"`
+	}
+
+	GatewayLoginReply {
+		Id     int64  `json:"id"`
+		Mobile string `json:"mobile"`
+		Email  string `json:"email"`
+
+		AccessToken  string `json:"access_token"`
+		AccessExpire int64  `json:"access_expire"`
+		RefreshAfter int64  `json:"refresh_after"`
+	}
+
+	GatewayGetUserRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayGetUserReply {
+		Id       int64  `json:"id"`
+		Avatar   string `json:"avatar"`
+		Mobile   string `json:"mobile"`
+		Email    string `json:"email"`
+		UserName string `json:"user_name"`
+		NickName string `json:"nick_name"`
+		Gender   int64  `json:"gender"`
+		Status   int64  `json:"status"`
+	}
+
+	GatewayUpdateUserRequest {
+		Id       int64  `path:"id"`
+		Avatar   string `json:"avatar"`
+		Mobile   string `json:"mobile"`
+		Email    string `json:"email"`
+		UserName string `json:"user_name"`
+		NickName string `json:"nick_name"`
+		Gender   int64  `json:"gender"`
+		Status   int64  `json:"status"`
+	}
+
+	GatewayUpdateUserReply {
+		Id       int64  `json:"id"`
+		Avatar   string `json:"avatar"`
+		Mobile   string `json:"mobile"`
+		Email    string `json:"email"`
+		UserName string `json:"user_name"`
+		NickName string `json:"nick_name"`
+		Gender   int64  `json:"gender"`
+		Status   int64  `json:"status"`
+	}
+)
+
+@server(
+	prefix: /api/gateway/account
+    group: account/auth
+)
+service gateway {
+	@doc "注册"
+	@handler register
+	post /register (GatewayRegisterRequest) returns (GatewayRegisterReply)
+	
+	@doc "登录"
+	@handler login
+	post /login (GatewayLoginRequest) returns (GatewayLoginReply)
+}
+
+@server(
+	prefix: /api/gateway/account
+    group: account/auth
+	jwt: JwtAuth
+)
+service gateway {
+	@doc "获取用户信息"
+	@handler getUser
+	get /user/:id (GatewayGetUserRequest) returns (GatewayGetUserReply)
+	
+	@doc "更新用户信息"
+	@handler updateUser
+	put /user/:id (GatewayUpdateUserRequest) returns (GatewayUpdateUserReply)
+}

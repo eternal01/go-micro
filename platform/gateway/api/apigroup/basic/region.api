@@ -1,0 +1,108 @@
+type (
+    //获取地区信息
+	GatewayGetRegionRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayGetRegionReply {
+		Id       int64  `json:"id"`
+		ParentId int64  `json:"parent_id"`
+		Name     string `json:"name"`
+	}
+
+	//根据父级id获取地区信息
+	GatewayGetRegionsRequest {
+		ParentId int64 `path:"parent_id"`
+	}
+
+	GatewayGetRegionsReply {
+		List []GatewayGetRegionsChild `json:"list"`
+	}
+
+	GatewayGetRegionsChild {
+		Id       int64  `json:"id"`
+		ParentId int64  `json:"parent_id"`
+		Name     string `json:"name"`
+	}
+
+	//获取地区信息树
+	GatewayGetRegionTreeRequest {
+	}
+
+	GatewayGetRegionTreeReply {
+		Tree []GatewayRegionTreeNode `json:"tree"`
+	}
+
+	GatewayRegionTreeNode {
+		Id       int64                   `json:"id"`
+		ParentId int64                   `json:"parent_id"`
+		Name     string                  `json:"name"`
+		Children []GatewayRegionTreeNode `json:"children"`
+	}
+
+	//添加地区信息
+	GatewayAddRegionRequest {
+		ParentId int64  `json:"parent_id"`
+		Name     string `json:"name"`
+	}
+
+	GatewayAddRegionReply {
+		Id int64 `json:"id"`
+	}
+
+	//更新地区信息
+	GatewayUpdateRegionRequest {
+		Id       int64  `path:"id"`
+		ParentId int64  `json:"parent_id"`
+		Name     string `json:"name"`
+	}
+
+	GatewayUpdateRegionReply {
+		Id int64 `json:"id"`
+	}
+
+	//删除地区信息
+	GatewayDeleteRegionRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayDeleteRegionReply {
+	}
+)
+
+@server(
+	prefix: /api/gateway/basic
+    group: basic/region
+)
+service gateway {
+	@doc "获取地区信息"
+	@handler getRegion
+	get /region/:id	(GatewayGetRegionRequest) returns (GatewayGetRegionReply)
+	
+	@doc "根据父级id获取地区信息"
+	@handler getRegions
+	get /regions/:parent_id	(GatewayGetRegionsRequest) returns (GatewayGetRegionsReply)
+	
+	@doc "添加地区信息"
+	@handler addRegion
+	post /region (GatewayAddRegionRequest) returns (GatewayAddRegionReply)
+	
+	@doc "更新地区信息"
+	@handler updateRegion
+	put /region/:id (GatewayUpdateRegionRequest) returns (GatewayUpdateRegionReply)
+	
+	@doc "删除地区信息"
+	@handler deleteRegion
+	delete /region/:id (GatewayDeleteRegionRequest) returns (GatewayDeleteRegionReply)
+}
+
+@server(
+	prefix: /api/gateway/basic
+    group: basic/region
+	timeout: 5s
+)
+service gateway {
+	@doc "获取地区信息树"
+	@handler getRegionTree
+	get /regionTree (GatewayGetRegionTreeRequest) returns (GatewayGetRegionTreeReply)
+}

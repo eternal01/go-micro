@@ -1,0 +1,113 @@
+type (
+    //获取类别信息
+	GatewayGetCategoryRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayGetCategoryReply {
+		Id          int64  `json:"id"`
+		Name        string `json:"name"`
+		ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	//根据父级id获取类别信息
+	GatewayGetCategoriesRequest {
+		ParentId int64 `path:"parent_id"`
+	}
+
+	GatewayGetCategoriesReply {
+		List []GatewayGetCategoriesChild `json:"list"`
+	}
+
+	GatewayGetCategoriesChild {
+		Id          int64  `json:"id"`
+		Name        string `json:"name"`
+		ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	//获取类别信息树
+	GatewayGetCategoryTreeRequest {
+	}
+
+	GatewayGetCategoryTreeReply {
+		Tree []GatewayCategoryTreeNode `json:"tree"`
+	}
+
+	GatewayCategoryTreeNode {
+		Id          int64                     `json:"id"`
+		Name        string                    `json:"name"`
+		ParentId    int64                     `json:"parent_id"`
+		Description string                    `json:"description"`
+		Children    []GatewayCategoryTreeNode `json:"children"`
+	}
+
+	//添加类别信息
+	GatewayAddCategoryRequest {
+		Name        string `json:"name"`
+		ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	GatewayAddCategoryReply {
+		Id int64 `json:"id"`
+	}
+
+	//更新类别信息
+	GatewayUpdateCategoryRequest {
+		Id          int64  `path:"id"`
+		Name        string `json:"name"`
+		ParentId    int64  `json:"parent_id"`
+		Description string `json:"description"`
+	}
+
+	GatewayUpdateCategoryReply {
+		Id int64 `json:"id"`
+	}
+
+	//删除类别信息
+	GatewayDeleteCategoryRequest {
+		Id int64 `path:"id"`
+	}
+
+	GatewayDeleteCategoryReply {
+	}
+)
+
+@server(
+	prefix: /api/gateway/basic
+    group: basic/category
+)
+service gateway {
+	@doc "获取类别信息"
+	@handler getCategory
+	get /category/:id (GatewayGetCategoryRequest) returns (GatewayGetCategoryReply)
+	
+	@doc "根据父级id获取类别信息"
+	@handler getCategories
+	get /categories/:parent_id (GatewayGetCategoriesRequest) returns (GatewayGetCategoriesReply)
+	
+	@doc "添加类别信息"
+	@handler addCategory
+	post /category (GatewayAddCategoryRequest) returns (GatewayAddCategoryReply)
+	
+	@doc "更新类别信息"
+	@handler updateCategory
+	put /category/:id (GatewayUpdateCategoryRequest) returns (GatewayUpdateCategoryReply)
+	
+	@doc "删除类别信息"
+	@handler deleteCategory
+	delete /category/:id (GatewayDeleteCategoryRequest) returns (GatewayDeleteCategoryReply)
+}
+
+@server(
+	prefix: /api/gateway/basic
+    group: basic/category
+	timeout: 5s
+)
+service gateway {
+	@doc "获取类别信息树"
+	@handler getCategoryTree
+	get /categoryTree (GatewayGetCategoryTreeRequest) returns (GatewayGetCategoryTreeReply)
+}

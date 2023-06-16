@@ -1,7 +1,6 @@
 Name: gateway.api
 Host: 0.0.0.0
 Port: 8888
-Timeout: 10000
 
 # 监控
 Prometheus:

@@ -15,6 +15,12 @@ message GetTopicRequest {
   int64 id = 1;
 }
 
+service InformationService {
+  rpc Ping(Request) returns(Response);
+}
+
+
+//文章
 message GetTopicResponse {
   int64 id = 1;
   string title = 2;
@@ -88,6 +94,8 @@ message UpdateTopicRequest {
   int64 categoryId = 7;
   int64 userId = 8;
   int64 auditorId = 9;
+  string auditedAt = 10;
+  string deletedAt = 11;
 }
 
 message UpdateTopicResponse {
@@ -102,6 +110,21 @@ message DeleteTopicResponse {
 
 }
 
+service InformationTopicService {
+  //添加文章
+  rpc AddTopic(AddTopicRequest) returns(AddTopicResponse);
+  //获取文章
+  rpc GetTopic(GetTopicRequest) returns(GetTopicResponse);
+  //获取文章列表
+  rpc GetTopicList(GetTopicsRequest) returns(GetTopicsResponse);
+  //编辑文章
+  rpc UpdateTopic(UpdateTopicRequest) returns(UpdateTopicResponse);
+  //删除文章
+  rpc DeleteTopic(DeleteTopicRequest) returns(DeleteTopicResponse);
+}
+
+
+//文章审核记录
 message AddTopicAuditRecordRequest {
   int64 topicId = 1;
   int64 status = 2;
@@ -127,20 +150,7 @@ message GetTopicAuditRecordResponse {
   string deletedAt = 8;
 }
 
-service Information {
-  rpc Ping(Request) returns(Response);
-
-  //添加文章
-  rpc AddTopic(AddTopicRequest) returns(AddTopicResponse);
-  //获取文章
-  rpc GetTopic(GetTopicRequest) returns(GetTopicResponse);
-  //获取文章列表
-  rpc GetTopicList(GetTopicsRequest) returns(GetTopicsResponse);
-  //编辑文章
-  rpc UpdateTopic(UpdateTopicRequest) returns(UpdateTopicResponse);
-  //删除文章
-  rpc DeleteTopic(DeleteTopicRequest) returns(DeleteTopicResponse);
-
+service InformationTopicAuditRecordService {
   //添加文章审核记录
   rpc AddTopicAuditRecord(AddTopicAuditRecordRequest) returns(AddTopicAuditRecordResponse);
   //获取文章审核记录

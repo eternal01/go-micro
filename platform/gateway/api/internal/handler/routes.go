@@ -3,7 +3,16 @@ package handler
 
 import (
 	"net/http"
+	"time"
 
+	accountauth "go-micro/platform/gateway/api/internal/handler/account/auth"
+	basiccategory "go-micro/platform/gateway/api/internal/handler/basic/category"
+	basicclassify "go-micro/platform/gateway/api/internal/handler/basic/classify"
+	basicconfiguration "go-micro/platform/gateway/api/internal/handler/basic/configuration"
+	basicindustry "go-micro/platform/gateway/api/internal/handler/basic/industry"
+	basicregion "go-micro/platform/gateway/api/internal/handler/basic/region"
+	basicstage "go-micro/platform/gateway/api/internal/handler/basic/stage"
+	informationtopic "go-micro/platform/gateway/api/internal/handler/information/topic"
 	"go-micro/platform/gateway/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -14,216 +23,260 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodGet,
-				Path:    "/region/:id",
-				Handler: getRegionHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/regions/:parent_id",
-				Handler: getRegionsHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/regionTree",
-				Handler: getRegionTreeHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/region",
-				Handler: addRegionHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPut,
-				Path:    "/region/:id",
-				Handler: updateRegionHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodDelete,
-				Path:    "/region/:id",
-				Handler: deleteRegionHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/industry/:id",
-				Handler: getIndustryHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/industry/industryId/:industry_id",
-				Handler: getIndustryByIndustryIdHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/industries/:parent_id",
-				Handler: getIndustriesHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/industryTree",
-				Handler: getIndustryTreeHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/industry",
-				Handler: addIndustryHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPut,
-				Path:    "/industry/:id",
-				Handler: updateIndustryHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodDelete,
-				Path:    "/industry/:id",
-				Handler: deleteIndustryHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
 				Path:    "/category/:id",
-				Handler: getCategoryHandler(serverCtx),
+				Handler: basiccategory.GetCategoryHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/categories/:parent_id",
-				Handler: getCategoriesHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/categoryTree",
-				Handler: getCategoryTreeHandler(serverCtx),
+				Handler: basiccategory.GetCategoriesHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/category",
-				Handler: addCategoryHandler(serverCtx),
+				Handler: basiccategory.AddCategoryHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPut,
 				Path:    "/category/:id",
-				Handler: updateCategoryHandler(serverCtx),
+				Handler: basiccategory.UpdateCategoryHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodDelete,
 				Path:    "/category/:id",
-				Handler: deleteCategoryHandler(serverCtx),
+				Handler: basiccategory.DeleteCategoryHandler(serverCtx),
 			},
+		},
+		rest.WithPrefix("/api/gateway/basic"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/categoryTree",
+				Handler: basiccategory.GetCategoryTreeHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/gateway/basic"),
+		rest.WithTimeout(5000*time.Millisecond),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
 			{
 				Method:  http.MethodGet,
 				Path:    "/classify/:id",
-				Handler: getClassifyHandler(serverCtx),
+				Handler: basicclassify.GetClassifyHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/classifies/:parent_id",
-				Handler: getClassifiesHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/classifyTree",
-				Handler: getClassifyTreeHandler(serverCtx),
+				Handler: basicclassify.GetClassifiesHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/classify",
-				Handler: addClassifyHandler(serverCtx),
+				Handler: basicclassify.AddClassifyHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPut,
 				Path:    "/classify/:id",
-				Handler: updateClassifyHandler(serverCtx),
+				Handler: basicclassify.UpdateClassifyHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodDelete,
 				Path:    "/classify/:id",
-				Handler: deleteClassifyHandler(serverCtx),
+				Handler: basicclassify.DeleteClassifyHandler(serverCtx),
 			},
+		},
+		rest.WithPrefix("/api/gateway/basic"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
 			{
 				Method:  http.MethodGet,
-				Path:    "/stage/:id",
-				Handler: getStageHandler(serverCtx),
+				Path:    "/classifyTree",
+				Handler: basicclassify.GetClassifyTreeHandler(serverCtx),
 			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/stages",
-				Handler: getStagesHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/stage",
-				Handler: addStageHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPut,
-				Path:    "/stage/:id",
-				Handler: updateStageHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodDelete,
-				Path:    "/stage/:id",
-				Handler: deleteStageHandler(serverCtx),
-			},
+		},
+		rest.WithPrefix("/api/gateway/basic"),
+		rest.WithTimeout(5000*time.Millisecond),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
 			{
 				Method:  http.MethodGet,
 				Path:    "/configuration/:id",
-				Handler: getConfigurationHandler(serverCtx),
+				Handler: basicconfiguration.GetConfigurationHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/configuration/name/:name",
-				Handler: getConfigurationByNameHandler(serverCtx),
+				Handler: basicconfiguration.GetConfigurationByNameHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/configurations",
-				Handler: getConfigurationsHandler(serverCtx),
+				Handler: basicconfiguration.GetConfigurationsHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/configuration",
-				Handler: addConfigurationHandler(serverCtx),
+				Handler: basicconfiguration.AddConfigurationHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPut,
 				Path:    "/configuration/:id",
-				Handler: updateConfigurationHandler(serverCtx),
+				Handler: basicconfiguration.UpdateConfigurationHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodDelete,
 				Path:    "/configuration/:id",
-				Handler: deleteConfigurationHandler(serverCtx),
+				Handler: basicconfiguration.DeleteConfigurationHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/gateway/basic"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/region/:id",
+				Handler: basicregion.GetRegionHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/regions/:parent_id",
+				Handler: basicregion.GetRegionsHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/topic",
-				Handler: addTopicHandler(serverCtx),
+				Path:    "/region",
+				Handler: basicregion.AddRegionHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPut,
-				Path:    "/topic/:id",
-				Handler: updateTopicHandler(serverCtx),
+				Path:    "/region/:id",
+				Handler: basicregion.UpdateRegionHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/region/:id",
+				Handler: basicregion.DeleteRegionHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/gateway/basic"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/regionTree",
+				Handler: basicregion.GetRegionTreeHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/gateway/basic"),
+		rest.WithTimeout(5000*time.Millisecond),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/industry/:id",
+				Handler: basicindustry.GetIndustryHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/topic/:id",
-				Handler: getTopicHandler(serverCtx),
+				Path:    "/industry/industryId/:industry_id",
+				Handler: basicindustry.GetIndustryByIndustryIdHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/topic/list",
-				Handler: getTopicListHandler(serverCtx),
+				Path:    "/industries/:parent_id",
+				Handler: basicindustry.GetIndustriesHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/industry",
+				Handler: basicindustry.AddIndustryHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/industry/:id",
+				Handler: basicindustry.UpdateIndustryHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/industry/:id",
+				Handler: basicindustry.DeleteIndustryHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/gateway/basic"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/industryTree",
+				Handler: basicindustry.GetIndustryTreeHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/gateway/basic"),
+		rest.WithTimeout(5000*time.Millisecond),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/stage/:id",
+				Handler: basicstage.GetStageHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/stages",
+				Handler: basicstage.GetStagesHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/stage",
+				Handler: basicstage.AddStageHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/stage/:id",
+				Handler: basicstage.UpdateStageHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/stage/:id",
+				Handler: basicstage.DeleteStageHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/gateway/basic"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
 				Path:    "/register",
-				Handler: registerHandler(serverCtx),
+				Handler: accountauth.RegisterHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/login",
-				Handler: loginHandler(serverCtx),
+				Handler: accountauth.LoginHandler(serverCtx),
 			},
 		},
-		rest.WithPrefix("/api/gateway"),
+		rest.WithPrefix("/api/gateway/account"),
 	)
 
 	server.AddRoutes(
@@ -231,15 +284,46 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodGet,
 				Path:    "/user/:id",
-				Handler: getUserHandler(serverCtx),
+				Handler: accountauth.GetUserHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPut,
 				Path:    "/user/:id",
-				Handler: updateUserHandler(serverCtx),
+				Handler: accountauth.UpdateUserHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
-		rest.WithPrefix("/api/gateway"),
+		rest.WithPrefix("/api/gateway/account"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/topic",
+				Handler: informationtopic.AddTopicHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/topic/:id",
+				Handler: informationtopic.UpdateTopicHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/topic/:id",
+				Handler: informationtopic.GetTopicHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/topic/list",
+				Handler: informationtopic.GetTopicListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/topic/:id",
+				Handler: informationtopic.DeleteTopicHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/gateway/information"),
 	)
 }
